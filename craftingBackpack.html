@@ -69,7 +69,7 @@ HEWWO?!!
 
     if (data.AmountIngredient0 != 0)
     {
-      updateArray(data.ItemIngredient0.Name, data.AmountIngredient0);
+      updateArray(data.ItemIngredient0.Name, data.AmountIngredient0, data.ItemIngredient0.Icon);
       //displayItems(data.ItemIngredient0TargetID);
       var x = "https://xivapi.com/item/" + data.ItemIngredient0TargetID;
       //console.log(x);
@@ -82,7 +82,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient1 != 0)
     {
-      updateArray(data.ItemIngredient1.Name, data.AmountIngredient1);
+      updateArray(data.ItemIngredient1.Name, data.AmountIngredient1, data.ItemIngredient1.Icon);
       //displayItems(data.ItemIngredient1TargetID);
 
       var x = "https://xivapi.com/item/" + data.ItemIngredient1TargetID;
@@ -95,7 +95,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient2 != 0)
     {
-      updateArray(data.ItemIngredient2.Name, data.AmountIngredient2);
+      updateArray(data.ItemIngredient2.Name, data.AmountIngredient2, data.ItemIngredient2.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient2TargetID;
       //console.log(x);
       for (var i = 1; i <= data.AmountIngredient2;i++)
@@ -107,7 +107,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient3 != 0)
     {
-      updateArray(data.ItemIngredient3.Name, data.AmountIngredient3);
+      updateArray(data.ItemIngredient3.Name, data.AmountIngredient3,  data.ItemIngredient3.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient3TargetID;
       //console.log(x);
       for (var i = 1; i <= data.AmountIngredient3;i++)
@@ -119,7 +119,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient4 != 0)
     {
-      updateArray(data.ItemIngredient4.Name, data.AmountIngredient4);
+      updateArray(data.ItemIngredient4.Name, data.AmountIngredient4,  data.ItemIngredient4.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient4TargetID;
       //console.log(x);
       for (var i = 1; i <= data.AmountIngredient4;i++)
@@ -131,7 +131,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient5 != 0)
     {
-      updateArray(data.ItemIngredient5.Name, data.AmountIngredient5);
+      updateArray(data.ItemIngredient5.Name, data.AmountIngredient5,  data.ItemIngredient5.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient5TargetID;
       //console.log(x);
       for (var i = 1; i <= data.AmountIngredient5;i++)
@@ -147,7 +147,7 @@ HEWWO?!!
     }
     //console.log(itemArray);
   }
-  function updateArray(name, amount)
+  function updateArray(name, amount,icon)
   {
     var searchNum = null;
     searchNum = itemArray.indexOf(name);
@@ -158,6 +158,9 @@ HEWWO?!!
       //var displayString = name + " x" + amount + "<br>";
       //document.getElementById("displayItemList").innerHTML += displayString;
       itemArray.push(name, amount);
+      var iconImg = "";
+      iconImg = "https://xivapi.com/" + icon;
+      document.getElementById("displayIconList").innerHTML += "<img src= "+iconImg+"  >"
     }
     else
     {
@@ -172,9 +175,17 @@ HEWWO?!!
     //  console.log(itemArray[i+1]);
       var str1 = itemArray[i];
       var str2 = ": " + itemArray[i+1];
+
+      console.log(iconImg);
+
+
       document.getElementById("displayItemList").innerHTML += str1;
       document.getElementById("displayItemList").innerHTML += str2;
       document.getElementById("displayItemList").innerHTML += "<br>";
+
+      //document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + name + "</button>";
+
+
     }
   }
   function subItemStepOne(id)
@@ -194,17 +205,12 @@ HEWWO?!!
 
       //Nothing!
     }
-    //displayItemButton(data);
-
-
-
-    //https://xivapi.com/item/19942
   }
   function printList2(data)
   {
     if (data.AmountIngredient0 != 0)
     {
-      updateArray(data.ItemIngredient0.Name, data.AmountIngredient0);
+      updateArray(data.ItemIngredient0.Name, data.AmountIngredient0, data.ItemIngredient0.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient0TargetID;
 
       for (var i = 1; i <= data.AmountIngredient0;i++)
@@ -213,11 +219,10 @@ HEWWO?!!
           .then(response => response.json())
           .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
       }
-
     }
     if (data.AmountIngredient1 != 0)
     {
-      updateArray(data.ItemIngredient1.Name, data.AmountIngredient1);
+      updateArray(data.ItemIngredient1.Name, data.AmountIngredient1,  data.ItemIngredient1.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient1TargetID;
       for (var i = 1; i <= data.AmountIngredient1;i++)
       {
@@ -225,11 +230,10 @@ HEWWO?!!
           .then(response => response.json())
           .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
       }
-
     }
     if (data.AmountIngredient2 != 0)
     {
-      updateArray(data.ItemIngredient2.Name, data.AmountIngredient2);
+      updateArray(data.ItemIngredient2.Name, data.AmountIngredient2,  data.ItemIngredient2.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient2TargetID;
       for (var i = 1; i <= data.AmountIngredient2;i++)
       {
@@ -240,7 +244,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient3 != 0)
     {
-      updateArray(data.ItemIngredient3.Name, data.AmountIngredient3);
+      updateArray(data.ItemIngredient3.Name, data.AmountIngredient3, data.ItemIngredient3.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient3TargetID;
       for (var i = 1; i <= data.AmountIngredient3;i++)
       {
@@ -251,7 +255,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient4 != 0)
     {
-      updateArray(data.ItemIngredient4.Name, data.AmountIngredient4);
+      updateArray(data.ItemIngredient4.Name, data.AmountIngredient4, data.ItemIngredient4.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient4TargetID;
       for (var i = 1; i <= data.AmountIngredient4;i++)
       {
@@ -262,7 +266,7 @@ HEWWO?!!
     }
     if (data.AmountIngredient5 != 0)
     {
-      updateArray(data.ItemIngredient5.Name, data.AmountIngredient5);
+      updateArray(data.ItemIngredient5.Name, data.AmountIngredient5, data.ItemIngredient5.Icon);
       var x = "https://xivapi.com/item/" + data.ItemIngredient5TargetID;
       for (var i = 1; i <= data.AmountIngredient5;i++)
       {
@@ -280,6 +284,12 @@ HEWWO?!!
   </script>
   <style>
     </style>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <body>
   <h2 style="font-size:16px;">Search for an item, then click Find Me! <br>Clicking the item's button will tell you how many materials you need to craft it, <br> including one step down of sub-items (i.e. nuggets, ingots)</h2>
 
@@ -289,10 +299,27 @@ HEWWO?!!
   <div id ="displayList"></div>
 
   <h2 id="itemList">Material List</h2>
-  <div id ="displayItemList"></div>
+  <div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-3" style="width:30px;">
+          <div id ="displayIconList"></div>
+          </div>
+          <div class="col-sm-9" style="padding-left:5%;font-size:20px;line-height:40px;">
+            <div id ="displayItemList"></div>
+
+            </div>
+      </div>
+
+    </div>
+
   <h2>Crafted Item List (does not include mats for sub items...yet)</h2>
+
   <div id ="craftedList"></div>
   <img src="xivImages/icons/namazu.jpg"/>
   <h1 style="font-size:12px;">Namazu are friends, not food!</h1>
+
+  <h1 style="font-size:12px;">Now with icons!</h1>
+
 
   </body>
