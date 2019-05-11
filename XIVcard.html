@@ -1,0 +1,869 @@
+<script>
+
+//please don't look at my code, nobody must know my shame
+
+
+//Thank you to XIVAPI!!!
+//Some good resources!!
+//https://github.com/viion/ffxiv-datamining/tree/master/csv where the various .csv names will relate to xivapi.com/something
+
+//https://xivapi.com/docs/Icons?set=icons061000https://xivapi.com/docs/Icons?set=icons061000
+
+//Parsedate = StartdatE?
+
+
+function makeCalls()
+{
+
+  var server = document.getElementById("serverSelect").value;
+  console.log(server);
+  var x = "https://xivapi.com/character/search?name=" + document.getElementById("inputText").value + "&server=" + server;
+
+  console.log(x);
+  fetch(x, { mode: 'cors' })
+  	.then(response => response.json())
+    .then(data => searchByID(data.Results[0].ID))
+}
+function searchByID(id)
+{
+  console.log(id);
+  fetch("https://xivapi.com/character/" + id, { mode: 'cors' })
+  	.then(response => response.json())
+    .then(data => assignStats(data))
+}
+function assignStats(dataObj)
+{
+console.log(dataObj);
+console.log(dataObj.Character.ClassJobs["1_19"].Level);
+document.getElementById("pldNum").innerHTML = dataObj.Character.ClassJobs["1_19"].Level;
+document.getElementById("mnkNum").innerHTML = dataObj.Character.ClassJobs["2_20"].Level;
+document.getElementById("warNum").innerHTML = dataObj.Character.ClassJobs["3_21"].Level;
+document.getElementById("drgNum").innerHTML = dataObj.Character.ClassJobs["4_22"].Level;
+document.getElementById("brdNum").innerHTML = dataObj.Character.ClassJobs["5_23"].Level;
+document.getElementById("whmNum").innerHTML = dataObj.Character.ClassJobs["6_24"].Level;
+document.getElementById("blmNum").innerHTML = dataObj.Character.ClassJobs["7_25"].Level;
+//document.getElementById("smnNum").innerHTML = dataObj.Character.ClassJobs["26_27"].Level;
+document.getElementById("schNum").innerHTML = dataObj.Character.ClassJobs["26_28"].Level;
+document.getElementById("ninNum").innerHTML = dataObj.Character.ClassJobs["29_30"].Level;
+document.getElementById("mchNum").innerHTML = dataObj.Character.ClassJobs["31_31"].Level;
+document.getElementById("drkNum").innerHTML = dataObj.Character.ClassJobs["32_32"].Level;
+document.getElementById("astNum").innerHTML = dataObj.Character.ClassJobs["33_33"].Level;
+document.getElementById("samNum").innerHTML = dataObj.Character.ClassJobs["34_34"].Level;
+document.getElementById("rdmNum").innerHTML = dataObj.Character.ClassJobs["35_35"].Level;
+document.getElementById("bluNum").innerHTML = dataObj.Character.ClassJobs["36_36"].Level;
+//document.getElementById("charPortrait").src = dataObj.Character.Portrait;
+//document.getElementById("charPortrait").src = dataObj.Character.Portrait;
+
+document.getElementById("crpNum").innerHTML = dataObj.Character.ClassJobs["8_8"].Level;
+document.getElementById("bsmNum").innerHTML = dataObj.Character.ClassJobs["9_9"].Level;
+document.getElementById("armNum").innerHTML = dataObj.Character.ClassJobs["10_10"].Level;
+document.getElementById("gsmNum").innerHTML = dataObj.Character.ClassJobs["11_11"].Level;
+document.getElementById("ltwNum").innerHTML = dataObj.Character.ClassJobs["12_12"].Level;
+document.getElementById("wvrNum").innerHTML = dataObj.Character.ClassJobs["13_13"].Level;
+document.getElementById("alcNum").innerHTML = dataObj.Character.ClassJobs["14_14"].Level;
+document.getElementById("culNum").innerHTML = dataObj.Character.ClassJobs["15_15"].Level;
+document.getElementById("minNum").innerHTML = dataObj.Character.ClassJobs["16_16"].Level;
+document.getElementById("btnNum").innerHTML = dataObj.Character.ClassJobs["17_17"].Level;
+document.getElementById("fshNum").innerHTML = dataObj.Character.ClassJobs["18_18"].Level;
+document.getElementById("charMinion").innerHTML = dataObj.Character.Minions.length;
+document.getElementById("charMount").innerHTML = dataObj.Character.Mounts.length;
+document.getElementById("ilvl").innerHTML = "N/A";
+//265 for title.
+var x = "https://xivapi.com/Title/" + dataObj.Character.Title;
+console.log(x);
+fetch(x, { mode: 'cors' })
+  .then(response => response.json())
+  .then(data => document.getElementById("charTitle").innerHTML = data.Name);
+
+console.log(dataObj.Character.FreeCompanyId);
+x = "https://xivapi.com/freecompany/" + dataObj.Character.FreeCompanyId;
+fetch(x, { mode: 'cors' })
+  .then(response => response.json())
+  .then(data => assignFCIcon(data));
+
+
+
+  x = "https://xivapi.com/grandcompany/" + dataObj.Character.GrandCompany.NameID;
+  fetch(x, { mode: 'cors' })
+    .then(response => response.json())
+    .then(data => document.getElementById("charGC").innerHTML = data.Name);
+
+    document.getElementById("charServer").innerHTML = dataObj.Character.Server;
+    document.getElementById("charNameday").innerHTML = dataObj.Character.Nameday;
+    document.getElementById("charName").innerHTML = dataObj.Character.Name;
+
+    x = "https://xivapi.com/race/" + dataObj.Character.Race;
+    fetch(x, { mode: 'cors' })
+      .then(response => response.json())
+      .then(data => document.getElementById("charRace").innerHTML = data.Name);
+
+      document.getElementById("charRace").innerHTML += "   ";
+
+    x = "https://xivapi.com/tribe/" + dataObj.Character.Tribe;
+    fetch(x, { mode: 'cors' })
+      .then(response => response.json())
+      .then(data => document.getElementById("charRace").innerHTML += data.Name);
+
+      x = "https://xivapi.com/guardiandeity/" + dataObj.Character.GuardianDeity;
+      fetch(x, { mode: 'cors' })
+        .then(response => response.json())
+        .then(data => document.getElementById("charDeity").innerHTML = data.Name);
+
+      x = "https://xivapi.com/character/730968?data=AC,FR,FC,FCM,PVP" + dataObj.ID;
+      fetch(x, { mode: 'cors' })
+        .then(response => response.json())
+        .then(data => assignAch(data));
+        //.GrandCompany.NameID = 3
+        //.GrandCompany.RankID = 10
+      if (dataObj.Character.GrandCompany.NameID === 1)
+      {
+        document.getElementById("charCity").src = "xivImages/icons/limsa.png";
+        x = "https://xivapi.com/GrandCompanyRank/" + dataObj.Character.GrandCompany.RankID;
+        fetch(x, { mode: 'cors' })
+          .then(response => response.json())
+          .then(data => document.getElementById("rankID").src = ("https://xivapi.com" + data.IconMaelstrom));
+      }
+      //Adder
+      if (dataObj.Character.GrandCompany.NameID === 2)
+      {
+        document.getElementById("charCity").src = "xivImages/icons/gridania.png";
+
+        x = "https://xivapi.com/GrandCompanyRank/" + dataObj.Character.GrandCompany.RankID;
+        fetch(x, { mode: 'cors' })
+          .then(response => response.json())
+          .then(data => document.getElementById("rankID").src = ("https://xivapi.com" + data.IconSerpents));
+      }
+      //Flames
+      if (dataObj.Character.GrandCompany.NameID === 3)
+      {
+        document.getElementById("charCity").src = "xivImages/icons/uldah.png";
+
+        x = "https://xivapi.com/GrandCompanyRank/" + dataObj.Character.GrandCompany.RankID;
+        fetch(x, { mode: 'cors' })
+          .then(response => response.json())
+          .then(data => document.getElementById("rankID").src = ("https://xivapi.com" + data.IconFlames));
+          //document.getElementById("charPortrait").src = dataObj.Character.Portrait;
+
+      }
+      //x = "https://xivapi.com/character/"
+
+
+  uiToggle();
+
+}
+function assignFCIcon(dataObj)
+{
+     document.getElementById("charFC").innerHTML = dataObj.FreeCompany.Name;
+     document.getElementById("charFC2").innerHTML = dataObj.FreeCompany.Tag;
+}
+function assignAch(data)
+{
+  console.log(data);
+
+}
+function defineStat(job, level, hexCode)
+{
+  this.job = job;
+  this.baseLevel = level;
+  this.alteredLevel = Math.trunc((this.baseLevel/70) * 100);
+  this.hexCode = hexCode;
+}
+
+var toggleBool = 0;
+function uiToggle()
+{
+
+  var x=document.getElementById("cardContainer");
+  var z=document.getElementById("inputContainer");
+  var g=document.getElementById("ggradientBG");
+  if (toggleBool === 1)
+  {
+    x.style.display="block";
+    z.style.display="none";
+    g.style.display="none";
+    toggleBool = 0;
+
+  }
+  else if (toggleBool === 0)
+  {
+    toggleBool = 1;
+    x.style.display="none";
+    z.style.display="block";
+    g.style.display="block";
+  }
+  //cardContainer.style.display="none";
+  //x.style = "padding-left: 200px;";
+
+}
+function executeToggle()
+{
+  if (toggleBool === 1)
+  {
+    var x1 = document.getElementById("techView");
+    var x2 = document.getElementById("techView1");
+    var x3 = document.getElementById("techView2");
+    var x4 = document.getElementById("techView3");
+    var x5 = document.getElementById("techView4");
+    var x6 = document.getElementById("techView5");
+    var x7 = document.getElementById("techView6");
+    var x8 = document.getElementById("techView7");
+    x1.style.display="block";
+    x2.style.display="block";
+    x3.style.display="block";
+    x4.style.display="block";
+    x5.style.display="block";
+    x6.style.display="block";
+    x7.style.display="block";
+    x8.style.display="block";
+    toggleBool = 0;
+
+  }
+  else if (toggleBool === 0)
+  {
+    toggleBool = 1;
+    var x1 = document.getElementById("techView");
+    var x2 = document.getElementById("techView1");
+    var x3 = document.getElementById("techView2");
+    var x4 = document.getElementById("techView3");
+    var x5 = document.getElementById("techView4");
+    var x6 = document.getElementById("techView5");
+    var x7 = document.getElementById("techView6");
+    var x8 = document.getElementById("techView7");
+    x1.style.display="none";
+    x2.style.display="none";
+    x3.style.display="none";
+    x4.style.display="none";
+    x5.style.display="none";
+    x6.style.display="none";
+    x7.style.display="none";
+    x8.style.display="none";
+  }
+}
+
+window.onload = function()
+{
+  uiToggle();
+
+
+}
+</script>
+<style>
+.w3-container
+{
+  color: white;
+  margin-bottom: 2px;
+  max-width: 100%;
+  height: 40%;
+  font-size: 20px;
+  position: relative;
+}
+#breaker
+{
+  height:20px;
+}
+body
+{
+  background-image: url("xivImages/background.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  opacity: 0.95;
+  color: black;
+}
+
+.jobIcon
+{
+max-width: 25px;
+max-height: 25px;
+margin-right: 0px;
+padding-right: 0px;
+padding-left:0px;
+}
+.detailIcon
+{
+  max-width: 50px;
+  max-height: 50px;
+  padding-left: 0px;
+  margin-right: 0px;
+  padding-top: 5px;
+  padding-bottom:5px;
+}
+.levelNum
+{
+  font-size: 20px;
+  margin-top: 2px;
+  margin-left: 0px;
+  padding-right: 0px;
+  padding-left: 0px;
+
+}
+.col-sm-1
+{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.characterDetails
+{
+  font-size: 25px;
+  text-align:center;
+  margin-top: -15px;
+  margin-bottom: 0px;
+}
+.subDetails
+{
+  font-size: 16px;
+  text-align:center;
+  margin-top: -15px;
+  margin-bottom: 5px;
+  max-height: 50px;
+  height: 30px;
+  max-width: 170px;
+}
+.subDetails2
+{
+  font-size: 16px;
+  text-align:center;
+  margin-top: -15px;
+  margin-bottom: 5px;
+  max-height: 50px;
+  height: 50px;
+  max-width: 170px;
+}
+.percentiles
+{
+  font-size: 22px;
+  margin-top: 12px;
+  margin-left: 15px;
+}
+.statIcon
+{
+  width: 20px;
+}
+.attributes
+{
+  font-size: 15px;
+  margin-top: 2px;
+}
+hr.stats
+{
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-top:-7px;
+  margin-bottom: 0px;
+}
+#cardContainer
+{
+left: 30%;
+top: 10%;
+background-image: url("xivImages/icons/dev_bg_2.png");
+background-repeat: repeat-x;
+background-size: 2000px;
+
+
+position: absolute;
+}
+#inputContainer
+{
+  background-image: url("xivImages/blackgradient.png");
+  background-size: 2000px;
+  height: 500px;
+  width: 800px;
+  background-repeat: repeat-x;
+  position: absolute;
+  top: 15%;
+  left: 25%;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+</style>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<body>
+<div class = "container-fluid" id = "cardContainer">
+  <div class = "row">
+    <div class="col-sm-4" style="width:400px;">
+        <h2 id ="charName" class ="characterDetails" style="padding-top:35px;">Character Name<h2>
+          <!-- If name over 14 chars, make font smaller. -->
+        <h2 id ="charTitle" class="characterDetails" style="font-size:20px;">Title<h2>
+        <div class = "row" style="padding-top:15px;">
+          <div class = "col-sm-6">
+
+            <h2 class ="subDetails" style="font-size: 14px;" id="charServer">Server</h2>
+            <h2 class ="subDetails" style="font-size: 14px;" id="charRace">Race, Clan</h2>
+            <h2 class ="subDetails" style="font-size: 11px;" id="charNameday">9th Sun of the 1st Astral Moon</h2>
+            <h2 class ="subDetails" style="font-size: 14px;" id="charDeity">Deity</h2>
+          </div>
+          <div class = "col-sm-4" >
+            <h2 class="subDetails2" id ="charFC">Free Company</h2>
+            <h2 class="subDetails2" id ="charFC2">Free Company</h2>
+
+
+          </div>
+          <div class = "col-sm-2" style="width:50px;padding-left:30px;margin-top:-25px;">
+            <img src = "https://xivapi.com/i/083000/083060.png" style="height:5%;" id="rankID">
+            <img src = "xivImages/icons/gridania.png" style="height:5%;" id="charCity">
+          </div>
+        </div>
+        <div class = "row">
+          <div class ="col-sm-2">
+            </div>
+            <div class ="col-sm-1">
+              </div>
+              <div class ="col-sm-1">
+                </div>
+                <div class ="col-sm-1">
+                  <img src = "xivImages/icons/minion.png" class="detailIcon" style="margin-left:75px;" id="ilvl">
+                  </div>
+                  <div class ="col-sm-1">
+                    <h2 class="percentiles" id="charMinion" style="margin-left:90px;">00%</h2>
+                    </div>
+                    <div class ="col-sm-1">
+                      <img src = "xivImages/icons/mount.png" class="detailIcon" style="margin-left:105px;" id="ilvl">
+                      </div>
+                      <div class ="col-sm-1">
+                        <h2 class="percentiles" id="charMount" style="margin-left:120px;">00%</h2>
+                        </div>
+                        </div>
+                        <div class="row" style="padding-top:10px;padding-left:7px;padding-bottom:0px;">
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:20px;width:30px;">
+                            <img src = "xivImages/icons/paladin.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:22px;width:30px;">
+                            <h1 class="levelNum" id="pldNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:30px;width:30px;">
+                            <img src = "xivImages/icons/warrior.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="warNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/darkknight.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="drkNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/whitemage.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="whmNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/astrologian.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32;width:30px;">
+                            <h1 class="levelNum" id="astNum">XX</h1>
+                          </div>
+                        </div>
+                        <div class="row" style="padding-top:0px;padding-left:7px;padding-bottom:0px;">
+
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:30px;width:30px;">
+                            <img src = "xivImages/icons/scholar.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="schNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/dragoon.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="drgNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/monk.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="mnkNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:20px;width:30px;">
+                            <img src = "xivImages/icons/bard.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:22px;width:30px;">
+                            <h1 class="levelNum" id="brdNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:30px;width:30px;">
+                            <img src = "xivImages/icons/blackmage.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="blmNum">XX</h1>
+                          </div>
+                        </div>
+                        <div class="row" style="padding-top:0px;padding-left:7px;padding-bottom:0px;">
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/ninja.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="ninNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:20px;width:30px;">
+                            <img src = "xivImages/icons/machinist.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:22px;width:30px;">
+                            <h1 class="levelNum" id="mchNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:30px;width:30px;">
+                            <img src = "xivImages/icons/redmage.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="rdmNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/samurai.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="samNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/bluemage.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="bluNum">XX</h1>
+                          </div>
+
+                        </div>
+                        <div class="row" style="padding-top:0px;padding-left:7px;padding-bottom:0px;">
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:20px;width:30px;">
+                            <img src = "xivImages/icons/goldsmith.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:22px;width:30px;">
+                            <h1 class="levelNum" id="gsmNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:30px;width:30px;">
+                            <img src = "xivImages/icons/carpenter.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="crpNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/blacksmith.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="bsmNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/armorer.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="armNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:20px;width:30px;">
+                            <img src = "xivImages/icons/alchemist.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:22px;width:30px;">
+                            <h1 class="levelNum" id="alcNum">XX</h1>
+                          </div>
+                        </div>
+                        <div class="row" style="padding-top:0px;padding-left:7px;padding-bottom:0px;">
+
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:30px;width:30px;">
+                            <img src = "xivImages/icons/weaver.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="wvrNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/culinarian.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="culNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/leatherworker.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="ltwNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:20px;width:30px;">
+                            <img src = "xivImages/icons/botanist.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:22px;width:30px;">
+                            <h1 class="levelNum" id="btnNum">XX</h1>
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:30px;width:30px;">
+                            <img src = "xivImages/icons/miner.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="minNum">XX</h1>
+                          </div>
+                        </div>
+                        <div class="row" style="padding-top:0px;padding-left:7px;padding-bottom:0px;">
+
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:40px;width:30px;">
+                            <img src = "xivImages/icons/fisher.png" class="jobIcon">
+                          </div>
+                          <div class="col-sm-1" style="padding-right:0px;padding-left:32px;width:30px;">
+                            <h1 class="levelNum" id="fshNum">XX</h1>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6" style="width:330px;padding-top:20px;">
+                        <img src="xivImages/testImg.png" style="width:300px;"id="charPortrait">
+                      </div>
+
+
+                        </div>
+                        </div>
+
+<img src ="xivImages/goldgradient.png" id="ggradientBG" style="height: 520px;
+  width: 820px;
+  background-repeat: repeat-x;
+  position: absolute;
+  top: 13.75%;
+  left: 24.5%;
+  border-radius: 20px;"/>
+<div class="container-fluid" id="inputContainer">
+
+  <div style="padding-bottom:000px;padding-left:10%;">
+    <div class ="row">
+        <div class = "col-sm-1">
+        <img src="xivImages/icons/dot2.png" class="detailIcon" style="margin-top:40%;"/>
+        <img src="xivImages/icons/dot2.png" class="detailIcon" style="margin-top:40%;"/>
+        <img src="xivImages/icons/maintenance.png" class="detailIcon" style="margin-top:40%;"/>
+        <img src="xivImages/icons/maintenance.png" class="detailIcon" style="margin-top:40%;"/>
+        <img src="xivImages/icons/maintenance.png" class="detailIcon" style="margin-top:40%;"/>
+
+
+        </div>
+      <div class = "col-sm-5">
+        <h3 style="color:white;font-size:30px;">Character Name</h3>
+        <h3 style="color:white;font-size:30px;margin-top:11%;">Server</h3>
+        <h3 style="color:white;font-size:30px;margin-top:11%;">Custom Image</h3>
+        <h3 style="color:white;font-size:30px;margin-top:11%;">Primary Job</h3>
+        <h3 style="color:white;font-size:28px;margin-top:11%;">Achievement Stickers</h3>
+
+
+        </div>
+      <div class = "col-sm-6">
+        <input id="inputText" style="margin-top:6%;height:6%;"></input>
+        <div>
+          <select id="serverSelect" style="margin-top:11%;width:52.5%;">
+            <option value="Adamantoise">Adamantoise</option>
+            <option value="Aegis">Aegis</option>
+            <option value="Alexander">Alexander</option>
+            <option value="Anima">Anima</option>
+            <option value="Asura">Asura</option>
+            <option value="Atomos">Atomos</option>
+            <option value="Bahamut">Bahamut</option>
+            <option value="Balmung">Balmung</option>
+            <option value="Behemoth">Behemoth</option>
+            <option value="Belias">Belias</option>
+            <option value="Byrnhildr">Byrnhildr</option>
+            <option value="Cactuar">Cactuar</option>
+            <option value="Carbuncle">Carbuncle</option>
+            <option value="Cerberus">Cerberus</option>
+            <option value="Chocobo">Chocobo</option>
+            <option value="Coeurl">Coeurl</option>
+            <option value="Diabolos">Diabolos</option>
+            <option value="Durandal">Durandal</option>
+            <option value="Excalibur">Excalibur</option>
+            <option value="Exodus">Exodus</option>
+            <option value="Faerie">Faerie</option>
+            <option value="Famfrit">Famfrit</option>
+            <option value="Fenrir">Fenrir</option>
+            <option value="Garuda">Garuda</option>
+            <option value="Gilgamesh">Gilgamesh</option>
+            <option value="Goblin">Goblin</option>
+            <option value="Gungnir">Gungnir</option>
+            <option value="Hades">Hades</option>
+            <option value="Hyperion">Hyperion</option>
+            <option value="Ifrit">Ifrit</option>
+            <option value="Ixion">Ixion</option>
+            <option value="Jenova">Jenova</option>
+            <option value="Kujata">Kujata</option>
+            <option value="Lamia">Lamia</option>
+            <option value="Leviathan">Leviathan</option>
+            <option value="Lich">Lich</option>
+            <option value="Louisoix">Louisoix</option>
+            <option value="Marlboro">Marlboro</option>
+            <option value="Mandragora">Mandragora</option>
+            <option value="Masamune">Masamune</option>
+            <option value="Mateus">Mateus</option>
+            <option value="Midgardsormr">Midgardsormr</option>
+            <option value="Moogle">Moogle</option>
+            <option value="Odin">Odin</option>
+            <option value="Omega">Omega</option>
+            <option value="Pandaemonium">Pandaemonium</option>
+            <option value="Phoenix">Phoenix</option>
+            <option value="Ragnarok">Ragnarok</option>
+            <option value="Ramuh">Ramuh</option>
+            <option value="Ridill">Ridill</option>
+            <option value="Sargatanas">Sargatanas</option>
+            <option value="Shinryu">Shinryu</option>
+            <option value="Shiva">Shiva</option>
+            <option value="Siren">Siren</option>
+            <option value="Tiamat">Tiamat</option>
+            <option value="Titan">Titan</option>
+            <option value="Tonberry">Tonberry</option>
+            <option value="Typhon">Typhon</option>
+            <option value="Ultima">Ultima</option>
+            <option value="Ultros">Ultros</option>
+            <option value="Unicorn">Unicorn</option>
+            <option value="Valefor">Valefor</option>
+            <option value="Yojimbo">Yojimbo</option>
+            <option value="Zalera">Zalera</option>
+            <option value="Zeromus">Zeromus</option>
+            <option value="Zodiark">Zodiark</option>
+            </select>
+
+          </div>
+        </div>
+      </div>
+      <div class="row" style="padding-top:10%;padding-left:35%;">
+        <button style="width:30%;height:10%;border-radius:20px;font-size:20px;" onclick="makeCalls()">Create Card</button>
+        <button onclick="uiToggle()">ToggleUI</button>
+
+      </div>
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+  <div>
+    <img src="xivImages/icons/namazu.JPG" style="height:10px;width:10px;">
+
+  </div>
+
+                            </div>
+                            <!--
+                            <select id="charFocus">
+                              <option value="RP">Roleplay</option>
+                              <option value="Raiding">Raiding</option>
+                              <option value="Crafter">Crafting</option>
+                              <option value="Gatherer">Gathering</option>
+                              <option value="Completionist">Completionist</option>
+                              <option value="Novice">New Player</option>
+                              <option value="Mentor">Mentor</option>
+
+
+
+
+                              </select>
+-->
+
+
+
+                      </body>
+
+<!--
+                        <div class = "row"  id="techView">
+                          <h2 class="attributes" style="padding-top:5px;padding-left:15px;">Attributes</h2>
+                          <hr class="stats">
+                          </div>
+
+              <div class = "row" style="padding-top:10px;" id="techView1">
+                <div class ="col-sm-1">
+                  <img src = "xivImages/testIcon.png" class="statIcon">
+                  <img src = "xivImages/testIcon.png" class="statIcon" style="margin-top:5px;">
+
+                  </div>
+                  <div class ="col-sm-1">
+                    <h2 class="attributes" id="strST">XXXX</h2>
+                    <h2 class="attributes" id="intST">XXXX</h2>
+
+                    </div>
+                    <div class ="col-sm-1">
+                      <img src = "xivImages/testIcon.png" class="statIcon" style="margin-left:15px;">
+                      <img src = "xivImages/testIcon.png" class="statIcon" style="margin-top:5px;margin-left:15px;">
+
+                      </div>
+                      <div class ="col-sm-1">
+                        <h2 class="attributes" id="dexST" style="margin-left:15px;">XXXX</h2>
+                        <h2 class="attributes" id="mndST" style="margin-left:15px;">XXXX</h2>
+
+                        </div>
+                        <div class ="col-sm-1">
+                          <img src = "xivImages/testIcon.png" class="statIcon" style="margin-left:30px;">
+                          </div>
+                          <div class ="col-sm-1">
+                            <h2 class="attributes" id = "vitST" style="margin-left:30px;">XXXX</h2>
+                            </div>
+
+                </div>
+                <div class = "row"  id="techView2">
+                  <h2 class="attributes" style="padding-top:5px;padding-left:15px;">Offensive/Defensive Properties</h2>
+                  <hr class="stats">
+                  </div>
+                  <div class = "row" style="padding-top:10px;"  id="techView3">
+                    <div class ="col-sm-1">
+                      <img src = "xivImages/testIcon.png" class="statIcon">
+                      <img src = "xivImages/testIcon.png" class="statIcon" style="padding-top:5px;">
+                      </div>
+                      <div class ="col-sm-1">
+                        <h2 class="attributes" id="crtST">XXXX</h2>
+                        <h2 class="attributes" id="defST">XXXX</h2>
+                        </div>
+                        <div class ="col-sm-1">
+                          <img src = "xivImages/testIcon.png" class="statIcon" style="margin-left:15px;">
+                          <img src = "xivImages/testIcon.png" class="statIcon" style="margin-left:15px;padding-top:5px;">
+                          </div>
+                          <div class ="col-sm-1">
+                            <h2 class="attributes" id="detST" style="margin-left:15px;">XXXX</h2>
+                            <h2 class="attributes" id="mdfST" style="margin-left:15px;">XXXX</h2>
+                            </div>
+                            <div class ="col-sm-1">
+                              <img src = "xivImages/testIcon.png" class="statIcon" style="margin-left:30px;">
+                              </div>
+                              <div class ="col-sm-1">
+                                <h2 class="attributes" id = "hitST" style="margin-left:30px;">XXXX</h2>
+                                </div>
+                            </div>
+                            <div class = "row"  id="techView4">
+                              <h2 class="attributes" style="padding-top:5px;padding-left:15px;">Physical/Mental Properties</h2>
+                              <hr class="stats">
+                              </div>
+                              <div class = "row" style="padding-top:10px;"  id="techView5">
+                                <div class ="col-sm-1">
+                                  <img src = "xivImages/testIcon.png" class="statIcon">
+                                  <img src = "xivImages/testIcon.png" class="statIcon" style="padding-top:5px;">
+                                  </div>
+                                  <div class ="col-sm-1">
+                                    <h2 class="attributes" id="crtST">XXXX</h2>
+                                    <h2 class="attributes" id="defST">XXXX</h2>
+                                    </div>
+                                    <div class ="col-sm-1">
+                                      <img src = "xivImages/testIcon.png" class="statIcon" style="margin-left: 15px;">
+                                      <img src = "xivImages/testIcon.png" class="statIcon" style="padding-top:5px;margin-left:15px;">
+                                      </div>
+                                      <div class ="col-sm-1">
+                                        <h2 class="attributes" id="crtST" style="margin-left:15px;">XXXX</h2>
+                                        <h2 class="attributes" id="defST" style="margin-left:15px;">XXXX</h2>
+                                        </div>
+                                        <div class ="col-sm-1">
+                                          <img src = "xivImages/testIcon.png" style="width:0px;" class="statIcon">
+                                          <img src = "xivImages/testIcon.png" class="statIcon" style="padding-top:25px;margin-left:30px;">
+                                          </div>
+                                          <div class ="col-sm-1">
+                                            <h2 class="attributes" id="crtST"></h2>
+                                            <h2 class="attributes" id="defST" style="padding-top:18px;margin-left:30px;">XXXX</h2>
+                                            </div>
+                                </div>
+                                <div class = "row" id="techView6">
+                                  <h2 class="attributes" style="padding-top:5px;padding-left:15px;">Role</h2>
+                                  <hr class="stats">
+                                  </div>
+                                  <div class = "row" style="padding-top:10px;" id="techView7">
+                                    <div class ="col-sm-1">
+                                      <img src = "xivImages/testIcon.png" class="statIcon">
+                                      <img src = "xivImages/testIcon.png" class="statIcon" style="padding-top:5px;">
+                                      </div>
+                                      <div class ="col-sm-1">
+                                        <h2 class="attributes" id="crtST">XXXX</h2>
+                                        <h2 class="attributes" id="defST">XXXX</h2>
+                                        </div>
+                                    </div>
+                                    -->
