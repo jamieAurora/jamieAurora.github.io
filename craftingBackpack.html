@@ -30,7 +30,13 @@ HEWWO?!!
   var idArray = [];
   function displayItems(id)
   {
-    for (var i = 0; i< id.length; i++)
+    console.log(id);
+    console.log(id.length);
+
+    //May need to have it only count calls that return objects with recipes. I.E. Hingan Cottage Permit is not a crafted item.
+    //...But we won't find that out until this function is over. Hm.
+    //Maybe instead of for, have while? And use a variable outside?
+    for (var i = 0; i < 11; i++)
     {
       var dataObject;
       //console.log(id[i].ID);
@@ -40,8 +46,8 @@ HEWWO?!!
         .then(response => response.json())
         .then(data => writeItems(data.GameContentLinks.Recipe.ItemResult[0],i,data.Name))
       }
-      idArray[i] = id[i].ID;
-      var tempVar = idArray[i];
+      //idArray[i] = id[i].ID;
+      //var tempVar = idArray[i];
   }
   function writeItems(itemData, i, name)
   {
@@ -62,8 +68,9 @@ HEWWO?!!
   {
     console.log(data.Name);
     console.log(craftedItemArray)
-    searchNum = craftedItemArray.findIndex(i => i.name === name);
-    if (searchNum = 'undefined')
+    searchNum = craftedItemArray.findIndex(i => i.name === data.Name);
+    console.log(searchNum);
+    if (searchNum === -1)
     {
       console.log("Undefined!");
       var newCraftedItem = new craftedItem(data.Name, 1, data.Icon);
@@ -107,7 +114,7 @@ HEWWO?!!
   }
   function updateArray(name,amount,icon)
   {
-    document.getElementById("displayList").innerHTML = ""
+    //document.getElementById("displayList").innerHTML = ""
     var searchNum = null;
     searchNum = itemArray.findIndex(i => i.name === name);
     if (searchNum === -1)
@@ -142,57 +149,134 @@ HEWWO?!!
     var container = document.createElement('div');
     container.classList.add('container');
     var name = document.createElement('h1');
-    name.style="font-size: 20px;float:left;margin-top:5px;padding-right:10px;";
+    name.style="font-size: 15px;float:left;padding-left:10px;margin-top:0.5%;";
     name.id = 'name';
     var ID = itemArray[i].name;
     var amount = document.createElement('h1');
-    amount.style = "font-size: 30px;float:left;margin-top:0px;padding-right:5px;";
+    amount.style = "font-size: 15px;float:left;padding-left:5px;margin-top:0.5%;";
     amount.id = 'amount' + itemArray[i].name;
     var x = document.createElement('IMG');
     x.classList.add('img');
-    x.style="float:left;";
+    x.style="float:left;width:2.5%;";
     x.src = "https://xivapi.com" + itemArray[i].iconID;
     var nameText = document.createTextNode(itemArray[i].name);
     var amountNum = document.createTextNode(itemArray[i].amount);
     name.appendChild(nameText);
     amount.appendChild(amountNum);
+    container.appendChild(x);
     container.appendChild(name);
     container.appendChild(amount);
-    container.appendChild(x);
+
     container.id = itemArray[i].name;
-    document.body.appendChild(container);
+    container.style = "padding-top:2px;";
+    //var appender = document.getElementById("displayIconList").lastChild;
+    //document.body.appendChild(container);
+     document.getElementById("displayIconList").appendChild(container);
   }
   function displayAllCraftedItems(i)
   {
     var container = document.createElement('div');
     container.classList.add('container');
     var name = document.createElement('h1');
-    name.style="font-size: 30px;float:left;margin-top:15px;padding-right:10px;";
+    name.style="font-size: 25px;float:left;padding-right:10px;margin-top:.7%;";
     name.id = 'name';
     var amount = document.createElement('h1');
-    amount.style = "font-size: 30px;float:left;margin-top:0px;padding-right:5px;";
+    amount.style = "font-size: 25px;float:left;padding-right:5px;margin-top:.7%";
     amount.id = 'amount' + i.Name;
     var x = document.createElement('IMG');
     x.classList.add('img');
     x.style="float:left;";
     x.src = "https://xivapi.com" + i.Icon;
-    x.style="margin-top:15px;";
     var nameText = document.createTextNode(i.Name);
-    var amountNum = document.createTextNode(i.Amount);
+    var amountNum = document.createTextNode(1);
     name.appendChild(nameText);
     amount.appendChild(amountNum);
+    container.appendChild(x);
     container.appendChild(name);
     container.appendChild(amount);
-    container.appendChild(x);
+
     container.id = i.Name;
-    document.body.appendChild(container);
+    container.style = "margin-top:1%;";
+    document.getElementById("displayIconList").appendChild(container);
   }
   </script>
   <style>
+    body
+    {
+      background-color: black;
+      padding-left: 5%;
+      padding-top: 2%;
+      height: 100%;
+    }
     h1
     {
       font-size:12px;
     }
+    .squareBG
+    {
+      height: auto;
+      min-height: 100%;
+      max-height: auto;
+      width: 90%;
+      background-color: #AA4A39;
+      border-radius:20px;
+      z-index: 1;
+      position: absolute;
+    }
+    .squareBG2
+    {
+      height: 100%;
+      width: 20%;
+      margin-left: 79%;
+      background-color: #59241A;
+      border-radius:20px;
+      z-index: 2;
+      position: absolute;
+    }
+    .overlay
+    {
+      z-index: 10;
+      position: absolute;
+      margin-left: 75%;
+      margin-top: 22%;
+    }
+    img.bg
+    {
+      min-height: auto;
+      min-width: 1024px;
+      width: 100%;
+      height: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -20;
+    }
+    .iconList
+    {
+      position:absolute;
+      z-index: 11;
+    }
+    .container-fluid
+    {
+    }
+    button
+    {
+      width: 180px;
+      height: 25px;
+      background-color: #FF7F67;
+      border-color: #FE8D33;
+    }
+    #displayList
+    {
+      max-width: 200px;
+      margin-top: 4%;
+      padding-left: 88%;
+    }
+    #displayIconList
+    {
+    }
+
+
     </style>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -201,23 +285,66 @@ HEWWO?!!
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <body>
-  <h2 style="font-size:16px;">Search for an item, then click Find Me! <br>Clicking the item's button will tell you how many materials you need to craft it, <br> including one step down of sub-items (i.e. nuggets, ingots)</h2>
-  <input id="inputText" style="margin-top:5%"></input>
-  <button onclick="makeCalls()">Search</button>
-  <div id ="displayList"></div>
-  <h2 id="itemList">Material List</h2>
+  <img src ="xivImages/icons/namazu-stroke.png" class="overlay"/>
+
+  <img src = "xivImages/blackgradient.png" class="bg"/>
+  <div class = "squareBG" />
+
   <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3" style="width:30px;">
-          <div id ="displayIconList"></div>
+    <div class ="row">
+      <div class = "col-sm-4">
+        <div id ="displayIconList" class="iconList"></div>
+        </div>
+        <div class = "col-sm-3" style="margin-top:5">
+          <h2></h2>
           </div>
-          <div class="col-sm-9" style="padding-left:5%;font-size:20px;line-height:40px;">
-            <div id ="displayItemList"></div>
+          <div class = "col-sm-3" style="margin-top:5">
+            <h2>Jamie's Crafting Backpack</h2>
+            <h2 style="font-size:16px;">Input the name of the item into the search bar. <br> The amount of returned objects is limited, so please be accurate. <br> Click search to pull up the craftable items.</h2>
+            <h2 style="font-size:16px;">Clicking on an item will add it to your item list. You can click on an item as many times as you like!</h2>
+            <h2 style="font-size:16px;">To look for a new set of items, just hit search again. You won't lose anything in your materials list.</h2>
+            <h2 style="padding-top:50%; padding-left: 15%;">"Working on it, yes yes!"</h2>
+            <div class="row" style="padding-left:30%;">
+              <div class = "col-sm-2">
+                <div class = "row">
+                  <img src = "xivImages/icons/dot2.png" style="padding-top:25%;width:50%;margin-right:0px;margin-right:-50px;">
+                  </div>
+                  <div class = "row">
+                    <img src = "xivImages/icons/dot2.png" style="padding-top:25%;width:50%;margin-right:0px;margin-right:-50px;">
+                    </div>
+                    <div class = "row">
+                      <img src = "xivImages/icons/dot2.png" style="padding-top:25%;width:50%;margin-right:0px;margin-right:-50px;">
+                      </div>
+                </div>
+                <div class = "col-sm-10">
+                  <div class = "row">
+                    <h2 style="font-size:20px;margin-left:0px;margin-top:15px;margin-bottom:0px;">Removable Materials</h2>
+                    </div>
+                    <div class = "row">
+                      <h2 style="font-size:20px;margin-left:0px;margin-top:15px;margin-bottom:0px;">Search Result Selector</h2>
+                      </div>
+                      <div class = "row">
+                        <h2 style="font-size:20px;margin-left:0px;margin-top:15px;margin-bottom:0px;">Website/Mobile Responsiveness</h2>
+                        </div>
+
+                  </div>
+
+              </div>
             </div>
+      <div class="col-sm-2">
+        <div class="row" style="padding-left: 36%;">
+          <input id="inputText" style="margin-top:5%;border-radius:5px;"></input>
+          <button onclick="makeCalls()" style="margin-top:5px;width:175px;border-radius:5px;">Search</button></div>
+          </div>
+          <div class = "row">
+            <div id ="displayList"></div>
+            </div>
+
+      </div>
+    <div class="row">
+        <div class="col-sm-12" style="width:30px;">
+          </div>
       </div>
     </div>
   <div id ="craftedList"></div>
-  <img src="xivImages/icons/namazu.jpg"/>
-  <h1 style="font-size:12px;">Namazu are friends, not food!</h1>
-  <h1 style="font-size:12px;">Now with icons!</h1>
   </body>
