@@ -4,12 +4,25 @@ HEWWO?!!
 <script>
 
   var itemArray = [];
+  var craftedItemArray = [];
+  function item(name, amount, iconID)
+  {
+    this.name = name,
+    //this.itemID = itemID,
+    //this.recipeID = recipeID,
+    this.amount = amount,
+    this.iconID = iconID
+  }
+  function craftedItem(name, amount, iconID)
+  {
+    this.name = name,
+    this.amount = amount,
+    this.iconID = iconID
+  }
   function makeCalls()
   {
-
+  document.getElementById("displayList").innerHTML = "";
   var x = "https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item";
-
-  //console.log(x);
   fetch(x, { mode: 'cors' })
   	.then(response => response.json())
     .then(data => displayItems(data.Results));
@@ -17,7 +30,6 @@ HEWWO?!!
   var idArray = [];
   function displayItems(id)
   {
-
     for (var i = 0; i< id.length; i++)
     {
       var dataObject;
@@ -33,256 +45,154 @@ HEWWO?!!
   }
   function writeItems(itemData, i, name)
   {
-    //console.log(i);
-    //console.log(itemData);
+    //document.getElementById("displayList").innerHTML = "";
     document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + name + "</button>";
   }
   function displayItemButton(id)
   {
-    //console.log(btnCount);
-    //console.log(id);
-    document.getElementById("craftedList").innerHTML += "<br>" + document.getElementById(id).innerHTML;
+    //document.getElementById("craftedList").innerHTML += "<br>" + document.getElementById(id).innerHTML;
+    console.log(id);
     var x = "https://xivapi.com/recipe/" + id;
 
-
-    //console.log(x);
     fetch(x, { mode: 'cors' })
     	.then(response => response.json())
       .then(data => printList(data));
-
   }
   function printList(data)
   {
-      //Durium Nugget ID 19942
-          //Returns ItemResult of 3619(?)
-          //Recipe/3619 is for Durium Nugget
-      //    displaySubItem(data.AmountIngredient0.ItemResult);
-
-      //When pulling the item up by its ID, it does give us the ItemResult value, which corresponds to the recipe.
-
-    //Once we have the recipe ID, we are going to go ahead and update the array with the materials needed.
-    //HOWEVER! Once we do this, we should check to see if the items themselves have components.
+    console.log(data.Name);
+    console.log(craftedItemArray)
+    searchNum = craftedItemArray.findIndex(i => i.name === name);
+    if (searchNum = 'undefined')
+    {
+      console.log("Undefined!");
+      var newCraftedItem = new craftedItem(data.Name, 1, data.Icon);
+      craftedItemArray.push(newCraftedItem);
+      searchNum = null;
+      displayAllCraftedItems(data);
+    }
+    else
+    {
+      console.log("Increment?");
+      incrementCraftedItems(searchNum);
+    }
     console.log(data);
-    //ItemIngredient0TargetID returns a value of 19954
-    //ItemIngredient1TargetID returns a value of 19942
-    //These are both the item IDs.
-
     if (data.AmountIngredient0 != 0)
     {
       updateArray(data.ItemIngredient0.Name, data.AmountIngredient0, data.ItemIngredient0.Icon);
-      //displayItems(data.ItemIngredient0TargetID);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient0TargetID;
-      //console.log(x);
-      for (var i = 1; i <= data.AmountIngredient0;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
     }
     if (data.AmountIngredient1 != 0)
     {
       updateArray(data.ItemIngredient1.Name, data.AmountIngredient1, data.ItemIngredient1.Icon);
-      //displayItems(data.ItemIngredient1TargetID);
-
-      var x = "https://xivapi.com/item/" + data.ItemIngredient1TargetID;
-      for (var i = 1; i <= data.AmountIngredient1;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
     }
     if (data.AmountIngredient2 != 0)
     {
       updateArray(data.ItemIngredient2.Name, data.AmountIngredient2, data.ItemIngredient2.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient2TargetID;
-      //console.log(x);
-      for (var i = 1; i <= data.AmountIngredient2;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
     }
     if (data.AmountIngredient3 != 0)
     {
       updateArray(data.ItemIngredient3.Name, data.AmountIngredient3,  data.ItemIngredient3.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient3TargetID;
-      //console.log(x);
-      for (var i = 1; i <= data.AmountIngredient3;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
     }
     if (data.AmountIngredient4 != 0)
     {
       updateArray(data.ItemIngredient4.Name, data.AmountIngredient4,  data.ItemIngredient4.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient4TargetID;
-      //console.log(x);
-      for (var i = 1; i <= data.AmountIngredient4;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
     }
     if (data.AmountIngredient5 != 0)
     {
       updateArray(data.ItemIngredient5.Name, data.AmountIngredient5,  data.ItemIngredient5.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient5TargetID;
-      //console.log(x);
-      for (var i = 1; i <= data.AmountIngredient5;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
     }
     else
     {
-
     }
-    //console.log(itemArray);
   }
-  function updateArray(name, amount,icon)
+  function updateArray(name,amount,icon)
   {
+    document.getElementById("displayList").innerHTML = ""
     var searchNum = null;
-    searchNum = itemArray.indexOf(name);
-    //console.log(searchNum);
-
+    searchNum = itemArray.findIndex(i => i.name === name);
     if (searchNum === -1)
     {
-      //var displayString = name + " x" + amount + "<br>";
-      //document.getElementById("displayItemList").innerHTML += displayString;
-      itemArray.push(name, amount);
-      var iconImg = "";
-      iconImg = "https://xivapi.com/" + icon;
-      document.getElementById("displayIconList").innerHTML += "<img src= "+iconImg+"  >"
+      var newItem = new item(name, amount, icon);
+      itemArray.push(newItem);
+      searchNum = itemArray.findIndex(i => i.name === name);
+      displayAllItems(searchNum);
     }
     else
     {
-    //  console.log("We have the same item in the array.");
-      itemArray[searchNum + 1] = itemArray[searchNum + 1] + amount;
-    }
-    document.getElementById("displayItemList").innerHTML = "";
-
-    for (var i = 0; i< itemArray.length; i=i+2)
-    {
-    //  console.log(itemArray[i]);
-    //  console.log(itemArray[i+1]);
-      var str1 = itemArray[i];
-      var str2 = ": " + itemArray[i+1];
-
-      console.log(iconImg);
-
-
-      document.getElementById("displayItemList").innerHTML += str1;
-      document.getElementById("displayItemList").innerHTML += str2;
-      document.getElementById("displayItemList").innerHTML += "<br>";
-
-      //document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + name + "</button>";
-
-
+      itemArray[searchNum].amount += amount;
+      incrementItems(searchNum);
     }
   }
-  function subItemStepOne(id)
+  function incrementItems(searchNum)
   {
-    console.log("Here is the sub item ID info." + id);
-    console.log(id);
-    //console.log(data.Recipe.ItemResult);
-    if (id != "undefined" && id != "null")
-    {
-      var x = "https://xivapi.com/recipe/" + id;
-      //console.log(x);
-      fetch(x, { mode: 'cors' })
-      	.then(response => response.json())
-        .then(data => printList2(data));
-    }
-    else {
-
-      //Nothing!
-    }
+    var itemName = itemArray[searchNum].name;
+    var x = document.getElementById('amount' + itemArray[searchNum].name);
+    x.innerHTML = itemArray[searchNum].amount;
   }
-  function printList2(data)
+  function incrementCraftedItems(searchNum)
   {
-    if (data.AmountIngredient0 != 0)
-    {
-      updateArray(data.ItemIngredient0.Name, data.AmountIngredient0, data.ItemIngredient0.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient0TargetID;
-
-      for (var i = 1; i <= data.AmountIngredient0;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
-    }
-    if (data.AmountIngredient1 != 0)
-    {
-      updateArray(data.ItemIngredient1.Name, data.AmountIngredient1,  data.ItemIngredient1.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient1TargetID;
-      for (var i = 1; i <= data.AmountIngredient1;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
-    }
-    if (data.AmountIngredient2 != 0)
-    {
-      updateArray(data.ItemIngredient2.Name, data.AmountIngredient2,  data.ItemIngredient2.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient2TargetID;
-      for (var i = 1; i <= data.AmountIngredient2;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
-    }
-    if (data.AmountIngredient3 != 0)
-    {
-      updateArray(data.ItemIngredient3.Name, data.AmountIngredient3, data.ItemIngredient3.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient3TargetID;
-      for (var i = 1; i <= data.AmountIngredient3;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
-    }
-    if (data.AmountIngredient4 != 0)
-    {
-      updateArray(data.ItemIngredient4.Name, data.AmountIngredient4, data.ItemIngredient4.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient4TargetID;
-      for (var i = 1; i <= data.AmountIngredient4;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
-    }
-    if (data.AmountIngredient5 != 0)
-    {
-      updateArray(data.ItemIngredient5.Name, data.AmountIngredient5, data.ItemIngredient5.Icon);
-      var x = "https://xivapi.com/item/" + data.ItemIngredient5TargetID;
-      for (var i = 1; i <= data.AmountIngredient5;i++)
-      {
-        fetch(x, { mode: 'cors' })
-          .then(response => response.json())
-          .then(data => subItemStepOne(data.GameContentLinks.Recipe.ItemResult));
-      }
-    }
-    else
-    {
-
-    }
+    console.log("Got to the incrementing Crafted Items func");
+    craftedItemArray[searchNum].amount += 1;
+    var itemName = craftedItemArray[searchNum].name;
+    var x = document.getElementById('amount' + craftedItemArray[searchNum].name);
+    x.innerHTML = craftedItemArray[searchNum].amount;
   }
-
+  function displayAllItems(i)
+  {
+    var container = document.createElement('div');
+    container.classList.add('container');
+    var name = document.createElement('h1');
+    name.style="font-size: 20px;float:left;margin-top:5px;padding-right:10px;";
+    name.id = 'name';
+    var ID = itemArray[i].name;
+    var amount = document.createElement('h1');
+    amount.style = "font-size: 30px;float:left;margin-top:0px;padding-right:5px;";
+    amount.id = 'amount' + itemArray[i].name;
+    var x = document.createElement('IMG');
+    x.classList.add('img');
+    x.style="float:left;";
+    x.src = "https://xivapi.com" + itemArray[i].iconID;
+    var nameText = document.createTextNode(itemArray[i].name);
+    var amountNum = document.createTextNode(itemArray[i].amount);
+    name.appendChild(nameText);
+    amount.appendChild(amountNum);
+    container.appendChild(name);
+    container.appendChild(amount);
+    container.appendChild(x);
+    container.id = itemArray[i].name;
+    document.body.appendChild(container);
+  }
+  function displayAllCraftedItems(i)
+  {
+    var container = document.createElement('div');
+    container.classList.add('container');
+    var name = document.createElement('h1');
+    name.style="font-size: 30px;float:left;margin-top:15px;padding-right:10px;";
+    name.id = 'name';
+    var amount = document.createElement('h1');
+    amount.style = "font-size: 30px;float:left;margin-top:0px;padding-right:5px;";
+    amount.id = 'amount' + i.Name;
+    var x = document.createElement('IMG');
+    x.classList.add('img');
+    x.style="float:left;";
+    x.src = "https://xivapi.com" + i.Icon;
+    x.style="margin-top:15px;";
+    var nameText = document.createTextNode(i.Name);
+    var amountNum = document.createTextNode(i.Amount);
+    name.appendChild(nameText);
+    amount.appendChild(amountNum);
+    container.appendChild(name);
+    container.appendChild(amount);
+    container.appendChild(x);
+    container.id = i.Name;
+    document.body.appendChild(container);
+  }
   </script>
   <style>
+    h1
+    {
+      font-size:12px;
+    }
     </style>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -292,34 +202,22 @@ HEWWO?!!
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <body>
   <h2 style="font-size:16px;">Search for an item, then click Find Me! <br>Clicking the item's button will tell you how many materials you need to craft it, <br> including one step down of sub-items (i.e. nuggets, ingots)</h2>
-
   <input id="inputText" style="margin-top:5%"></input>
   <button onclick="makeCalls()">Search</button>
-
   <div id ="displayList"></div>
-
   <h2 id="itemList">Material List</h2>
   <div class="container-fluid">
     <div class="row">
-
         <div class="col-sm-3" style="width:30px;">
           <div id ="displayIconList"></div>
           </div>
           <div class="col-sm-9" style="padding-left:5%;font-size:20px;line-height:40px;">
             <div id ="displayItemList"></div>
-
             </div>
       </div>
-
     </div>
-
-  <h2>Crafted Item List (does not include mats for sub items...yet)</h2>
-
   <div id ="craftedList"></div>
   <img src="xivImages/icons/namazu.jpg"/>
   <h1 style="font-size:12px;">Namazu are friends, not food!</h1>
-
   <h1 style="font-size:12px;">Now with icons!</h1>
-
-
   </body>
