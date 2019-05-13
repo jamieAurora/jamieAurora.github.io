@@ -2,9 +2,9 @@
 HEWWO?!!
 -->
 <script>
-
   var itemArray = [];
   var craftedItemArray = [];
+  var badID = [17731,17733,17735,17737,17739];
   function item(name, amount, iconID)
   {
     this.name = name,
@@ -22,7 +22,8 @@ HEWWO?!!
   function makeCalls()
   {
   document.getElementById("displayList").innerHTML = "";
-  var x = "https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item";
+  //The result that comes back now has .GameContentLinks.Recipe.ItemResult[]
+  var x = "https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item&columns=ID,Name,Icon,GameContentLinks";
   fetch(x, { mode: 'cors' })
   	.then(response => response.json())
     .then(data => displayItems(data.Results));
@@ -30,28 +31,47 @@ HEWWO?!!
   var idArray = [];
   function displayItems(id)
   {
-    console.log(id);
     console.log(id.length);
-
-    //May need to have it only count calls that return objects with recipes. I.E. Hingan Cottage Permit is not a crafted item.
-    //...But we won't find that out until this function is over. Hm.
-    //Maybe instead of for, have while? And use a variable outside?
-    for (var i = 0; i < 11; i++)
+    for (var i = 0; i < id.length; i++)
     {
-      var dataObject;
-      //console.log(id[i].ID);
-      var x = "https://xivapi.com/item/" + id[i].ID;
-      //console.log(x);
-      fetch(x, { mode: 'cors' })
-        .then(response => response.json())
-        .then(data => writeItems(data.GameContentLinks.Recipe.ItemResult[0],i,data.Name))
+      if (typeof id[i].GameContentLinks.Recipe !== 'undefined')
+      {
+        console.log(id[i].Name);
+        console.log("Does Exist");
+        for (var q = 0; q < badID.length; q++)
+        {
+          if (id[i].ID === badID[q])
+          {
+            console.log(id[i].ID, badID[q]);
+            //Remove the item from the array of items.
+            id.splice(i,1);
+          }
+          else
+          {
+          }
+        }
       }
-      //idArray[i] = id[i].ID;
-      //var tempVar = idArray[i];
+      else {
+        console.log(id[i].Name);
+        console.log("Does not Exist");
+        //Remove the item from the array of items.
+        id.splice(i,1);
+      }
+    }
+    console.log ("After filtering...");
+    console.log(id.length);
+    console.log(id);
+    var y = document.getElementById("amtSelect").value;
+    for (var i = 0; i < y;i++)
+    {
+      console.log(id[i]);
+      writeItems(id[i].GameContentLinks.Recipe.ItemResult, i, id[i].Name);
+    }
   }
   function writeItems(itemData, i, name)
   {
     //document.getElementById("displayList").innerHTML = "";
+    console.log(itemData);
     document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + name + "</button>";
   }
   function displayItemButton(id)
@@ -161,6 +181,7 @@ HEWWO?!!
     x.src = "https://xivapi.com" + itemArray[i].iconID;
     var nameText = document.createTextNode(itemArray[i].name);
     var amountNum = document.createTextNode(itemArray[i].amount);
+
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
@@ -303,37 +324,21 @@ HEWWO?!!
             <h2 style="font-size:16px;">Input the name of the item into the search bar. <br> The amount of returned objects is limited, so please be accurate. <br> Click search to pull up the craftable items.</h2>
             <h2 style="font-size:16px;">Clicking on an item will add it to your item list. You can click on an item as many times as you like!</h2>
             <h2 style="font-size:16px;">To look for a new set of items, just hit search again. You won't lose anything in your materials list.</h2>
-            <h2 style="padding-top:50%; padding-left: 15%;">"Working on it, yes yes!"</h2>
+            <h2 style="padding-top:50%;">"Working on it, yes yes!"</h2>
+            <h2 style="font-size:16px;">"This site is new, and still a work in progress. Please be patient, as I am new to many aspects of this sort of development."</h2>
+            <h2 style="font-size:16px;">"Also, because I do not have fingers, and it is very difficult to type with flippers, yes yes."</h2>
+
             <div class="row" style="padding-left:30%;">
-              <div class = "col-sm-2">
-                <div class = "row">
-                  <img src = "xivImages/icons/dot2.png" style="padding-top:25%;width:50%;margin-right:0px;margin-right:-50px;">
-                  </div>
-                  <div class = "row">
-                    <img src = "xivImages/icons/dot2.png" style="padding-top:25%;width:50%;margin-right:0px;margin-right:-50px;">
-                    </div>
-                    <div class = "row">
-                      <img src = "xivImages/icons/dot2.png" style="padding-top:25%;width:50%;margin-right:0px;margin-right:-50px;">
-                      </div>
-                </div>
-                <div class = "col-sm-10">
-                  <div class = "row">
-                    <h2 style="font-size:20px;margin-left:0px;margin-top:15px;margin-bottom:0px;">Removable Materials</h2>
-                    </div>
-                    <div class = "row">
-                      <h2 style="font-size:20px;margin-left:0px;margin-top:15px;margin-bottom:0px;">Search Result Selector</h2>
-                      </div>
-                      <div class = "row">
-                        <h2 style="font-size:20px;margin-left:0px;margin-top:15px;margin-bottom:0px;">Website/Mobile Responsiveness</h2>
-                        </div>
-
-                  </div>
-
               </div>
             </div>
       <div class="col-sm-2">
         <div class="row" style="padding-left: 36%;">
           <input id="inputText" style="margin-top:5%;border-radius:5px;"></input>
+          <select id="amtSelect" style="margin-top:11%;width:52.5%;">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
           <button onclick="makeCalls()" style="margin-top:5px;width:175px;border-radius:5px;">Search</button></div>
           </div>
           <div class = "row">
