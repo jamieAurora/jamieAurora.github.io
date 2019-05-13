@@ -153,11 +153,11 @@ HEWWO?!!
     var container = document.createElement('div');
     container.classList.add('container');
     var name = document.createElement('h1');
-    name.style="font-size: 13px;float:left;padding-left:10px;margin-top:0px;";
+    name.style="font-size: 13px;float:left;padding-left:10px;margin-top:0px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
     name.id = 'name';
     var ID = itemArray[i].name;
     var amount = document.createElement('h1');
-    amount.style = "font-size: 15px;float:right;padding-left:5px;margin-top:0px;";
+    amount.style = "font-size: 15px;float:right;padding-left:5px;margin-top:0px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
     amount.id = 'amount' + itemArray[i].name;
     var x = document.createElement('IMG');
     x.classList.add('img');
@@ -166,27 +166,60 @@ HEWWO?!!
     var nameText = document.createTextNode(itemArray[i].name);
     var amountNum = document.createTextNode(itemArray[i].amount);
 
+    var deleteButton = document.createElement('button');
+    deleteButton.style="margin-left:20px;width:20px;height:20px;float:right;";
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;position-right:25px;margin-left:-10px;"/>';
+    deleteButton.addEventListener('click', () => { deleteItem(ID); })
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
     container.appendChild(name);
     container.appendChild(amount);
-
+    container.appendChild(deleteButton);
     container.id = itemArray[i].name;
-    container.style = "padding-top:2px;font-size:12px;";
-    //var appender = document.getElementById("displayIconList").lastChild;
-    //document.body.appendChild(container);
-     document.getElementById("displayIconList").appendChild(container);
+    container.style = "padding-top:2px;font-size:12px;background-color:#c4513c;";
+   document.getElementById("displayIconList").appendChild(container);
+  }
+  function deleteItem(id)
+  {
+    console.log(id);
+    var searchNum = null;
+    console.log(itemArray);
+    searchNum = itemArray.findIndex(i => i.name === id);
+    console.log(searchNum);
+    if (searchNum === -1)
+    {
+    }
+    else
+    {
+      itemArray.splice(searchNum,1);
+      document.getElementById(id).remove();
+    }
+  }
+  function deleteCItem(id)
+  {
+    console.log(id);
+    var searchNum = null;
+    searchNum = craftedItemArray.findIndex(i => i.name === id);
+    console.log(searchNum);
+    if (searchNum === -1)
+    {
+    }
+    else
+    {
+      craftedItemArray.splice(searchNum,1);
+      document.getElementById(id).remove();
+    }
   }
   function displayAllCraftedItems(i)
   {
     var container = document.createElement('div');
     container.classList.add('container');
     var name = document.createElement('h1');
-    name.style="font-size: 18px;float:left;padding-left:10px;margin-top:20px;";
+    name.style="font-size: 18px;float:left;padding-left:10px;margin-top:20px;color:#F29D2C;font-family: 'PT Sans', sans-serif;";
     name.id = 'name';
     var amount = document.createElement('h1');
-    amount.style = "font-size: 18px;float:right;margin-top:20x;";
+    amount.style = "font-size: 18px;float:right;margin-top:20x;color:#F29D2C;font-family: 'PT Sans', sans-serif;";
     amount.id = 'amount' + i.Name;
     var x = document.createElement('IMG');
     x.classList.add('img');
@@ -194,11 +227,20 @@ HEWWO?!!
     x.src = "https://xivapi.com" + i.Icon;
     var nameText = document.createTextNode(i.Name);
     var amountNum = document.createTextNode(1);
+
+    var deleteButton = document.createElement('button');
+    deleteButton.style="margin-left:20px;width:20px;height:20px;float:right;";
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;position-right:25px;margin-left:-10px;"/>';
+    deleteButton.addEventListener('click', () => { deleteCItem(i.Name); })
+
+
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
     container.appendChild(name);
     container.appendChild(amount);
+
+    container.appendChild(deleteButton);
 
     container.id = i.Name;
     container.style = "margin-top:1%;font-size: 12px;";
@@ -224,6 +266,8 @@ HEWWO?!!
     h1
     {
       font-size:12px;
+
+
     }
     .squareBG
     {
@@ -233,6 +277,7 @@ HEWWO?!!
     {
 
     }
+
     .overlay
     {
 
@@ -283,20 +328,34 @@ HEWWO?!!
     {
       background-color: #AA4A39;
     }
+    .removeButton
+    {
+      background-color: black;
+    }
     #fishieboye
     {
-      padding-top: 360px;
-      margin-left: 160px;
-      width: 70%;
+      padding-top: 410px;
+      width: 90%;
+    }
+    @media only screen and (width: 600px)
+    {
+
     }
 
       </style>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <head>
+      <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+    </head>
 <body style="background-color: #88241C;">
 
   <!--
@@ -337,7 +396,14 @@ HEWWO?!!
       </div>
       <div class ="row">
         </div>
-        <img src ="xivImages/icons/namazu-stroke.png" id="fishieboye"/>
+        <div class = "col-xs-5">
+          <h1 style="font-size:12px;padding-top:400px;color:white;margin-bottom:-10px;">"Still a work in progress, yes yes!"<h1>
+            <h1 style="font-size:10px;color:white;">"If an item/recipe appears as undefined, please message Jamie#6288 on Discord!"<h1>
+
+          </div>
+          <div class = "col-xs-7">
+            <img src ="xivImages/icons/namazu-stroke.png" id="fishieboye"/>
+            </div>
 
       </div>
     </body>
