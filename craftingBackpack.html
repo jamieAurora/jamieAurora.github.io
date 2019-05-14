@@ -4,7 +4,7 @@ HEWWO?!!
 <script>
   var itemArray = [];
   var craftedItemArray = [];
-  var badID = [17731,17733,17735,17737,17739,7033];
+  var badID = [17731,24998,17733,7158,17735,17737,17739,7033,1828,161,6122,157,1828,1856,1860,1888,164,4459,6036,5565,20658,20887,20888,20889,20891, 20891,20892,18270,11155,11162,11169,11176,11183,11190,22960,24058];
   function item(name, amount, iconID)
   {
     this.name = name,
@@ -31,52 +31,91 @@ HEWWO?!!
   var idArray = [];
   function displayItems(id)
   {
-    console.log(id.length);
-    console.log(id);
-
-    //New filtering here.
-    id = id.filter(id => !!id.GameContentLinks.Recipe && badID.indexOf(id.ID) < 0);
-
-
-
-
-    console.log ("After filtering...");
-    console.log(id.length);
-    console.log(id);
-
+    var badName = ["Lominsan"," Aetherial Iron Lance","Dated"];
+    id = id.filter(id => !!id.GameContentLinks);
+    id = id.filter(id => !badID.includes(id.ID));
+    id = id.filter(id => !!id.GameContentLinks.Recipe);
+    id = id.filter(id => !!id.GameContentLinks.Recipe.ItemResult);
     var y = document.getElementById("amtSelect").value;
     for (var i = 0; i < y;i++)
     {
       console.log(id[i]);
-      writeItems(id[i].GameContentLinks.Recipe.ItemResult, i, id[i].Name);
+      writeItems(id[i].GameContentLinks.Recipe.ItemResult, i, id[i].Name,id[i].Icon);
     }
   }
 
-  function writeItems(itemData, i, name)
+  function adjustFont(name)
   {
-    //document.getElementById("displayList").innerHTML = "";
+    var str = "font-size:";
+    var newStr;
+    var newerStr = name.split(" ");
+    for (i=0; i < newerStr.length;i++)
+    {
+      if (newerStr[i].length >= 9)
+      {
+        newerStr[i] = newerStr[i] + "<br>";
+      }
+      else
+      {
+
+      }
+    }
+    console.log(newerStr[0]);
+    if (newerStr.length === 1)
+    {
+      newStr = name;
+    }
+    if (newerStr.length === 2)
+    {
+      newStr = newerStr[0] + " " + newerStr[1];
+    }
+    if (newerStr.length === 3)
+    {
+      newStr = newerStr[0] + "<br>" + newerStr[1] + " " + newerStr[2];
+    }
+    if (newerStr.length === 4)
+    {
+      newStr = newerStr[0] + " " + newerStr[1] + "<br>" + newerStr[2] + " " + newerStr[3];
+    }
+
+
+    return newStr;
+  }
+
+  function writeItems(itemData, i, name, icon)
+  {
+    console.log(i);
+    console.log(name);
     console.log(itemData);
-    document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + name + "</button>";
+    console.log(icon);
+    var iconPath = "https://xivapi.com" + icon;
+    var objName = document.createElement('h1');
+    objName.style="float:left;font-size:15px;padding-left:5px;margin-top:0px;margin-bottom:20px;color: black;font-family: 'PT Sans', sans-serif;";
+    //container.appendChild(name);
+    var nameText = document.createTextNode(name);
+    objName.innerHTML = adjustFont(name);
+    //name.appendChild(nameText);
+
+    document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + "</button>";
+    var x = document.createElement('IMG');
+    x.classList.add('img');
+    x.style="float:left;margin-top:0px;";
+    x.src = "https://xivapi.com" + icon;
+    document.getElementById(itemData).appendChild(x);
+    document.getElementById(itemData).appendChild(objName);
   }
   function displayItemButton(id)
   {
-    //document.getElementById("craftedList").innerHTML += "<br>" + document.getElementById(id).innerHTML;
-    console.log(id);
     var x = "https://xivapi.com/recipe/" + id;
-
     fetch(x, { mode: 'cors' })
     	.then(response => response.json())
       .then(data => printList(data));
   }
   function printList(data)
   {
-    console.log(data.Name);
-    console.log(craftedItemArray)
     searchNum = craftedItemArray.findIndex(i => i.name === data.Name);
-    console.log(searchNum);
     if (searchNum === -1)
     {
-      console.log("Undefined!");
       var newCraftedItem = new craftedItem(data.Name, 1, data.Icon);
       craftedItemArray.push(newCraftedItem);
       searchNum = null;
@@ -84,7 +123,7 @@ HEWWO?!!
     }
     else
     {
-      console.log("Increment?");
+      //console.log("Increment?");
       incrementCraftedItems(searchNum);
     }
     console.log(data);
@@ -153,31 +192,38 @@ HEWWO?!!
     var container = document.createElement('div');
     container.classList.add('container');
     var name = document.createElement('h1');
-    name.style="font-size: 13px;float:left;padding-left:10px;margin-top:0px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
     name.id = 'name';
     var ID = itemArray[i].name;
     var amount = document.createElement('h1');
-    amount.style = "font-size: 15px;float:right;padding-left:5px;margin-top:0px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
     amount.id = 'amount' + itemArray[i].name;
     var x = document.createElement('IMG');
     x.classList.add('img');
-    x.style="float:left;width:6%;";
+    x.style="float:left;width:6%;padding-top:3px;";
     x.src = "https://xivapi.com" + itemArray[i].iconID;
     var nameText = document.createTextNode(itemArray[i].name);
     var amountNum = document.createTextNode(itemArray[i].amount);
 
     var deleteButton = document.createElement('button');
-    deleteButton.style="margin-left:20px;width:20px;height:20px;float:right;";
-    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;position-right:25px;margin-left:-10px;"/>';
+    amount.style = "font-size: 15px;float:right;padding-right:15px;padding-top:8px;margin-top:0px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
+    name.style="font-size: 13px;float:left;padding-left:10px;margin-top:8px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;"/>';
+
+    //eleteButton.style="width:20px;height:20px;float:right;padding:0px;margin-top:4px;display:inline-block;border-radius:15px;padding-left:14px;";
+    deleteButton.style="width:20px;height:20px;padding-left:20px;float:right;padding:0px;margin-top:5px;border-radius:15px;";
+
+
+
+
     deleteButton.addEventListener('click', () => { deleteItem(ID); })
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
     container.appendChild(name);
-    container.appendChild(amount);
     container.appendChild(deleteButton);
+    container.appendChild(amount);
+
     container.id = itemArray[i].name;
-    container.style = "padding-top:2px;font-size:12px;background-color:#c4513c;";
+    container.style = "padding-top:2px;font-size:12px;background-color:#cc5d49;margin-top:5px;margin-bottom:5px;height:30px;padding:0px;padding-left:10px;";
    document.getElementById("displayIconList").appendChild(container);
   }
   function deleteItem(id)
@@ -216,48 +262,44 @@ HEWWO?!!
     var container = document.createElement('div');
     container.classList.add('container');
     var name = document.createElement('h1');
-    name.style="font-size: 18px;float:left;padding-left:10px;margin-top:20px;color:#F29D2C;font-family: 'PT Sans', sans-serif;";
     name.id = 'name';
     var amount = document.createElement('h1');
-    amount.style = "font-size: 18px;float:right;margin-top:20x;color:#F29D2C;font-family: 'PT Sans', sans-serif;";
+
+    amount.style = "font-size: 18px;float:right;margin-top:20x;color:#F29D2C;font-family: 'PT Sans', sans-serif;padding-right:13px;";
+    name.style="font-size: 18px;float:left;padding-left:10px;margin-top:20px;color:#F29D2C;font-family: 'PT Sans', sans-serif;";
+
     amount.id = 'amount' + i.Name;
     var x = document.createElement('IMG');
     x.classList.add('img');
-    x.style="float:left;margin-top:10px;";
+    x.style="float:left;margin-top:10px;margin-left: 10px;";
     x.src = "https://xivapi.com" + i.Icon;
     var nameText = document.createTextNode(i.Name);
-    var amountNum = document.createTextNode(1);
 
     var deleteButton = document.createElement('button');
-    deleteButton.style="margin-left:20px;width:20px;height:20px;float:right;";
-    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;position-right:25px;margin-left:-10px;"/>';
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;position-right:20px;"/>';
+
+    deleteButton.style="margin-left:0px;width:20px;height:20px;float:right;padding:0px;margin-top:20px;display:inline-block;border-radius:15px;";
     deleteButton.addEventListener('click', () => { deleteCItem(i.Name); })
+    var amountNum = document.createTextNode(1);
 
 
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
     container.appendChild(name);
-    container.appendChild(amount);
 
     container.appendChild(deleteButton);
+    container.appendChild(amount);
 
     container.id = i.Name;
-    container.style = "margin-top:1%;font-size: 12px;";
+    container.style = "margin-top:0%;font-size: 12px;margin-bottom:10px;padding:0px;";
     document.getElementById("displayIconList").appendChild(container);
   }
   </script>
   <style>
-    <!--
-      iPhone X - 375x812
-      iPad - 768x1024
-      Galaxy S5 - 360x640
-      -->
     body
     {
       background-color: #AA4A39;
-      padding-left: 5%;
-      padding-top: 2%;
       height: 100%;
     }
     body
@@ -266,63 +308,66 @@ HEWWO?!!
     h1
     {
       font-size:12px;
-
-
     }
-    .squareBG
+    .row
     {
-
-    }
-    .squareBG2
-    {
-
-    }
-
-    .overlay
-    {
-
-    }
-    img.bg
-    {
-
+      width: 390px;
     }
     .iconList
     {
-    }
-    .container-fluid
-
-    {
-      background-color: #88241C;
     }
     button
     {
       width: 160px;
       height: auto;
+      max-height: 50px;
       background-color: #FF7F67;
       border-color: #FE8D33;
-      border-radius: 5px;
-      padding-left: 10px;
     }
     #displayList
     {
-
+      padding-left: 15px;
+    }
+    #displayList button
+    {
+      font-size: 14px;
+      width: 170px;
+      padding: 0px;
+      margin: 5px;
     }
     #displayIconList
     {
     }
+    #searchHeader
+    {
+      padding-left:10px;
+    }
     #inputText
     {
+      border-radius: 10px;
+      height: 30px;
+      width: 255px;
+
     }
     #amtSelect
     {
-      width:80px;
-
+      width:40px;
+      height: 30px;
+      border-radius: 10px;
+    }
+    #amtDiv
+    {
+      width: 40px;
     }
     #searchBtn
     {
-      margin-top:5px;
-      width:80px;
+      margin-left: 5px;
+      padding-left: 5px;
+      width:55px;
       border-radius:5px;
+      height: 30px;
+      font-family: 'PT Sans', sans-serif;
+
     }
     #displayIconList
     {
@@ -334,18 +379,58 @@ HEWWO?!!
     }
     #fishieboye
     {
-      padding-top: 410px;
-      width: 90%;
+      width: 200px;
     }
+    #footer
+    {
+      padding-top: 315px;
+
+    }
+
+    #speechIcon
+    {
+      width: 180px;
+      padding-top:20px;
+    }
+    #speechText
+    {
+      color: black;
+      font-family: 'PT Sans', sans-serif;
+      font-size: 12px;
+      margin-left:30px;
+      padding-top:5px;
+    }
+    #footerText
+    {
+      color: white;
+      margin-top: 0px;
+      font-family: 'PT Sans', sans-serif;
+      font-size:12px;
+      margin-left: 30px;
+      padding-right: 0px;
+    }
+    #titleHeader
+    {
+      color: gold;
+      font-size:42px;
+      font-family: 'Unica One', cursive;
+      padding-left: 40px;
+
+    }
+    #headerBG
+    {
+      background-color: #801515;
+    }
+
     @media only screen and (width: 600px)
     {
 
     }
-
       </style>
-
     <head>
       <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">
+
       <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -370,20 +455,26 @@ HEWWO?!!
   Galaxy S5 - 360x640
   -->
   <div class="container-fluid">
-    <div class ="row">
-      <div class = "col-xs-12" style="float:right;">
-        <div class = "row" style="padding-left:90px;">
-          <input id="inputText" style="margin-top:5%;border-radius:5px;align:center;"></input>
+    <div class = "row" style="background-color: #661010;">
+      <h2 id = "titleHeader">Namazu Backpack</h2>
+      </div>
+    <div class ="row" id="searchHeader">
+      <div class = "col-xs-8" style="padding:5px;">
+        <input id="inputText" placeholder="i.e. Hingan Sofa, Lumber"></input>
+        </div>
+        <div class = "col-xs-2"  style="padding:5px; padding-left:10px;" id ="amtDiv">
+          <select id="amtSelect">
+            <option value="6">6</option>
+            <option value="12">12</option>
+            <option value="18">18</option>
+            <option value="30">30</option>
+          </select>
           </div>
-          <div class = "row" style="padding-left:95px;">
-            <select id="amtSelect">
-              <option value="6">6</option>
-              <option value="12">12</option>
-              <option value="18">18</option>
-            </select>
+          <div class = "col-xs-2" style="padding:5px;padding-left:10px;">
             <button onclick="makeCalls()" id="searchBtn">Search</button>
             </div>
-          <div class = "row" style="padding-left:20px;">
+            </div>
+          <div class = "row">
             <div id ="displayList"></div>
 
             </div>
@@ -393,17 +484,19 @@ HEWWO?!!
               <div id ="craftedList"></div>
           </div>
         </div>
-      </div>
-      <div class ="row">
-        </div>
+      <div class ="row" id = "footer">
         <div class = "col-xs-5">
-          <h1 style="font-size:12px;padding-top:400px;color:white;margin-bottom:-10px;">"Still a work in progress, yes yes!"<h1>
-            <h1 style="font-size:10px;color:white;">"If an item/recipe appears as undefined, please message Jamie#6288 on Discord!"<h1>
+          <div class = "image" style="position:relative;width:100%;">
+              <img src ="xivImages/icons/speech.png" id = "speechIcon">
+              <h2 style="position:absolute;top:10px;left:0;width:100%;" id="speechText"><span>Still a work in progress, yes yes!</span></h2>
+              <h2 id="footerText"><span>If an item appears as undefined, please message Jamie#6288 on Discord!</span></h2>
 
+          </div>
           </div>
           <div class = "col-xs-7">
             <img src ="xivImages/icons/namazu-stroke.png" id="fishieboye"/>
             </div>
+          </div>
 
       </div>
     </body>
