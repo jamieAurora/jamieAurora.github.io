@@ -198,7 +198,7 @@ HEWWO?!!
     amount.id = 'amount' + itemArray[i].name;
     var x = document.createElement('IMG');
     x.classList.add('img');
-    x.style="float:left;width:6%;padding-top:3px;";
+    x.style="float:left;width:20px;padding-top:3px;";
     x.src = "https://xivapi.com" + itemArray[i].iconID;
     var nameText = document.createTextNode(itemArray[i].name);
     var amountNum = document.createTextNode(itemArray[i].amount);
@@ -296,137 +296,7 @@ HEWWO?!!
     document.getElementById("displayIconList").appendChild(container);
   }
   </script>
-  <style>
-    body
-    {
-      background-color: #AA4A39;
-      height: 100%;
-    }
-    body
-    {
-    }
-    h1
-    {
-      font-size:12px;
-    }
-    .row
-    {
-      width: 390px;
-    }
-    .iconList
-    {
-    }
-    button
-    {
-      width: 160px;
-      height: auto;
-      max-height: 50px;
-      background-color: #FF7F67;
-      border-color: #FE8D33;
-    }
-    #displayList
-    {
-      padding-left: 15px;
-    }
-    #displayList button
-    {
-      font-size: 14px;
-      width: 170px;
-      padding: 0px;
-      margin: 5px;
-    }
-    #displayIconList
-    {
-    }
-    #searchHeader
-    {
-      padding-left:10px;
-    }
-    #inputText
-    {
-      border-radius: 10px;
-      height: 30px;
-      width: 255px;
 
-    }
-    #amtSelect
-    {
-      width:40px;
-      height: 30px;
-      border-radius: 10px;
-    }
-    #amtDiv
-    {
-      width: 40px;
-    }
-    #searchBtn
-    {
-      margin-left: 5px;
-      padding-left: 5px;
-      width:55px;
-      border-radius:5px;
-      height: 30px;
-      font-family: 'PT Sans', sans-serif;
-
-    }
-    #displayIconList
-    {
-      background-color: #AA4A39;
-    }
-    .removeButton
-    {
-      background-color: black;
-    }
-    #fishieboye
-    {
-      width: 200px;
-    }
-    #footer
-    {
-      padding-top: 315px;
-
-    }
-
-    #speechIcon
-    {
-      width: 180px;
-      padding-top:20px;
-    }
-    #speechText
-    {
-      color: black;
-      font-family: 'PT Sans', sans-serif;
-      font-size: 12px;
-      margin-left:30px;
-      padding-top:5px;
-    }
-    #footerText
-    {
-      color: white;
-      margin-top: 0px;
-      font-family: 'PT Sans', sans-serif;
-      font-size:12px;
-      margin-left: 30px;
-      padding-right: 0px;
-    }
-    #titleHeader
-    {
-      color: gold;
-      font-size:42px;
-      font-family: 'Unica One', cursive;
-      padding-left: 40px;
-
-    }
-    #headerBG
-    {
-      background-color: #801515;
-    }
-
-    @media only screen and (width: 600px)
-    {
-
-    }
-      </style>
     <head>
       <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">
@@ -437,32 +307,22 @@ HEWWO?!!
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" media="screen and (max-width: 600px)" href="craftingBackpackMobile.css">
+      <link rel="stylesheet" media="screen and (min-width: 1440px)" href="craftingBackpackDesktop.css">
 
 
 
     </head>
 <body style="background-color: #88241C;">
-
-  <!--
-  <img src ="xivImages/icons/namazu-stroke.png" class="overlay"/>
-
-  <img src = "xivImages/blackgradient.png" class="bg"/>
-  <div class = "squareBG" />
--->
-<!--
-  iPhone X - 375x812
-  iPad - 768x1024
-  Galaxy S5 - 360x640
-  -->
   <div class="container-fluid">
-    <div class = "row" style="background-color: #661010;">
+    <div class = "row" style="background-color: #661010;" id="headerContainer">
       <h2 id = "titleHeader">Namazu Backpack</h2>
       </div>
     <div class ="row" id="searchHeader">
-      <div class = "col-xs-8" style="padding:5px;">
+      <div class = "col-xs-8" id="inputDiv">
         <input id="inputText" placeholder="i.e. Hingan Sofa, Lumber"></input>
         </div>
-        <div class = "col-xs-2"  style="padding:5px; padding-left:10px;" id ="amtDiv">
+        <div class = "col-xs-2" id ="amtDiv">
           <select id="amtSelect">
             <option value="6">6</option>
             <option value="12">12</option>
@@ -470,7 +330,7 @@ HEWWO?!!
             <option value="30">30</option>
           </select>
           </div>
-          <div class = "col-xs-2" style="padding:5px;padding-left:10px;">
+          <div class = "col-xs-2" id="searchDiv">
             <button onclick="makeCalls()" id="searchBtn">Search</button>
             </div>
             </div>
@@ -486,27 +346,14 @@ HEWWO?!!
         </div>
       <div class ="row" id = "footer">
         <div class = "col-xs-5">
-          <div class = "image" style="position:relative;width:100%;">
+          <div class = "image" style="">
               <img src ="xivImages/icons/speech.png" id = "speechIcon">
-              <h2 style="position:absolute;top:10px;left:0;width:100%;" id="speechText"><span>Still a work in progress, yes yes!</span></h2>
+              <h2 style="" id="speechText"><span>Still a work in progress, yes yes!</span></h2>
               <h2 id="footerText"><span>If an item appears as undefined, please message Jamie#6288 on Discord!</span></h2>
-
           </div>
           </div>
           <div class = "col-xs-7">
             <img src ="xivImages/icons/namazu-stroke.png" id="fishieboye"/>
             </div>
           </div>
-
-      </div>
     </body>
-
-
-            <!--
-            <h2 style="font-size:16px;">Input the name of the item into the search bar. <br> The amount of returned objects is limited, so please be accurate. <br> Click search to pull up the craftable items.</h2>
-            <h2 style="font-size:16px;">Clicking on an item will add it to your item list. You can click on an item as many times as you like!</h2>
-            <h2 style="font-size:16px;">To look for a new set of items, just hit search again. You won't lose anything in your materials list.</h2>
-            <h2 style="padding-top:50%;">"Working on it, yes yes!"</h2>
-            <h2 style="font-size:16px;">"This site is new, and still a work in progress. Please be patient, as I am new to many aspects of this sort of development."</h2>
-            <h2 style="font-size:16px;">"Also, because I do not have fingers, and it is very difficult to type with flippers, yes yes."</h2>
-            -->
