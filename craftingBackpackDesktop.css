@@ -1,0 +1,148 @@
+body
+{
+  background-color: #AA4A39;
+  height: 100%;
+}
+body
+{
+}
+h1
+{
+  font-size:12px;
+}
+.row
+{
+  width: 390px;
+}
+.iconList
+{
+}
+button
+{
+  width: 160px;
+  height: auto;
+  max-height: 50px;
+  background-color: #FF7F67;
+  border-color: #FE8D33;
+}
+#displayList
+{
+  padding-left: 15px;
+}
+#displayList button
+{
+  font-size: 14px;
+  width: 170px;
+  padding: 0px;
+  margin: 5px;
+}
+#displayIconList
+{
+  width: 100%;
+}
+#searchHeader
+{
+  padding-left:10px;
+}
+#inputText
+{
+  border-radius: 10px;
+  height: 30px;
+  width: 255px;
+
+}
+#amtSelect
+{
+  width:40px;
+  height: 30px;
+  border-radius: 10px;
+}
+#inputDiv
+{
+  padding: 5px;
+}
+#amtDiv
+{
+  width: 40px;
+  padding:5px;
+  padding-left:10px;
+}
+#searchDiv
+{
+  padding:5px;
+  padding-left:10px;
+}
+#searchBtn
+{
+  margin-left: 5px;
+  padding-left: 5px;
+  width:55px;
+  border-radius:5px;
+  height: 30px;
+  font-family: 'PT Sans', sans-serif;
+
+}
+#displayIconList
+{
+  background-color: #AA4A39;
+}
+.removeButton
+{
+  background-color: black;
+}
+#fishieboye
+{
+  width: 200px;
+}
+#footer
+{
+  padding-top: 785px;
+  padding-left: 1600px;
+  width: 1900px;
+
+}
+
+#speechIcon
+{
+  width: 180px;
+  padding-top:20px;
+}
+#speechText
+{
+  color: black;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 12px;
+  margin-left:30px;
+  padding-top:5px;
+  position:absolute;
+  top:10px;
+  left:0;
+  width:100%;
+}
+#footerText
+{
+  color: white;
+  margin-top: 0px;
+  font-family: 'PT Sans', sans-serif;
+  font-size:12px;
+  margin-left: 30px;
+  padding-right: 0px;
+}
+#titleHeader
+{
+  color: gold;
+  font-size:64px;
+  font-family: 'Unica One', cursive;
+  padding-left: 40px;
+  width: 1440px;
+
+}
+#headerContainer
+{
+  width: 1980px;
+}
+#headerBG
+{
+  width: 1440px;
+  background-color: #801515;
+}

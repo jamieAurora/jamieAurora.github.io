@@ -1,0 +1,323 @@
+<!--
+HEWWO?!!
+-->
+<script>
+  var itemArray = [];
+  var craftedItemArray = [];
+  var badID = [17731,24998,17733,7158,17735,17737,17739,7033,1828,161,6122,157,1828,1856,1860,1888,164,4459,6036,5565,20658,20887,20888,20889,20891, 20891,20892,18270,11155,11162,11169,11176,11183,11190,22960,24058];
+  function item(name, amount, iconID)
+  {
+    this.name = name,
+    //this.itemID = itemID,
+    //this.recipeID = recipeID,
+    this.amount = amount,
+    this.iconID = iconID
+  }
+  function craftedItem(name, amount, iconID)
+  {
+    this.name = name,
+    this.amount = amount,
+    this.iconID = iconID
+  }
+  function makeCalls()
+  {
+  document.getElementById("displayList").innerHTML = "";
+  //The result that comes back now has .GameContentLinks.Recipe.ItemResult[]
+  var x = "https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item&columns=ID,Name,Icon,GameContentLinks";
+  fetch(x, { mode: 'cors' })
+  	.then(response => response.json())
+    .then(data => displayItems(data.Results));
+  }
+  var idArray = [];
+  function displayItems(id)
+  {
+    var badName = ["Lominsan"," Aetherial Iron Lance","Dated"];
+    id = id.filter(id => !!id.GameContentLinks);
+    id = id.filter(id => !badID.includes(id.ID));
+    id = id.filter(id => !!id.GameContentLinks.Recipe);
+    id = id.filter(id => !!id.GameContentLinks.Recipe.ItemResult);
+    var y = document.getElementById("amtSelect").value;
+    for (var i = 0; i < y;i++)
+    {
+      console.log(id[i]);
+      writeItems(id[i].GameContentLinks.Recipe.ItemResult, i, id[i].Name,id[i].Icon);
+    }
+  }
+
+  function writeItems(itemData, i, name, icon)
+  {
+    console.log(i);
+    console.log(name);
+    console.log(itemData);
+    console.log(icon);
+    var iconPath = "https://xivapi.com" + icon;
+    var objName = document.createElement('h1');
+    objName.style="width:120px;float:left;font-size:15px;padding-left:5px;margin-top:0px;margin-bottom:20px;color: black;font-family: 'PT Sans', sans-serif;word-wrap:break-word;";
+    //container.appendChild(name);
+    var nameText = document.createTextNode(name);
+    objName.innerHTML = (name);
+    //name.appendChild(nameText);
+
+    document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + "</button>";
+    var x = document.createElement('IMG');
+    x.classList.add('img');
+    x.style="float:left;margin-top:0px;";
+    x.src = "https://xivapi.com" + icon;
+    document.getElementById(itemData).appendChild(x);
+    document.getElementById(itemData).appendChild(objName);
+
+  }
+  function displayItemButton(id)
+  {
+    var x = "https://xivapi.com/recipe/" + id;
+    fetch(x, { mode: 'cors' })
+    	.then(response => response.json())
+      .then(data => printList(data));
+  }
+  function printList(data)
+  {
+    searchNum = craftedItemArray.findIndex(i => i.name === data.Name);
+    if (searchNum === -1)
+    {
+      var newCraftedItem = new craftedItem(data.Name, 1, data.Icon);
+      craftedItemArray.push(newCraftedItem);
+      searchNum = null;
+      displayAllCraftedItems(data);
+    }
+    else
+    {
+      //console.log("Increment?");
+      incrementCraftedItems(searchNum);
+    }
+    console.log(data);
+    if (data.AmountIngredient0 != 0)
+    {
+      updateArray(data.ItemIngredient0.Name, data.AmountIngredient0, data.ItemIngredient0.Icon);
+    }
+    if (data.AmountIngredient1 != 0)
+    {
+      updateArray(data.ItemIngredient1.Name, data.AmountIngredient1, data.ItemIngredient1.Icon);
+    }
+    if (data.AmountIngredient2 != 0)
+    {
+      updateArray(data.ItemIngredient2.Name, data.AmountIngredient2, data.ItemIngredient2.Icon);
+    }
+    if (data.AmountIngredient3 != 0)
+    {
+      updateArray(data.ItemIngredient3.Name, data.AmountIngredient3,  data.ItemIngredient3.Icon);
+    }
+    if (data.AmountIngredient4 != 0)
+    {
+      updateArray(data.ItemIngredient4.Name, data.AmountIngredient4,  data.ItemIngredient4.Icon);
+    }
+    if (data.AmountIngredient5 != 0)
+    {
+      updateArray(data.ItemIngredient5.Name, data.AmountIngredient5,  data.ItemIngredient5.Icon);
+    }
+    else
+    {
+    }
+  }
+  function updateArray(name,amount,icon)
+  {
+    //document.getElementById("displayList").innerHTML = ""
+    var searchNum = null;
+    searchNum = itemArray.findIndex(i => i.name === name);
+    if (searchNum === -1)
+    {
+      var newItem = new item(name, amount, icon);
+      itemArray.push(newItem);
+      searchNum = itemArray.findIndex(i => i.name === name);
+      displayAllItems(searchNum);
+    }
+    else
+    {
+      itemArray[searchNum].amount += amount;
+      incrementItems(searchNum);
+    }
+  }
+  function incrementItems(searchNum)
+  {
+    var itemName = itemArray[searchNum].name;
+    var x = document.getElementById('amount' + itemArray[searchNum].name);
+    x.innerHTML = itemArray[searchNum].amount;
+  }
+  function incrementCraftedItems(searchNum)
+  {
+    console.log("Got to the incrementing Crafted Items func");
+    craftedItemArray[searchNum].amount += 1;
+    var itemName = craftedItemArray[searchNum].name;
+    var x = document.getElementById('amount' + craftedItemArray[searchNum].name);
+    x.innerHTML = craftedItemArray[searchNum].amount;
+  }
+  function displayAllItems(i)
+  {
+    var container = document.createElement('div');
+    container.classList.add('container');
+    var name = document.createElement('h1');
+    name.id = 'name';
+    var ID = itemArray[i].name;
+    var amount = document.createElement('h1');
+    amount.id = 'amount' + itemArray[i].name;
+    var x = document.createElement('IMG');
+    x.classList.add('img');
+    x.style="float:left;width:20px;padding-top:3px;";
+    x.src = "https://xivapi.com" + itemArray[i].iconID;
+    var nameText = document.createTextNode(itemArray[i].name);
+    var amountNum = document.createTextNode(itemArray[i].amount);
+
+    var deleteButton = document.createElement('button');
+    amount.style = "font-size: 15px;float:right;padding-right:15px;padding-top:8px;margin-top:0px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
+    name.style="font-size: 13px;float:left;padding-left:10px;margin-top:8px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;"/>';
+
+    //eleteButton.style="width:20px;height:20px;float:right;padding:0px;margin-top:4px;display:inline-block;border-radius:15px;padding-left:14px;";
+    deleteButton.style="width:20px;height:20px;padding-left:20px;float:right;padding:0px;margin-top:5px;border-radius:15px;";
+
+
+
+
+    deleteButton.addEventListener('click', () => { deleteItem(ID); })
+    name.appendChild(nameText);
+    amount.appendChild(amountNum);
+    container.appendChild(x);
+    container.appendChild(name);
+    container.appendChild(deleteButton);
+    container.appendChild(amount);
+
+    container.id = itemArray[i].name;
+    container.style = "padding-top:2px;font-size:12px;background-color:#cc5d49;margin-top:5px;margin-bottom:5px;height:30px;padding:0px;padding-left:10px;";
+   document.getElementById("displayIconList").appendChild(container);
+  }
+  function deleteItem(id)
+  {
+    console.log(id);
+    var searchNum = null;
+    console.log(itemArray);
+    searchNum = itemArray.findIndex(i => i.name === id);
+    console.log(searchNum);
+    if (searchNum === -1)
+    {
+    }
+    else
+    {
+      itemArray.splice(searchNum,1);
+      document.getElementById(id).remove();
+    }
+  }
+  function deleteCItem(id)
+  {
+    console.log(id);
+    var searchNum = null;
+    searchNum = craftedItemArray.findIndex(i => i.name === id);
+    console.log(searchNum);
+    if (searchNum === -1)
+    {
+    }
+    else
+    {
+      craftedItemArray.splice(searchNum,1);
+      document.getElementById(id).remove();
+    }
+  }
+  function displayAllCraftedItems(i)
+  {
+    var container = document.createElement('div');
+    container.classList.add('container');
+    var name = document.createElement('h1');
+    name.id = 'name';
+    var amount = document.createElement('h1');
+
+    amount.style = "font-size: 18px;float:right;margin-top:20x;color:#F29D2C;font-family: 'PT Sans', sans-serif;padding-right:13px;";
+    name.style="font-size: 18px;float:left;padding-left:10px;margin-top:20px;color:#F29D2C;font-family: 'PT Sans', sans-serif;";
+
+    amount.id = 'amount' + i.Name;
+    var x = document.createElement('IMG');
+    x.classList.add('img');
+    x.style="float:left;margin-top:10px;margin-left: 10px;";
+    x.src = "https://xivapi.com" + i.Icon;
+    var nameText = document.createTextNode(i.Name);
+
+    var deleteButton = document.createElement('button');
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;position-right:20px;"/>';
+
+    deleteButton.style="margin-left:0px;width:20px;height:20px;float:right;padding:0px;margin-top:20px;display:inline-block;border-radius:15px;";
+    deleteButton.addEventListener('click', () => { deleteCItem(i.Name); })
+    var amountNum = document.createTextNode(1);
+
+
+    name.appendChild(nameText);
+    amount.appendChild(amountNum);
+    container.appendChild(x);
+    container.appendChild(name);
+
+    container.appendChild(deleteButton);
+    container.appendChild(amount);
+
+    container.id = i.Name;
+    container.style = "margin-top:0%;font-size: 12px;margin-bottom:10px;padding:0px;";
+    document.getElementById("displayIconList").appendChild(container);
+  }
+  </script>
+
+    <head>
+      <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">
+
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" media="screen and (max-width: 600px)" href="craftingBackpackMobile.css">
+      <link rel="stylesheet" media="screen and (min-width: 1440px)" href="craftingBackpackDesktop.css">
+
+
+
+    </head>
+<body style="background-color: #88241C;">
+  <div class="container-fluid">
+    <div class = "row" style="background-color: #661010;" id="headerContainer">
+      <h2 id = "titleHeader">Namazu Backpack</h2>
+      </div>
+    <div class ="row" id="searchHeader">
+      <div class = "col-xs-8" id="inputDiv">
+        <input id="inputText" placeholder="i.e. Hingan Sofa, Lumber"></input>
+        </div>
+        <div class = "col-xs-2" id ="amtDiv">
+          <select id="amtSelect">
+            <option value="6">6</option>
+            <option value="12">12</option>
+            <option value="18">18</option>
+            <option value="30">30</option>
+          </select>
+          </div>
+          <div class = "col-xs-2" id="searchDiv">
+            <button onclick="makeCalls()" id="searchBtn">Search</button>
+            </div>
+            </div>
+          <div class = "row">
+            <div id ="displayList"></div>
+
+            </div>
+            <div class = "row">
+              <div id ="displayIconList"></div>
+
+              <div id ="craftedList"></div>
+          </div>
+        </div>
+      <div class ="row" id = "footer">
+        <div class = "col-xs-5">
+          <div class = "image" style="">
+              <img src ="xivImages/icons/speech.png" id = "speechIcon">
+              <h2 style="" id="speechText"><span>Still a work in progress, yes yes!</span></h2>
+              <h2 id="footerText"><span>If an item appears as undefined, please message Jamie#6288 on Discord!</span></h2>
+              <h2 id="footerText"><span>Like the app? Please tell me at @anzusariya on Twitter!</span></h2>
+          </div>
+          </div>
+          <div class = "col-xs-7">
+            <img src ="xivImages/icons/namazu-stroke.png" id="fishieboye"/>
+            </div>
+          </div>
+    </body>
