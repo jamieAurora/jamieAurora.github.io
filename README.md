@@ -2,11 +2,10 @@
 
 Hi! This site will serve as a hub for any of my web development projects that regularly update.
 
-I am currently mostly working on the craftingBackpack, a tool to be used in tandem with FINAL FANTASY XIV.
+I am currently mostly working on the NamazuBackpack, a tool to be used in tandem with FINAL FANTASY XIV.
 
 To use the Crafting Backpack, please head over to
-https://jamieaurora.github.io/craftingBackpack
-
+https://jamieaurora.github.io/namazuBackpack
 
 You can enter the name or an item, or a partial part of the name. 
 I.e., you can search for "Hingan Sofa" to return that precise item, or "Hingan" to return all Hingan items.
