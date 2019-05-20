@@ -19,6 +19,8 @@ You can click the X button on any line to remove it. Removing an entire item wil
 
 NamazuBackpack is a web application created with Bootstrap and JQUERY. The application utilizes the XIVAPI service, and is meant to supplement users while playing Final Fantasy XIV.
 
+*This readme is incomplete, and will be changed as the code is refactored.*
+
 ## item 
  > *item(name, amount, iconID)* 
  
