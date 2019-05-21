@@ -52,6 +52,7 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  
 **Description** 
  >This function is called when the user clicks on the search button after inputting a string.
+ 
  The function then searches XIVAPI for objects containing that string in their name.
  Additional indexes "item&columns=ID,Name,Icon,GameContentLinks" are added to the call.
  The response is passed over to the retrieveItems function.
