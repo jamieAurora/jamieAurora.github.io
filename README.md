@@ -98,4 +98,18 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  > This function executes when a recipeButton is clicked.
  A call is made to XIVAPI.COM/RECIPE/ with the 'id' field being appended to it.
  The returned data is passed to the printList() function.
+ 
+ 
+## printList
+ > *printList(data)*
+
+**Parameters**
+ >**data** - The recipeItem object passed from itemButton()
+
+**Description**
+ > This function first searches the 'craftedItemArray' by 'data.Name', to find if the item already exists.
+ > The variable 'searchNum' is created, which is the location of the item in the 'craftedItemArray'
+ > If the item already exists, the function incrementCraftedItems(searchNum) is called.
+ > If the item does not exist, the new item is pushed into the array, and the function displayAllCraftedItems(data) is called.
+ > For every 'data.AmountIngredientX', with X being any number between 0 and 5, the function updateArray(data.ItemIngredientX.Name, data.AmountIngredientX, data.ItemIngredientX.Icon) is called.
 
