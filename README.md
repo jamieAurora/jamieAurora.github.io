@@ -34,6 +34,7 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
 **Description** 
  >This function creates objects of the type 'item' when called.
 
+
 ## craftedItem 
  > *craftedItem(name, amount, iconID)* 
  
@@ -47,6 +48,7 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
 **Description** 
  >This function creates objects of the type 'craftedItem' when called.
 
+
 ## makeCalls 
  > *makeCalls()* 
  
@@ -55,6 +57,7 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  The function then searches XIVAPI for objects containing that string in their name.
  Additional indexes "item&columns=ID,Name,Icon,GameContentLinks" are added to the call.
  The response is passed over to the retrieveItems function.
+ 
  
 ## retrieveItems 
  > *retrieveItems(data)* 
@@ -69,4 +72,30 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  Finally, it filters out any objects that do not contain a 'GameContentLinks.Recipe' and then 'GameContentLinks.Recipe.ItemResult' property.
  Then, for every value left in the array, the function passes the 'GameContentLinks.Recipe.ItemResult' property, the integer 'i', the name, and the icon properties to the function createButtons().
  This 'for' loop is limited by the 'amtSelect' form, which is a dropdown select form that the user uses to determine how many results to display.
+ 
+## createButtons
+ > *createButtons(itemData, i, name, icon)*
+ 
+**Parameters**
+ >**itemData** - The recipeID of the object passed from retrieveItems()
+ >**i** - This value is no longer used and should be removed.
+ >**name** - The name of the item.
+ >**icon** - The icon path of the item.
+ 
+**Description**
+ >This function creates a button based on the parameters passed to it.
+ The button has the display name of 'name', as well as displaying an icon.
+ The icon is pulled from "https://xivapi.com" with the 'icon' value being appended to it.
+ On click, these buttons will call itemButton(itemData), with 'itemData' being the recipeID of the relevant item.
+ 
+## itemButton
+ > *itemButton(id)*
+
+**Parameters**
+ >**id** - The recipeID of the item.
+ 
+**Description**
+ > This function executes when a recipeButton is clicked.
+ A call is made to XIVAPI.COM/RECIPE/ with the 'id' field being appended to it.
+ The returned data is passed to the printList() function.
 
