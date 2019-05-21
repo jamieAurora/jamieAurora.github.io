@@ -150,3 +150,51 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  This item, craftedItemArray[searchNum].amount is incremented by 1.
  It then finds the HTML element with ID "amount" + craftedItemArray[searchNum].name
  The .amount property of that element is set equal to craftedItemArray[searchNum].amount
+ 
+## displayAllItems
+ > *displayAllItems(i)*
+
+**Parameters**
+ >**i** - The index of an item in an array.
+
+**Description**
+ > This creates an HTML element named 'container'.
+ This element contains a text field 'name', a text field 'amount', an image, and a button.
+ The name and amount are set to itemArray[i].name and itemArray[i].amount, respectively.
+ The image is set to the icon of the item.
+ The button is created to the right of the item image, and on click, calls the deleteItem(ID) function.
+ The container element is then appended to the 'displayIconList' HTML element. The ID of this container is set to itemArray[i].name
+
+## deleteItem
+ > *deleteItem(i)*
+
+**Parameters**
+ >**i** - The name of an item in an array.
+
+**Description**
+ >The function searches itemArray for any item with the name matching 'i'.
+ This item is removed from the array, if it exists.
+
+## deleteCItem
+ >*deleteCItem(i)*
+ 
+**Parameters**
+ >**i** - The name of an item in an array.
+ 
+**Description**
+ >The function searches craftedItemArray for any item with the name matching 'i'
+ This item is removed from the array, if it exists.
+ 
+## displayAllCraftedItems
+ >*displayAllCraftedItems(i)*
+
+**Parameters**
+ >**i** - The index of an item in an array.
+ 
+**Description**
+ > This creates an HTML element named 'container'.
+ This element contains a text field 'name', a text field 'amount', an image, and a button.
+ The name and amount are set to craftedItemArray[i].name and craftedItemArray[i].amount, respectively.
+ The image is set to the icon of the item.
+ The button is created to the right of the item image, and on click, calls the deleteCItem(ID) function.
+ The container element is then appended to the 'displayIconList' HTML element. The ID of this container is set to craftedItemArray[i].name
