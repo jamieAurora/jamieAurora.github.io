@@ -24,12 +24,12 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
 ## item 
  > *item(name, amount, iconID)* 
  
-Parameters 
+**Parameters** 
  >**name** - The name of the item. 
  
  >**amount** - The amount of the item. 
  
  >**iconID** - The icon url, as a string, of the item. 
  
-Description 
+**Description** 
  >This function creates objects of the type 'item' when called.
