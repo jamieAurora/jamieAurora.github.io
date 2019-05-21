@@ -198,3 +198,13 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  The image is set to the icon of the item.
  The button is created to the right of the item image, and on click, calls the deleteCItem(ID) function.
  The container element is then appended to the 'displayIconList' HTML element. The ID of this container is set to craftedItemArray[i].name
+ 
+## deleteCItem
+ >*deleteCItem(id)*
+
+**Parameters**
+ >**id** - The name of the item in an array.
+
+**Description**
+ >The function searches craftedItemArray for any objects matching 'id'.
+ If a matching object is found, it is removed from the array.
