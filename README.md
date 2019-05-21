@@ -113,3 +113,40 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  > If the item does not exist, the new item is pushed into the array, and the function displayAllCraftedItems(data) is called.
  > For every 'data.AmountIngredientX', with X being any number between 0 and 5, the function updateArray(data.ItemIngredientX.Name, data.AmountIngredientX, data.ItemIngredientX.Icon) is called.
 
+## updateArray
+ > *updateArray(name,amount,icon)*
+ 
+**Parameters**
+ >**name** - The name of the item.
+ >**amount** - The amount of this specific item.
+ >**icon** - The icon path of the item.
+
+**Description**
+ > The array 'itemArray' is searched by the 'name' field.
+ If the item exists in 'itemArray', itemArray[searchNum] is incremented by 'amount'.
+ The incrementItems(searchNum) function is then called.
+ If the item does not exist, it is then pushed into itemArray.
+ The displayAllItems(searchNum) function is then called.
+ 
+## incrementItems
+ > *incrementItems(searchNum)*
+
+**Parameters**
+ >**searchNum** - The location of the item in itemArray.
+
+**Description**
+ >The function takes the item's location in itemArray.
+ It then finds the HTML element with ID "amount" + itemArray[searchNum].name
+ The .amount property is set equal to itemArray[searchNum].amount
+
+## incrementCraftedItems
+ > *incrementCraftedItems(searchNum)*
+
+**Parameters**
+ >**searchNum** - The location of the item in craftedItemArray.
+ 
+**Description**
+ >The function takes the item's location in craftedItemArray.
+ This item, craftedItemArray[searchNum].amount is incremented by 1.
+ It then finds the HTML element with ID "amount" + craftedItemArray[searchNum].name
+ The .amount property of that element is set equal to craftedItemArray[searchNum].amount
