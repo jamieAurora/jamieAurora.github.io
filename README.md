@@ -33,3 +33,40 @@ NamazuBackpack is a web application created with Bootstrap and JQUERY. The appli
  
 **Description** 
  >This function creates objects of the type 'item' when called.
+
+## craftedItem 
+ > *craftedItem(name, amount, iconID)* 
+ 
+**Parameters** 
+ >**name** - The name of the item. 
+ 
+ >**amount** - The amount of the item. 
+ 
+ >**iconID** - The icon url, as a string, of the item. 
+ 
+**Description** 
+ >This function creates objects of the type 'craftedItem' when called.
+
+## makeCalls 
+ > *makeCalls()* 
+ 
+**Description** 
+ >This function is called when the user clicks on the search button after inputting a string.
+ The function then searches XIVAPI for objects containing that string in their name.
+ Additional indexes "item&columns=ID,Name,Icon,GameContentLinks" are added to the call.
+ The response is passed over to the retrieveItems function.
+ 
+## retrieveItems 
+ > *retrieveItems(data)* 
+ 
+**Parameters** 
+ >**data** - The array of objects returned from XIVAPI that contain the string entered by the user.
+ 
+**Description** 
+ >This function takes the returned object array, 'data', and filters it.
+ It is first filtered to ensure that every object in the array contains the property 'GameContentLinks'.
+ Then, it checks to ensure that no objects in the array contain a property 'ID' that match any integer included in the array 'badID'.
+ Finally, it filters out any objects that do not contain a 'GameContentLinks.Recipe' and then 'GameContentLinks.Recipe.ItemResult' property.
+ Then, for every value left in the array, the function passes the 'GameContentLinks.Recipe.ItemResult' property, the integer 'i', the name, and the icon properties to the function createButtons().
+ This 'for' loop is limited by the 'amtSelect' form, which is a dropdown select form that the user uses to determine how many results to display.
+
