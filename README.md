@@ -7,17 +7,23 @@ I am currently mostly working on the NamazuBackpack, a tool to be used in tandem
 To use the Crafting Backpack, please head over to
 https://jamieaurora.github.io/namazuBackpack
 
+To use the XIV Card Generator, go to 
+https://jamieaurora.github.io/XIVcard
+
+
+
+
+
+# NamazuBackpack README
+
+NamazuBackpack is a web application created with Bootstrap and JQUERY. The application utilizes the XIVAPI service, and is meant to supplement users while playing Final Fantasy XIV.
+
 You can enter the name or an item, or a partial part of the name. 
 I.e., you can search for "Hingan Sofa" to return that precise item, or "Hingan" to return all Hingan items.
 You can then select the maximum amount of items to display, with a default of 6.
 
 The objects will be returned as buttons. Clicking a button will display the relevant crafting materials needed to craft that item!
 You can click the X button on any line to remove it. Removing an entire item will not remove its materials.
-
-
-# NamazuBackpack README
-
-NamazuBackpack is a web application created with Bootstrap and JQUERY. The application utilizes the XIVAPI service, and is meant to supplement users while playing Final Fantasy XIV.
 
 *This readme is incomplete, and will be changed as the code is refactored.*
 
