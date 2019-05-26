@@ -10,9 +10,10 @@ https://jamieaurora.github.io/namazuBackpack
 To use the XIV Card Generator, go to 
 https://jamieaurora.github.io/XIVcard
 
+# XIV Card Generator README
 
-
-
+The XIV Card Generator is a simple display of character data, given the input of your character's name, and the server they reside on.
+Improperly entered character names may not pull the proper data.
 
 # NamazuBackpack README
 
