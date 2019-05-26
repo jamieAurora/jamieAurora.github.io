@@ -1,0 +1,316 @@
+<!-- Hi there, FCC people! Hope you're having a nice day :3 -->
+<!--
+- Add Favicon
+- Add responsiveness using media queries\
+- Font Awesome
+-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+  function calcMaterials(lengthVal, widthVal, heightVal)
+{
+  var lengthVal = document.getElementById("lengthID").value;
+var widthVal = document.getElementById("widthID").value;
+var heightVal = document.getElementById("heightID").value;
+var thickVal = document.getElementById("thickID").value;
+  console.log("Test");
+  console.log(lengthVal);
+  console.log(widthVal);
+  var frontBack = (lengthVal - (thickVal * 2)) + " by " + heightVal;
+  var topBottom = (lengthVal - (thickVal * 2)) + " by " + widthVal;
+  var leftRight = widthVal + " by " + heightVal;
+    console.log(frontBack);
+  console.log(topBottom);
+  console.log(leftRight);
+
+  document.getElementById("returnInfo").innerHTML = "You will need... <br/> Two " + frontBack + " boards. <br/> Two " + topBottom + " boards. <br/> Two " + leftRight +" boards.";
+  //document.getElementById("returnInfo").innerHTML = "fafs";
+}
+
+</script>
+<style>
+  html,
+  body {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  nav
+  {
+  }
+  nav ul {
+    text-align: left;
+    position: fixed;
+    width: 100%;
+    background-color: #333;
+  }
+
+  nav ul li {
+    display: inline-block;
+    margin: -5px;
+    margin-bottom: 13px;
+    margin-top: 15px;
+  }
+
+  nav ul li a {
+    color: #f2f2f2;
+    padding: 14px 15px;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    color: black;
+    background-color: #ddd;
+  }
+
+  /* Add a color to the active/current link */
+  .navbar a.active {
+    background-color: red;
+    color: red;
+  }
+  .active
+  {
+    background-color: #86C232;
+    color: white;
+  }
+  @media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  }
+  .welcome-section
+  {
+    background-color: #222629;
+    font-family: Oswald;
+    letter-spacing: 4px;
+    top: 0;
+    min-height: 55vh;
+    padding-top: 45vh;
+  }
+  .tileDT
+  {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    font-size: 16px;
+
+    background-color: grey;
+    background-image: url("demoDT.png");
+    border-radius: 20px;
+  }
+  .tileTW
+  {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    font-size: 16px;
+
+    background-color: grey;
+    background-image: url("demoTW.png");
+    border-radius: 20px;
+  }
+  .tileME
+  {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    font-size: 16px;
+
+    background-color: grey;
+    background-image: url("demoME.png");
+    border-radius: 20px;
+  }
+  .tile:hover
+  {
+    opacity: 0.75;
+  }
+  .contact
+  {
+    font-size: 12px;
+    background: #222629;
+  }
+  .projects
+  {
+    background: #474B4F;
+  }
+  .footer
+  {
+    background: #6B6E70;
+    height: 250px;
+  }
+  .footer h1
+  {
+    font-size: 20px;
+    padding-top: 20px;
+    font-family: Oswald;
+    color: #86C232;
+  }
+  h1
+  {
+    font-size: 40px;
+  }
+  h2
+  {
+    font-family: Oswald;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    background: #474B4F;
+    font-size: 30px;
+  }
+  h3
+  {
+    background: #a4b7d4;
+  }
+  .project-title
+  {
+    padding-top: 260px;
+    font-size: 16px;
+    color: #86C232;
+    font-weight: bold;
+    decoration: none;
+  }
+  a:link {
+    text-decoration: none;
+  }
+  .profile-linkLI
+  {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+     border-radius: 10px;
+    background-color: grey;
+    background-image: url("iconLI.png");
+  }
+  .profile-linkGH
+  {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+     border-radius: 10px;
+    background-color: grey;
+    background-image: url("iconGH.png");
+  }
+  .profile-linkEM
+  {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+     border-radius: 10px;
+    background-color: grey;
+    background-image: url("iconEM.png");
+  }
+  .profile-link:hover
+  {
+    opacity: 0.75;
+  }
+
+  hr
+  {
+    padding-top: 0px;
+
+  }
+
+  </style>
+<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+
+<body>
+<nav>
+<ul id='navbar'>
+<li><a class = "active" href="index.html">Home</a></li>
+</ul>
+</nav>
+<h2 style="length: 200px"></h2>
+  <div class="row">
+    <div class="col-xs-2">
+  <h1 style="font-size: 22px;">Length</h1>
+  <input type="text" name="length" id="lengthID" value="" />
+    </div>
+      <div class="col-xs-2">
+      <h1 style="font-size: 22px;">Width</h1>
+  <input type="text" name="width" id="widthID" value="" />
+      </div>
+    <div class="col-xs-2">
+    <h1 style="font-size: 22px;">Height</h1>
+  <input type="text" name="height" id="heightID" value="" />
+    </div>
+    <div class="col-xs-2">
+    <h1 style="font-size: 22px;">Thickness</h1>
+  <input type="text" name="thick" id="thickID" value="" />
+    </div>
+    </div>
+
+  <button onclick="calcMaterials()" class = "btn btn-block btn-default">Click me</button>
+  <h1 style="font-size: 22px;">Assuming this is a rectangle, with the sides applied like so... |_| </h1>
+  <h2 style = "height: 200px; color: #f2f2f2; "id = "returnInfo"></h2>
+  <h1 style="font-size:12px;">This application coded in under 30 minutes.</h1>
+
+
+
+
+
+</body>

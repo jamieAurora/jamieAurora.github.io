@@ -1,0 +1,342 @@
+<!-- Hi there, FCC people! Hope you're having a nice day :3 -->
+<!--
+- Add Favicon
+- Add responsiveness using media queries\
+- Font Awesome
+-->
+<style>
+  html,
+  body {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  nav
+  {
+  }
+  nav ul {
+    text-align: left;
+    position: fixed;
+    width: 100%;
+    background-color: #333;
+  }
+
+  nav ul li {
+    display: inline-block;
+    margin: -5px;
+    margin-bottom: 13px;
+    margin-top: 15px;
+  }
+
+  nav ul li a {
+    color: #f2f2f2;
+    padding: 14px 15px;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    color: black;
+    background-color: #ddd;
+  }
+
+  /* Add a color to the active/current link */
+  .navbar a.active {
+    background-color: red;
+    color: red;
+  }
+  .active
+  {
+    background-color: #86C232;
+    color: white;
+  }
+  @media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  }
+  .welcome-section
+  {
+    background-color: #222629;
+    font-family: Oswald;
+    letter-spacing: 4px;
+    top: 0;
+    min-height: 55vh;
+    padding-top: 45vh;
+  }
+  .tileDT
+  {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    font-size: 16px;
+
+    background-color: grey;
+    background-image: url("demoDT.png");
+    border-radius: 20px;
+  }
+  .tileTW
+  {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    font-size: 16px;
+
+    background-color: grey;
+    background-image: url("demoTW.png");
+    border-radius: 20px;
+  }
+  .tileME
+  {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    font-size: 16px;
+
+    background-color: grey;
+    background-image: url("demoME.png");
+    border-radius: 20px;
+  }
+  .tileCode
+  {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    font-size: 16px;
+
+    background-color: grey;
+    background-image: url("codeIcon.png");
+    border-radius: 20px;
+  }
+  .tile:hover
+  {
+    opacity: 0.75;
+  }
+  .contact
+  {
+    font-size: 12px;
+    background: #222629;
+  }
+  .projects
+  {
+    background: #474B4F;
+  }
+  .footer
+  {
+    background: #6B6E70;
+    height: 250px;
+  }
+  .footer h1
+  {
+    font-size: 20px;
+    padding-top: 20px;
+    font-family: Oswald;
+    color: #86C232;
+  }
+  h1
+  {
+    font-size: 40px;
+  }
+  h2
+  {
+    font-family: Oswald;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    background: #474B4F;
+    font-size: 30px;
+  }
+  h3
+  {
+    background: #a4b7d4;
+  }
+  .project-title
+  {
+    padding-top: 260px;
+    font-size: 16px;
+    color: #86C232;
+    font-weight: bold;
+    decoration: none;
+  }
+  a:link {
+    text-decoration: none;
+  }
+  .profile-linkLI
+  {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+     border-radius: 10px;
+    background-color: grey;
+    background-image: url("iconLI.png");
+  }
+  .profile-linkGH
+  {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+     border-radius: 10px;
+    background-color: grey;
+    background-image: url("iconGH.png");
+  }
+  .profile-linkEM
+  {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+     border-radius: 10px;
+    background-color: grey;
+    background-image: url("iconEM.png");
+  }
+  .profile-link:hover
+  {
+    opacity: 0.75;
+  }
+
+  hr
+  {
+    padding-top: 0px;
+
+  }
+
+  </style>
+<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
+<body>
+<nav>
+<ul id='navbar'>
+<li><a class = "active" href="#welcome-section">Welcome</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#footer">Accomplishments</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+<section class="welcome-section" id = "welcome-section">
+<h1 style="color:white" "font-size: 100px">Jamie Aurora Clary</h1>
+<h1 style="color:#86C232; font-size: 20px;">Web Developer, Technical Writer, Artist
+
+
+</section>
+<h2 style="color:#86C232;">Project Portfolio</h2>
+<h2 style="color:#61892F;font-size:16px;letter-spacing:2px;">Please select any tile to experience one of my prior projects for yourself.</h2>
+
+
+
+<section class="projects" id="projects">
+<div class="project-tile">
+<!-- These are placeholder links! I'm going to have them redirect to some external pages when I finish those!-->
+<a href="https://codepen.io/geisty/pen/ZZyQOE" class="tileTW">
+<div class="project-title">Technical Writing Sample</div>
+</a>
+
+<a href="https://itunes.apple.com/us/app/marginedge/id1013992211" class="tileME">
+<div class="project-title">MarginEdge Mobile App</div>
+</a>
+
+<a href="devinTribute.html" class="tileDT">
+<div class="project-title">Devin Townsend Tribute Page</div>
+</a>
+
+<a href="rectangleCalculator.html" class="tileCode">
+<div class="project-title">RectangleCalculator</div>
+</a>
+
+<a href="rot13decoder.html" class="tileCode">
+<div class="project-title">ROT13 Decoder</div>
+</a>
+
+
+</div>
+</section>
+<section class="footer" id="footer">
+<h1 style="font-size:26px;">"Great app...amazingly robust analytics and food ordering interface. Highly recommend... A+++"</h1>
+<h1 style="font-size:26px;">&#9733;&#9733;&#9733;&#9733;&#9733;  rated app on the iOS App Store </h1>
+<h1 style="font-size:26px;">Certified - Responsive Web Design Certified</h1>
+<h1 style="font-size:26px;">Certified - JavaScript Algorithms and Data Structures</h1>
+</section>
+
+<section class="contact" id="contact">
+  <div style = "height:10px"></div>
+<div class = "contact-tile">
+  <a href="https://www.linkedin.com/in/jamie-clary-b92126105" target = "_blank" id ="profile-link"><i class="fab fa-linkedin fa-5x"></i>
+</a>
+  <a href="https://github.com/jamieaurora" target = "_blank"  id ="profile-link"> <i class="fab fa-github fa-5x"></i>
+</a>
+  <a href="mailto:admin@jamieaurora.com" target = "_blank"  id ="profile-link">
+    <i class="fas fa-envelope fa-5x"></i>
+</a>
+<h1 style="color:#86C232;">This space is always being updated...</h1>
+  </div>
+</section>
+
+
+</body>

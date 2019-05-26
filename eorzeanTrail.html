@@ -1,0 +1,166 @@
+
+<script>
+  //idyllshire -> hinterlands -> forelands -> western highlands -> foundation ->
+  //central highlands -> north shroud -> old gridania -> airship to limsa lominsa -> Kugane -> ruby sea -> yanxia or azime steppe
+  var characterArray = [];
+  var position = 0;
+  //Supplies go here.
+  var wagons = 0;
+  var chocobos = 0;
+  var food = 0;
+  var medicine = 0;
+  var clothes = 0;
+  var money = 0;
+  var day = 0;
+
+  function makeCalls()
+  {
+
+    //var server = document.getElementById("serverSelect").value;
+    //console.log(server);
+    //document.getElementById("continue").disabled = true;
+    //document.getElementById("next").disabled = true;
+    var x = "https://xivapi.com/freecompany/search?name=" + document.getElementById("inputText").value + "&server=Mateus" ;
+    console.log(x);
+    fetch(x, { mode: 'cors' })
+    	.then(response => response.json())
+      .then(data => pullID(data.Results[0].ID))
+  }
+  function pullID(id)
+  {
+    console.log(id);
+    var x = "https://xivapi.com/freecompany/" + id + "?data=FCM";
+    //console.log(x);
+    fetch(x, { mode: 'cors' })
+    	.then(response => response.json())
+      .then(data => getMembers(data))
+  }
+  function getMembers(data)
+  {
+    console.log(data);
+    characterArray = data.FreeCompanyMembers;
+    startGame();
+  }
+  function startGame()
+  {
+    document.getElementById("header1").innerHTML = "The journey has begun! The free company embarks, bringing with it...";
+    document.getElementById("header2").innerHTML = "<br>";
+
+    for (i=0;i < characterArray.length;i++)
+    {
+      document.getElementById("header2").innerHTML += characterArray[i].Name + "<br>";
+      //var faceImg = document.createElement("image");
+      //faceImg.setAttribute('src', "characterArray[i].Avatar");
+      //document.body.appendChild(faceImg);
+    }
+
+    //document.getElementById("startBtn").disabled = true;
+    //document.getElementById("inputText").disabled = true;
+    //document.getElementById("continue").enabled = true;
+    position++;
+  }
+
+  function continueOn()
+  {
+    if (position === 0)
+    {
+      makeCalls();
+    }
+    if (position === 1)
+    {
+      $('continue').unbind('click');
+
+      idyllshireTravel();
+    }
+  }
+
+  function idyllshireTravel()
+  {
+    document.getElementById("header2").innerHTML = "You begin your expedition in Idyllshire.";
+    var tempMoney = 1000 * characterArray.length;
+    money = tempMoney;
+    document.getElementById("header2").innerHTML += "<br> Before you set out, you must first purchase supplies. You will need to purchase Chocobos, Food, Medicine, and Clothing.";
+    document.getElementById("header2").innerHTML += "<br> Please purchase your supplies.";
+    document.getElementById("header1").innerHTML = "You have " + tempMoney + " gil."
+    document.getElementById("continue").enabled = true;
+    document.getElementById("continue").addEventListener("click", function(){
+      document.getElementById("header2").innerHTML = "Chocobos are 1000 gil each, and come with a wagon attached.";
+      document.getElementById("header1").innerHTML = "You have " + money + " gil."
+      document.getElementById("inputText").enabled = true;
+      document.getElementById("continue").addEventListener("click", function(){
+        money = money - (document.getElementById("inputText").value * 1000);
+        chocobos = document.getElementById("inputText").value;
+        document.getElementById("header1").innerHTML = "You have " + money + " gil and" + chocobos + " chocobos."
+        document.getElementById("header2").innerHTML = "Parcels of food are 100 gil each, and will feed one person for a day.";
+        document.getElementById("continue").addEventListener("click", function(){
+          money = money - (document.getElementById("inputText").value * 100);
+          food = document.getElementById("inputText").value;
+          document.getElementById("header1").innerHTML = "You have " + money + " gil, " + chocobos + " chocobos, and " + food + " parcels of food.";
+          document.getElementById("header2").innerHTML = "Medicinal kits cost 500 a piece.";
+          document.getElementById("continue").addEventListener("click", function(){
+            money = money - (document.getElementById("inputText").value * 500);
+            medicine = document.getElementById("inputText").value;
+            document.getElementById("header1").innerHTML = "You have " + money + " gil, " + chocobos + " chocobos," + food + " parcels of food, and " + medicine + " medicinal kits.";
+            document.getElementById("header2").innerHTML = "Spare clothing costs 250 a piece.";
+            document.getElementById("continue").addEventListener("click", function(){
+              money = money - (document.getElementById("inputText").value * 250);
+              clothes = document.getElementById("inputText").value;
+              document.getElementById("header1").innerHTML = "You have " + money + " gil, " + chocobos + " chocobos," + food + " parcels of food, " + medicine + " medicinal kits., and " + clothes + " spare sets of clothes.";
+              document.getElementById("header2").innerHTML = "You're now ready to head out!";
+              document.getElementById("continue").addEventListener("click", function(){
+                hinterlandsTravel();
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+  hinterlandsTravel()
+  {
+    document.getElementById("header1").innerHTML = "";
+    document.getElementById("header2").innerHTML = "";
+    var randNum = Math.floor(Math.random()*10);
+    if (randNum === 0)
+    {
+      partySafe(area);
+    }
+    if (randNum === 1)
+    {
+      partyAttack(area,name);
+    }
+    if (randNum === 2)
+    {
+      partySick(area);
+    }
+  }
+  partySafe(area)
+  {
+
+  }
+  partyAttack(area, name)
+  {
+
+  }
+  partySick(area)
+  {
+
+  }
+  party
+
+
+
+  </script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <body>
+    <h1 id="header1">The Eorzean Trail</h1>
+    <h2 id="header2">Please search for your Free Company</h2>
+    <button id="continue" onclick = "continueOn()">Next</button>
+  <input id="inputText" style="margin-top:6%;height:6%;"></input>
+
+</body>

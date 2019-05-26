@@ -1,0 +1,1779 @@
+<!-- Hi there, FCC people! Hope you're having a nice day :3 -->
+<!--
+- Add Favicon
+- Add responsiveness using media queries\
+- Font Awesome
+-->
+<style>
+  html,
+  body {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    background-color: #222629;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  nav
+  {
+  }
+  nav ul {
+    text-align: left;
+    position: fixed;
+    width: 100%;
+    background-color: #333;
+  }
+
+  nav ul li {
+    display: inline-block;
+    margin: -5px;
+    margin-bottom: 13px;
+    margin-top: 15px;
+  }
+
+  nav ul li a {
+    color: #f2f2f2;
+    padding: 14px 15px;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    color: black;
+    background-color: #ddd;
+  }
+
+  /* Add a color to the active/current link */
+  .navbar a.active {
+    background-color: red;
+    color: red;
+  }
+  .active
+  {
+    background-color: #86C232;
+    color: white;
+  }
+  @media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  }
+  .welcome-section
+  {
+    background-color: #222629;
+    font-family: Oswald;
+    letter-spacing: 4px;
+    top: 0;
+    height: 32%;
+    padding-top: 10%;
+    padding-bottom: 1%;
+  }
+
+
+  .tile:hover
+  {
+    opacity: 0.75;
+  }
+  .contact
+  {
+    font-size: 12px;
+    background: #222629;
+  }
+  .row
+  {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .projects
+  {
+    background: #474B4F;
+  }
+  .footer
+  {
+    background: #6B6E70;
+    height: 250px;
+  }
+  .footer h1
+  {
+    font-size: 20px;
+    padding-top: 20px;
+    font-family: Oswald;
+    color: #86C232;
+  }
+  h1
+  {
+    font-size: 40px;
+  }
+  h2
+  {
+    font-family: Oswald;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    font-size: 30px;
+    z-index: 990;
+
+
+  }
+  h3
+  {
+    background: #a4b7d4;
+  }
+  .project-title
+  {
+    padding-top: 260px;
+    font-size: 16px;
+    color: #86C232;
+    font-weight: bold;
+    decoration: none;
+  }
+  a:link {
+    text-decoration: none;
+  }
+  .profile-link:hover
+  {
+    opacity: 0.75;
+  }
+
+  hr
+  {
+    padding-top: 0px;
+
+  }
+
+
+  /* The flip box container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-box {
+  background-color: transparent;
+  width: 100%;
+  height: auto;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box:hover .flip-box-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-box-front, .flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(black, 0.5);
+
+  /*backface-visibility: hidden;*/
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-box-front {
+  width: 100%;
+  height: auto;
+  z-index: 999;
+}
+
+/* Style the back side */
+.flip-box-back {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: auto;
+  transform: rotateY(180deg);
+  background-color: rgba(black, 0.5);
+
+}
+.responsive
+{
+  width: 100%;
+  height: auto;
+}
+.responsive2
+{
+  width: auto;
+  height: auto;
+}
+.hero-section
+{
+  background-color:  #222629;
+  font-family: Oswald;
+  letter-spacing: 4px;
+  top: 0;
+  width: auto;
+  height: 50%;
+  padding-top: 5%;
+  padding-bottom: 1%;
+}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+  font-size: 20px;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.modal
+{
+  background: rgba(0, 0, 0, 0.75);
+  border: 0px;
+}
+.devyBG
+{
+  background-image: url("images/devin-townsend-evermore.jpg";
+}
+#modalTitle
+{
+  font-size: 70px;
+  margin-right: 10%;
+  max-width: 100%;
+  margin-top: 2.5%;
+  color: white;
+}
+#albumArt
+{
+  margin-left: 5%;
+  margin-top: 10%;
+
+}
+#trackListing
+{
+  color: white;
+  text-align: left;
+}
+#favorite, #favorite2, #favorite3
+{
+  color: white;
+  padding-right: 50%;
+}
+#summary, #experience
+{
+  padding-top: 5%;
+  color: white;
+}
+
+
+  </style>
+<script>
+  let albumArray = [
+  {
+    name: "IR8 Demos",
+    summary: "",
+    experience: "",
+    releaseDate: "1994",
+    trackList: [],
+    imgSrc: "images/ir8.JPEG",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Heavy As A Really Heavy Thing",
+    summary: "Devin's early career was spent touring with other bands, such as The Wildhearts and Steve Vai. After becoming disillusioned with the music industry, and having one of his personal projects, Noisecapes, rejected by both Roadrunner Records and Relativity Records, Devin was contacted by Century Media Records. Devin agreed to a five album deal with Century Media, with a contract promising the delivery of five 'extreme albums'.",
+    experience: "This is one of my personal favorites, with a blend of thrash and industrial. It's a very savage album, and a bit unrefined, but that's part of what makes it so appealing to me. This is one of those albums to listen to when you're angry, but still have a lot of energy left in you. Strapping Young Lad is angry music for sure, but I feel like most of their albums have this different kind of anger that the music is sort of imbued with. For this one, I'd say it's frustration.",
+    releaseDate: "April 4th, 1995",
+    trackList: ["S.Y.L.","In the Rainy Season","Goat","Cod Metal King","Happy Camper","Critic","The Filler - Sweet City Jesus","Skin Me","Drizzlehell","Satan's Ice Cream Truck","Japan","Monday","Exciter"],
+    imgSrc: "images/HAARHT.jpg",
+    favorite: "Skin Me",
+    favorite2: "Goat + Cod Metal King",
+    favorite3: "Monday"
+  },
+  {
+    name: "Punky Bruster - Cooked on Phonics",
+    summary: "Summary",
+    experience: "Hm",
+    releaseDate: "Date",
+    trackList: "",
+    imgSrc: "images/punkybruster.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "City",
+    summary: "A little while after Heavy As A Really Heavy Thing was released, Devin transformed Strapping Young Lad from a solo project into a band, with Jed Simon on guitar, Byron Stroud on bass, and Gene Hoglan on the drums. The titular City in the album is referring to Los Angeles, where Devin lived on a friend's couch for a while. City was a huge success, puttting Strapping Young Lad on the map, and is widely considered to be the band's best album.",
+    experience: "This is by far my favorite Strapping Young Lad album. Devin himself stated that it is 'the real Strapping record. That's the ultimate one out of all of them.' Like the earlier album, City is an angry album, and I feel like the anger in this one stems from a rage against society, and the complacency and mediocrity of its inhabitants.",
+    releaseDate: "February 11th, 1997",
+    trackList: ["Velvet Kevorkian","All Hail The New Flesh","Oh My Fucking God","Detox","Home Nucleonics", "AAA", "Underneath the Waves","Room 429", "Spirituality"],
+    imgSrc: "images/city.jpg",
+    favorite: "Detox",
+    favorite2: "Oh My Fucking God",
+    favorite3: "Velvet Kevorkian + All Hail The New Flesh"
+  },
+  {
+    name: "Ocean Machine",
+    summary: "Summary",
+    experience: "Without a doubt, this is my favorite album of all time. I first heard it when starting college in 2012, and it has remained the single most touching piece of art I have ever experienced since. The melancholy of aging, the mourning of loved ones, the questions that will never be answered...I feel that this album understands me more than anything else ever could.",
+    releaseDate: "Date",
+    trackList: ["Seventh Wave","Life","Night","Hide Nowhere","Sister","3 A.M.","Voices in the Fan","Greetings","Regulator","Funeral","Bastard - Not One of My Better Days/The Girl from Blue City","The Death of Music","Things Beyond Things"],
+    imgSrc: "images/oceanmachine.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Christeen + 4 Demos",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "May 1998",
+    trackList: ["Christeen","Om","Sit In The Mountain","Processional (Star Child Rise - Welcome Home - Metamorph - Infinite Waltz)","Love-Load"],
+    imgSrc: "images/christeen.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "No Sleep Til Bedtime (Live)",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "June 1998",
+    trackList: ["Velvet Kevorkian","All Hail the New Flesh","Home Nucleonics","Oh My Fucking God","S.Y.L.","In the Rainy Season","Far Beyond Metal","Japan","Centipede","Home Nucleonics ('96 demo)","Hedrhoid","Detox ('96 demo')","AAA ('96 demo')"],
+    imgSrc: "images/nosleep.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Infinity",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "Oct 1998",
+    trackList: "",
+    imgSrc: "images/infinity.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Ass Sordid Demos",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2000",
+    trackList: "",
+    imgSrc: "images/asssordid.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Official Bootleg",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2000",
+    trackList: "",
+    imgSrc: "images/bootleg.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Physicist",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "June 2000",
+    trackList: "",
+    imgSrc: "images/physicist.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Terria",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "November 2001",
+    trackList: "",
+    imgSrc: "images/terria.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Strapping Young Lad",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "February 2003",
+    trackList: ["Dire","Consequence","Relentless","Rape Song","Aftermath","Devour","Last Minute","Force Fed","Dirt Pride","Bring On The Young", "Detox (Bonus, live ver.)","Underneath the Waves (Bonus, live ver.)"],
+    imgSrc: "images/syl.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Accelerated Evolution",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "March 2003",
+    trackList: ["Depth Charge","Storm","Random Analysis","Deadhead","Suicide","Traveller","Away","Sunday Afternoon","Slow Me Down"],
+    imgSrc: "images/acceleratedevolution.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "SYL Tour EP",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2003",
+    trackList: ["Devour","Aftermath","Oh My Fucking God","In the Rainy Season","Detox"],
+    imgSrc: "images/tourEP.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Ass Sordid Demos II",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2004",
+    trackList: "",
+    imgSrc: "images/asssordid2.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Devlab",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2004",
+    trackList: "",
+    imgSrc: "images/devlab.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "For Those Aboot To Rock",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "November 2nd, 2004",
+    trackList: "",
+    imgSrc: "images/aboot.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Alien",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2005",
+    trackList: ["Imperial","Skeksis","Shitstorm","Love?","Shine","We Ride","Possessions","Two Weeks","Thalamus","Zen","Info Dump"],
+    imgSrc: "images/alien.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Synchestra",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2006",
+    trackList: ["Let it Roll","Hypergeek","Triumph","Babysong","Vampolka","Vampira","Mental Tan","Gaia","Pixillate","Judgement","A Simple Lullaby","Sunset","Notes from Africa","Sunshine and Happiness (Hidden track)"],
+    imgSrc: "images/synchestra.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Safe Zone",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2006",
+    trackList: "",
+    imgSrc: "images/dtb.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "The New Black",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2006",
+    trackList: ["Decimator","You Suck","Anti-Product","Monument","Wrong Side","Hope","Far Beyond Metal","Fucker","Almost Again","Polyphony","The New Black","The Long Pig (Bonus)","Zodiac (Bonus)","C:enter:### (Bonus)"],
+    imgSrc: "images/thenewblack.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "The Hummer",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2006",
+    trackList: ["The Hummer","Arc","Consciousness Causes Collapse","Equation","The Abacus","Cosmic Surf"],
+    imgSrc: "images/thehummer.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Ziltoid The Omniscient",
+    summary: "Fetid humans! How dare you summarize *my* album? Foolish! I am so omniscient, I can even see this webpage! And this code...foul! How dare they present *this* to me?",
+    experience: "Modular forms and elliptic curves! Infinite for loops revolving around unassigned arrays, fractals of out-of-scope objects, each cascading style sheet gliding in an infinite wheel! This website sucks!",
+    releaseDate: "May 21st, 2007, in your sordid Earth Calendar",
+    trackList: ["ZTO","By Your Command","Ziltoidia Attaxx!!!","Solar Winds","Hyperdrive","N9","Planet Smasher","Omnidimensional Creator","Color Your World","The Greys","Tall Latte"],
+    imgSrc: "images/ziltoid.jpg",
+    favorite: "Color Your World",
+    favorite2: "By Your Command",
+    favorite3: "Planet Smasher"
+  },
+  {
+    name: "C:enter:###",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "2007",
+    trackList: "",
+    imgSrc: "images/c-enter.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Chaos Years",
+    summary: "Chaos Years is a compilation album of various Strapping Young Lad tracks, each picked by the band and remastered by Devin.",
+    experience: "Not much to say here. Strapping Young Lad made some great music, but I understand why they disbanded, and I wouldn't want them to get back together. It always frustrates me when I see people say they want Devin to quit his other projects and pick SYL back up. The guy was miserable! Don't put him through that again! ",
+    releaseDate: "2007",
+    trackList: ["S.Y.L.","In the Rainy Season","Velvet Kevorkian","All Hail The New Flesh","Oh My Fucking God","Detox","Relentless","Rape Song","Aftermath","Imperial","Skeksis","Shitstorm","Love?","You Suck","Wrong Side","Almost Again","Satan's Ice Cream Truck"],
+    imgSrc: "images/chaosyears.jpg",
+    favorite: "Detox",
+    favorite2: "Love?",
+    favorite3: "Wrong Side"
+  },
+  {
+    name: "Project EKO",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "March 21st 2008",
+    trackList: ["Locate","Echo","Assignable"],
+    imgSrc: "images/eko.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Ki",
+    summary: "The first album in the Devin Townsend Project, Ki is a weird one. It's the product of Devin taking a sabbatical to find himself, along with a year long reprieve from songwriting after being exhausted from the stress of touring and living in the project eye with Strapping Young Lad and The Devin Townsend Band.",
+    experience: "This is a spooky album, but not as spooky as Casualties. The album deals a lot with self control and sobriety, and has influences from the country and ambient genres, though I wouldn't refer to it as either.",
+    releaseDate: "May 2009",
+    trackList: ["A Monday","Coast","Disruptr","Gato","Terminal","Heaven Send","Ain't Never Gonna Win","Trainfire","Lady Helen","Ki","Quiet Riot","Daemon League"],
+    imgSrc: "images/ki.jpg",
+    favorite: "Trainfire",
+    favorite2: "Disruptr",
+    favorite3: "Gato"
+  },
+  {
+    name: "Addicted",
+    summary: "Addicted is sort of like Devin flirting with the idea of pop metal, and as always, he excels at it. This is by far one of the more accessible Devin albums, and is the one I usually recommend to friends who aren't very into metal. This was the first album featuring Anneke van Giersbergen on additional vocals, and she has continued to work with Devin since.",
+    experience: "This album is like heavy metal you can dance to! I actually prefer this album's version of Hyperdrive, and Anneke's vocals on it are beautiful. If I ever get married, I'd love to play Ih-Ah! for my wife at our wedding.",
+    releaseDate: "November 2009",
+    trackList: ["Addicted!","Universe in a Ball!","Bend It Like Bender!","Supercrush!","Hyperdrive!","Resolve!","Ih-Ah!","The Way Home!","Numbered!","Awake!!"],
+    imgSrc: "images/addicted.jpg",
+    favorite: "Hyperdrive!",
+    favorite2: "Addicted!",
+    favorite3: "The Way Home!"
+  },
+  {
+    name: "Live in Baltimore",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "Feb 4, 2011",
+    trackList: "",
+    imgSrc: "images/baltimore.jpeg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Deconstruction",
+    summary: "Deconstruction is an absolutely wild album, from start to finish. It's got a tone a bit similar to The New Black, in terms of the raw power mixed with a tongue in cheek tone, but it's fantastic start to finish. It's a concept album about cheeseburgers.",
+    experience: "This was the first Devin album I listened to. It was the first album I had ever bought with my own money. Deconstruction holds a very special place in my heart, and my appreciation for the album has only grown over the years as I've come to learn more about Devin, as well as myself. There's a lot more that can be gleaned from this album once you've listened to his earlier work.",
+    releaseDate: "June 2011",
+    trackList: ["Praise the Lowered","Stand","Juular","Planet of the Apes","Sumeria","The Mighty Masturbator","Pandemic","Deconstruction","Poltergeist", "Ho Krll (Bonus Track)"],
+    imgSrc: "images/deconstruction.jpg",
+    favorite: "The Mighty Masturbator",
+    favorite2: "Deconstruction",
+    favorite3: "Ho Krll"
+  },
+  {
+    name: "Ghost",
+    summary: "Ghost was released simultaneously with Deconstruction, and they're sort of two sides of the same coin. Devin often works on two albums at once to balance himself, but this is the most obvious one. It's a very light, floaty, serene album.",
+    experience: "One of my favorite things is sinking into a warm bath with this album playing in the background. I'd say it's the most soothing thing Devin has ever produced, and though I wasn't a fan when I first heard it, I find myself coming back to it often.",
+    releaseDate: "June 2011",
+    trackList: ["Fly","Heart Baby","Feather","Kawaii","Ghost","Blackberry","Monsoon","Dark Matters","Texada","Seams","Infinite Ocean","As You Were","Radial Highway (Bonus Track)"],
+    imgSrc: "images/ghost.jpg",
+    favorite: "Blackberry",
+    favorite2: "Feather",
+    favorite3: "Infinite Ocean"
+  },
+  {
+    name: "Ghost 2",
+    summary: "Ghost was originally supposed to be a double album, but the second disc was sadly cancelled. Devin said that the tracks were a bit too dark and heavier than the rest of Ghost, and that it wouldn't really fit. He officially cancelled it on August 22, 2012. Parts of the album were released in the Contain Us box set, though some of the contents wound up on the bonus disk for Casualties of Cool, and it can be argued that Casualties is what the tone of Ghost 2 eventually evolved into.",
+    experience: "",
+    releaseDate: "June 2011",
+    trackList: "",
+    imgSrc: "images/ghost2.jpg",
+    favorite: "Watch You",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Unplugged",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "July 2011",
+    trackList: "",
+    imgSrc: "images/unplugged.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Contain Us",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "December 9th, 2011",
+    trackList: "",
+    imgSrc: "images/containus.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Stuff That Was Almost Stuff",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "December 9th, 2011",
+    trackList: "",
+    imgSrc: "images/dtp1.jpeg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Stuff That Was Stuff Before It Was Finished Stuff",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "December 9th, 2011",
+    trackList: "",
+    imgSrc: "images/dtp2.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "By A Thread",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "June 2012",
+    trackList: "",
+    imgSrc: "images/byathread.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Epicloud",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "September 2012",
+    trackList: "",
+    imgSrc: "images/epicloudAlt.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Epiclouder",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "September 2012",
+    trackList: "",
+    imgSrc: "images/epiclouder.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "The Retinal Circus",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "September 2013",
+    trackList: "",
+    imgSrc: "images/retinalcircus.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Casualties of Cool",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "May 2014",
+    trackList: "",
+    imgSrc: "images/casualties.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Casualties of Cooler",
+    summary: "Summary",
+    experience: "",
+    releaseDate: "May 2014",
+    trackList: "",
+    imgSrc: "images/cooler.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+
+  {
+    name: "Z2",
+    summary: "",
+    experience: "",
+    releaseDate: "October 2014",
+    trackList: "",
+    imgSrc: "images/z2.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Sky Blue",
+    summary: "",
+    experience: "",
+    releaseDate: "October 2014",
+    trackList: "",
+    imgSrc: "images/skyblue.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Dark Matters",
+    summary: "",
+    experience: "",
+    releaseDate: "October 2014",
+    trackList: "",
+    imgSrc: "images/darkmatters.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+
+  {
+    name: "Ziltoid - Live at the Royal Albert Hall",
+    summary: "",
+    experience: "",
+    releaseDate: "November 13th, 2015",
+    trackList: "",
+    imgSrc: "images/alberthall.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Transcendence",
+    summary: "",
+    experience: "",
+    releaseDate: "September 2016",
+    trackList: "",
+    imgSrc: "images/transcendence.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Holding Patterns",
+    summary: "",
+    experience: "",
+    releaseDate: "September 2016",
+    trackList: "",
+    imgSrc: "images/holdingpatterns.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Ancient",
+    summary: "",
+    experience: "",
+    releaseDate: "October 2016",
+    trackList: "",
+    imgSrc: "images/ancient.png",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Iceland",
+    summary: "",
+    experience: "",
+    releaseDate: "October 2016",
+    trackList: "",
+    imgSrc: "images/iceland.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Ocean Machine - Live at Plovdiv",
+    summary: "",
+    experience: "",
+    releaseDate: "July 2018",
+    trackList: "",
+    imgSrc: "images/plovdiv.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Empath",
+    summary: "",
+    experience: "",
+    releaseDate: "March 2019",
+    trackList: "",
+    imgSrc: "images/empath.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+  {
+    name: "Tests of Manhood",
+    summary: "",
+    experience: "",
+    releaseDate: "March 2019",
+    trackList: "",
+    imgSrc: "images/catte.jpg",
+    favorite: "",
+    favorite2: "",
+    favorite3: ""
+  },
+
+  ];
+
+  function makeUL(array)
+  {
+    var list = document.createElement('ol');
+    for (var i = 0; i<array.length; i++)
+    {
+      var item = document.createElement('li');
+      item.appendChild(document.createTextNode(array[i]));
+      list.appendChild(item);
+    }
+    return list;
+  }
+  function modalFunc(input)
+  {
+    console.log(albumArray[input].trackList);
+    console.log(input);
+    console.log("Hewwo?");
+    document.getElementById('trackListing').innerHTML= "";
+    modalTitle.innerText = albumArray[input].name;
+    document.getElementById('trackListing').appendChild(makeUL(albumArray[input].trackList));
+    document.getElementById('summary').innerHTML = albumArray[input].summary;
+    document.getElementById('experience').innerHTML = albumArray[input].experience;
+    document.getElementById('albumArt').src = albumArray[input].imgSrc;
+    document.getElementById('favorite').innerHTML = "Favorite Track: " + albumArray[input].favorite;
+    document.getElementById('favorite2').innerHTML = "Second Favorite Track: " + albumArray[input].favorite2;
+    document.getElementById('favorite3').innerHTML = "Third Favorite Track: " + albumArray[input].favorite3;
+    document.getElementById('releaseDate').innerHTML = albumArray[input].releaseDate;
+
+    $("#myModal").modal();
+    }
+  </script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<body>
+<!--
+<nav>
+<ul id='navbar' style="z-index:0;">
+<li><a class = "active" href="index.html">Home</a></li>
+</ul>
+</nav>
+-->
+
+<div class="modal fade" id="myModal" role="dialog">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="container-fluid">
+
+          <div class = "row">
+            <div class="col-sm-3">
+              <img id="albumArt" style = "padding-top: 10%;padding-left:15%;width: 700px;  height: 700px
+
+" src=""></img>
+              </div>
+
+
+              <div class="col-sm-9">
+                <h4 id ="modalTitle" style="padding-top:2%;font-size:70px;color:white;"></h4>
+                <div class ="row">
+                  <div class="col-sm-4">
+                    <ol id="trackListing" style="padding-left:45%; text-align:left; color: white;"></ol>
+
+
+                    </div>
+                    <div class="col-sm-8">
+                      <h4 id="summary" style="color:white;"></h4>
+                      <h4 id="experience" style="color:white;"></h4>
+                      <h4 id="favorite" style = "padding-top: 5%; color:white;"></h4>
+                      <h4 id="favorite2" style="color:white;"></h4>
+                      <h4 id="favorite3" style="color:white;"></h4>
+
+                      </div>
+
+                  </div>
+
+
+                </div>
+            </div>
+            <div class = "row">
+              <div class = "col-sm-3">
+                <h4 id="releaseDate" style="color:white;font-size: 40px;padding-left:40%"></h4>
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:40%;">Close</button>
+
+                </div>
+              </div>
+            </div>
+
+
+        <div id="modalBody">
+        </div>
+  </div>
+
+
+<section class="hero-section" id="hero-section">
+  <div class = "container-fluid">
+    <div class = "row">
+      <img src="images/devin-townsend-evermore.jpg" class="responsive" style="z-index: 0;">
+      <h1 style="z-index: 1; font-color: black;position:absolute;padding-left:60%;font-size:100px;">Devin Townsend </h1>
+      <h1 style ="z-index: 2; position: absolute; padding-top: 7%; padding-left: 50%; font-size: 20px; align: left;">With a musical career spanning twenty five years, and roughly as many albums to show for it, Devin Townsend has long been one of metal's biggest names. Devin released his first album in 1995, with a band named Strapping Young Lad. Since then, Devin has continued to release new and exciting music, sometimes even inventing new sub-genres of metal. His work ranges from hard rock, progressive metal, new-age, and ambient, if it can be classified as any one genre at all. He is known for his signature wall of sound, his down to earth personality, and his beautiful scalp. Creative freedom and expression has always been the focus of Townsend's passion with music, and his latest album, Empath, displays that greatly. Devin Townsend's music has been very important to me throughout my life, and I'm eager to see what he will do next; I hope you'll end up looking forward to it as well! </h1>
+      </div>
+    </div>
+  </section>
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+  <div class="col-xs-2">
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/ir8.jpg" alt="Heavy as a Really Heavy Thing" class="responsive" onclick="modalFunc(0);">
+        </div>
+        <div class="flip-box-back">
+          <h2>IR8 Demos</h2>
+          <p>1994</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/HAARHT.jpg" alt="Heavy as a Really Heavy Thing" class="responsive" onclick="modalFunc(1);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Heavy As A Really Heavy Thing</h2>
+          <p>April 1995</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/punkybruster.jpg" alt="Heavy as a Really Heavy Thing" class="responsive" onclick="modalFunc(2);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Punky Bruster - Cooked on Phonics</h2>
+          <p>Apr 1995</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/city.jpg" alt="City"   class="responsive" onclick="modalFunc(3);">
+        </div>
+        <div class="flip-box-back">
+          <h2>City</h2>
+          <p>February 1997</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+     <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/oceanmachine.jpg" alt="Ocean Machine"   class="responsive" onclick="modalFunc(4);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Ocean Machine</h2>
+          <p>July 1997</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+    <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/christeen.jpg" alt="Christeen"   class="responsive" onclick="modalFunc(5);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Christeen + 4 Demos</h2>
+        <p>October 1998</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+
+<div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/nosleep.jpg" alt="No Sleep Til Bedtime"   class="responsive" onclick="modalFunc(6);">
+    </div>
+    <div class="flip-box-back">
+      <h2>No Sleep Til Bedtime</h2>
+      <p>June 1998</p>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="col-xs-2">
+    <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/infinity.jpg" alt="Infinity"   class="responsive" onclick="modalFunc(7);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Infinity</h2>
+        <p>October 1998</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/asssordid.jpg" alt="Ass Sordid"   class="responsive" onclick="modalFunc(8);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Ass-Sordid Demos</h2>
+      <p>2000</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/bootleg.jpg" alt="Official Bootleg"   class="responsive" onclick="modalFunc(9);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Official Bootleg</h2>
+      <p>2000</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+      <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/physicist.jpg" alt="Physicist"   class="responsive" onclick="modalFunc(10);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Physicist</h2>
+          <p>June 2000</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+     <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/terria.jpg" alt="Terria"  class="responsive" onclick="modalFunc(11);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Terria</h2>
+          <p>November 2001</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<section class ="welcome-section" id="welcome-section">
+  <div class = "container-fluid">
+    <div class = "row">
+
+        <div class="col-xs-2">
+          <div class="flip-box">
+            <div class="flip-box-inner">
+              <div class="flip-box-front">
+                <img src="images/syl.jpg" alt="Strapping Young Lad" class="responsive" onclick="modalFunc(12);">
+              </div>
+              <div class="flip-box-back">
+                <h2>Strapping Young Lad</h2>
+                <p>February 2003</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="flip-box">
+            <div class="flip-box-inner">
+              <div class="flip-box-front">
+                <img src="images/acceleratedevolution.jpg" alt="Accelerated Evolution"   class="responsive" onclick="modalFunc(13);">
+              </div>
+              <div class="flip-box-back">
+                <h2>Accelerated Evolution</h2>
+                <p>March 2003</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="flip-box">
+            <div class="flip-box-inner">
+              <div class="flip-box-front">
+                <img src="images/tourEP.jpg" alt="Tour EP"   class="responsive" onclick="modalFunc(14);">
+              </div>
+              <div class="flip-box-back">
+                <h2>SYL Tour EP</h2>
+                <p>2003</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="flip-box">
+           <div class="flip-box-inner">
+             <div class="flip-box-front">
+               <img src="images/asssordid2.jpg" alt="Ass-Sordid 2"   class="responsive" onclick="modalFunc(15);">
+             </div>
+             <div class="flip-box-back">
+               <h2>Ass-Sordid Demos 2</h2>
+               <p>2004</p>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div class="col-xs-2">
+          <div class="flip-box">
+           <div class="flip-box-inner">
+             <div class="flip-box-front">
+               <img src="images/devlab.jpg" alt="Devlab"   class="responsive" onclick="modalFunc(16);">
+             </div>
+             <div class="flip-box-back">
+               <h2>Devlab</h2>
+               <p>December 2004</p>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div class="col-xs-2">
+          <div class="flip-box">
+           <div class="flip-box-inner">
+             <div class="flip-box-front">
+               <img src="images/aboot.jpg" alt="For Those Aboot To Rock"   class="responsive" onclick="modalFunc(17);">
+             </div>
+             <div class="flip-box-back">
+               <h2>For Those Aboot To Rock</h2>
+               <p>December 2004</p>
+             </div>
+           </div>
+         </div>
+       </div>
+</div>
+</div>
+</section>
+
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+
+ <div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/alien.jpg" alt="Alien"   class="responsive" onclick="modalFunc(18);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Alien</h2>
+      <p>March 2005</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+    <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/synchestra.jpg" alt="Synchestra"   class="responsive" onclick="modalFunc(19);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Synchestra</h2>
+        <p>January 2006</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+    <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/dtb.jpg" alt="Safe Zone"   class="responsive" onclick="modalFunc(20);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Safe Zone</h2>
+        <p>January 2006</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+ <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/thenewblack.jpg" alt="The New Black"  class="responsive" onclick="modalFunc(21);">
+    </div>
+    <div class="flip-box-back">
+      <h2>The New Black</h2>
+      <p>July 2006</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+<div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/thehummer.jpg" alt="The Hummer" class="responsive" onclick="modalFunc(22);">
+    </div>
+    <div class="flip-box-back">
+      <h2>The Hummer</h2>
+      <p>November 2006</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+<div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/ziltoid.jpg" alt="Ziltoid the Omniscient"   class="responsive" onclick="modalFunc(23);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Ziltoid the Omniscient</h2>
+      <p>May 2007</p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+
+<div class="col-xs-2">
+  <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/c-enter.jpg" alt="C:enter:###"   class="responsive" onclick="modalFunc(24);">
+      </div>
+      <div class="flip-box-back">
+        <h2>C:enter:###</h2>
+        <p>2007</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/chaosyears.jpg" alt="Chaos Years"   class="responsive" onclick="modalFunc(25);">
+      </div>
+      <div class="flip-box-back">
+        <h2>1994-2006 Chaos Years</h2>
+        <p>March 31st, 2008</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/eko.jpg" alt="Project EKO"   class="responsive" onclick="modalFunc(26);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Project EKO</h2>
+        <p>March 21st, 2008</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+    <div class="flip-box">
+     <div class="flip-box-inner">
+       <div class="flip-box-front">
+         <img src="images/ki.jpg" alt="Ki"   class="responsive" onclick="modalFunc(27);">
+       </div>
+       <div class="flip-box-back">
+         <h2>Ki</h2>
+         <p>May 2009</p>
+       </div>
+     </div>
+   </div></div>
+ <div class="col-xs-2">
+   <div class="flip-box">
+   <div class="flip-box-inner">
+     <div class="flip-box-front">
+       <img src="images/addicted.jpg" alt="Addicted"   class="responsive" onclick="modalFunc(28);">
+     </div>
+     <div class="flip-box-back">
+       <h2>Addicted</h2>
+       <p>November 2009</p>
+     </div>
+   </div>
+ </div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/baltimore.jpeg" alt="Live in Baltimore"   class="responsive" onclick="modalFunc(29);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Live In Baltimore</h2>
+      <p>Feb 4th, 2011</p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+  <div class="col-xs-2">
+       <div class="flip-box">
+       <div class="flip-box-inner">
+         <div class="flip-box-front">
+           <img src="images/deconstruction.jpg" alt="Deconstruction"   class="responsive" onclick="modalFunc(30);">
+         </div>
+         <div class="flip-box-back">
+           <h2>Deconstruction</h2>
+           <p>June 2011</p>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="col-xs-2">
+      <div class="flip-box">
+       <div class="flip-box-inner">
+         <div class="flip-box-front">
+           <img src="images/ghost.jpg" alt="Ghost"  class="responsive" onclick="modalFunc(31);">
+         </div>
+         <div class="flip-box-back">
+           <h2>Ghost</h2>
+           <p>June 2011</p>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="col-xs-2">
+      <div class="flip-box">
+       <div class="flip-box-inner">
+         <div class="flip-box-front">
+           <img src="images/ghost2.jpg" alt="Ghost2"  class="responsive" onclick="modalFunc(32);">
+         </div>
+         <div class="flip-box-back">
+           <h2>Ghost 2</h2>
+           <p>June 2011</p>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="col-xs-2">
+      <div class="flip-box">
+       <div class="flip-box-inner">
+         <div class="flip-box-front">
+           <img src="images/unplugged.jpg" alt="unplugged"  class="responsive" onclick="modalFunc(33);">
+         </div>
+         <div class="flip-box-back">
+           <h2>Unplugged</h2>
+           <p>July 2011</p>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="col-xs-2">
+      <div class="flip-box">
+       <div class="flip-box-inner">
+         <div class="flip-box-front">
+           <img src="images/containus.jpg" alt="Contain Us"  class="responsive" onclick="modalFunc(34);">
+         </div>
+         <div class="flip-box-back">
+           <h2>Contain Us</h2>
+           <p>December 9th, 2011</p>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="col-xs-2">
+      <div class="flip-box">
+       <div class="flip-box-inner">
+         <div class="flip-box-front">
+           <img src="images/dtp1.jpeg" alt="Stuff That Was Almost Stuff"  class="responsive" onclick="modalFunc(35);">
+         </div>
+         <div class="flip-box-back">
+           <h2>Stuff That Was Almost Stuff</h2>
+           <p>December 9th, 2011</p>
+         </div>
+       </div>
+     </div>
+   </div>
+
+</div>
+</div>
+</section>
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+  <div class="col-xs-2">
+     <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/dtp2.jpg" alt="Stuff That Was Almost Stuff Before It Was Finished Stuff"  class="responsive" onclick="modalFunc(36);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Stuff That Was Almost Stuff Before It Was Finished Stuff</h2>
+          <p>December 9th, 2011</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+     <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/byathread.jpg" alt="By A Thread"  class="responsive" onclick="modalFunc(37);">
+        </div>
+        <div class="flip-box-back">
+          <h2>By A Thread</h2>
+          <p>June 2012</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+  <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/epicloud.jpg" alt="Epicloud" class="responsive" onclick="modalFunc(38);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Epicloud</h2>
+        <p>September 2012</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/epiclouder.jpg" alt="Epiclouder" class="responsive" onclick="modalFunc(39);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Epiclouder</h2>
+        <p>September 2012</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/retinalcircus.jpg" alt="The Retinal Circus" class="responsive" onclick="modalFunc(40);">
+      </div>
+      <div class="flip-box-back">
+        <h2>The Retinal Circus</h2>
+        <p>September 2013</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+   <div class="flip-box">
+     <div class="flip-box-inner">
+       <div class="flip-box-front">
+         <img src="images/casualties.jpg" alt="Casualties of Cool"   class="responsive" onclick="modalFunc(41);">
+       </div>
+       <div class="flip-box-back">
+         <h2>Casualties of Cool</h2>
+         <p>May 2014</p>
+       </div>
+     </div>
+   </div></div>
+</div>
+</div>
+</section>
+
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+  <div class="col-xs-2">
+<div class="flip-box">
+ <div class="flip-box-inner">
+   <div class="flip-box-front">
+     <img src="images/cooler.jpg" alt="Casualties of Cooler"   class="responsive" onclick="modalFunc(42);">
+   </div>
+   <div class="flip-box-back">
+     <h2>Casualties of Cooler</h2>
+     <p>May 2014</p>
+   </div>
+ </div>
+</div>
+</div>
+<div class="col-xs-2">
+<div class="flip-box">
+<div class="flip-box-inner">
+ <div class="flip-box-front">
+   <img src="images/z2.jpg" alt="Z2"   class="responsive" onclick="modalFunc(43);">
+ </div>
+ <div class="flip-box-back">
+   <h2>Z2</h2>
+   <p>October 2014</p>
+ </div>
+</div>
+</div>
+</div>
+<div class="col-xs-2">
+     <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/skyblue.jpg" alt="Sky Blue"   class="responsive" onclick="modalFunc(44);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Sky Blue</h2>
+          <p>October 2014</p>
+        </div>
+      </div>
+    </div></div>
+  <div class="col-xs-2">
+    <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/darkmatters.jpg" alt="Dark Matters"   class="responsive" onclick="modalFunc(45);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Dark Matters</h2>
+        <p>October 2014</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/alberthall.jpg" alt="Ziltoid - Live at the Royal Albert Hall"   class="responsive" onclick="modalFunc(46);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Ziltoid - Live at the Royal Albert Hall</h2>
+      <p>November 13th, 2015</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+    <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/transcendence.jpg" alt="Transcendence"   class="responsive" onclick="modalFunc(47);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Transcendence</h2>
+        <p>September 2016</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="welcome-section" id = "welcome-section">
+<div class = "container-fluid">
+<div class = "row">
+  <div class="col-xs-2">
+      <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <img src="images/holdingpatterns.jpg" alt="Holding Patterns"   class="responsive" onclick="modalFunc(48);">
+        </div>
+        <div class="flip-box-back">
+          <h2>Holding Patterns</h2>
+          <p>September 2016</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-2">
+    <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/ancient.png" alt="Ancient"   class="responsive" onclick="modalFunc(49);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Ancient</h2>
+        <p>October 2016</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/iceland.jpg" alt="Iceland"   class="responsive" onclick="modalFunc(50);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Iceland</h2>
+      <p>October 2016</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+  <div class="flip-box">
+  <div class="flip-box-inner">
+    <div class="flip-box-front">
+      <img src="images/plovdiv.jpg" alt="Ocean Machine - Live at the Plovdiv Ancient Theater"   class="responsive" onclick="modalFunc(51);">
+    </div>
+    <div class="flip-box-back">
+      <h2>Ocean Machine - Live at the Plovdiv Ancient Theater</h2>
+      <p>October 2016</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-xs-2">
+   <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/empath.jpg" alt="Empath"  class="responsive" onclick="modalFunc(52);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Empath</h2>
+        <p>March 2019</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-2">
+   <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img src="images/empathAlt.jpg" alt="Tests of Manhood"  class="responsive" onclick="modalFunc(53);">
+      </div>
+      <div class="flip-box-back">
+        <h2>Tests of Manhood</h2>
+        <p>March 2019</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+</div>
+</section>
+
+
+</body>

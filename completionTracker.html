@@ -1,0 +1,172 @@
+<!--
+HEWWO?!!
+-->
+<script>
+  var classLevels = [];
+  var levelTotal = 0;
+  var levelPercentage = 0;
+  function makeCalls()
+  {
+
+    var server = document.getElementById("serverSelect").value;
+    console.log(server);
+    //var x = "https://xivapi.com/character/search?name=" + document.getElementById("inputText").value + "&server=" + server;
+    var x = "https://xivapi.com/character/search?name=Rah'senna Selah&server=Mateus";
+    console.log(x);
+    fetch(x, { mode: 'cors' })
+    	.then(response => response.json())
+      .then(data => searchByID(data.Results[0].ID))
+  }
+  function searchByID(id)
+  {
+    console.log(id);
+    fetch("https://xivapi.com/character/" + id, { mode: 'cors' })
+    	.then(response => response.json())
+      .then(data => printOut(data));
+  }
+  function printOut(dataObj)
+  {
+    console.log(dataObj);
+   classLevels[8] = dataObj.Character.ClassJobs["8_8"].Level;
+   classLevels[9] = dataObj.Character.ClassJobs["9_9"].Level;
+   classLevels[10] = dataObj.Character.ClassJobs["10_10"].Level;
+   classLevels[11] = dataObj.Character.ClassJobs["11_11"].Level;
+   classLevels[12] = dataObj.Character.ClassJobs["12_12"].Level;
+   classLevels[13] = dataObj.Character.ClassJobs["13_13"].Level;
+   classLevels[14] = dataObj.Character.ClassJobs["14_14"].Level;
+   classLevels[15] = dataObj.Character.ClassJobs["15_15"].Level;
+   classLevels[16] = dataObj.Character.ClassJobs["16_16"].Level;
+   classLevels[17] = dataObj.Character.ClassJobs["17_17"].Level;
+   classLevels[18] = dataObj.Character.ClassJobs["18_18"].Level;
+   classLevels[19] = dataObj.Character.ClassJobs["1_19"].Level;
+   classLevels[20] = dataObj.Character.ClassJobs["2_20"].Level;
+   classLevels[21] = dataObj.Character.ClassJobs["3_21"].Level;
+   classLevels[22] = dataObj.Character.ClassJobs["4_22"].Level;
+   classLevels[23] = dataObj.Character.ClassJobs["5_23"].Level;
+   classLevels[24] = dataObj.Character.ClassJobs["6_24"].Level;
+   classLevels[25] = dataObj.Character.ClassJobs["7_25"].Level;
+   classLevels[28] = dataObj.Character.ClassJobs["26_28"].Level;
+   classLevels[30] = dataObj.Character.ClassJobs["29_30"].Level;
+   classLevels[31] = dataObj.Character.ClassJobs["31_31"].Level;
+   classLevels[32] = dataObj.Character.ClassJobs["32_32"].Level;
+   classLevels[33] = dataObj.Character.ClassJobs["33_33"].Level;
+   classLevels[34] = dataObj.Character.ClassJobs["34_34"].Level;
+   classLevels[35] = dataObj.Character.ClassJobs["35_35"].Level;
+   classLevels[36] = dataObj.Character.ClassJobs["36_36"].Level;
+   for (var i = 8; i < 36; i++)
+   {
+     if (i === 26 || i === 27 || i === 29)
+     {
+       //DO nothing.
+     }
+     else
+     {
+       levelTotal += classLevels[i];
+     }
+
+   }
+   minionCount = dataObj.Character.Minions.length;
+   mountCount = dataObj.Character.Mounts.length;
+   levelPercentage = Math.trunc((levelTotal/1870) * 100);
+   var minionPercent = minionCount/355;
+   var mountPercent = mountCount/186;
+   console.log("Job Percentage: " + levelPercentage);
+   //1870;
+   //https://xivapi.com/character/ID?data=AC
+   fetch("https://xivapi.com/character/319160?data=AC", { mode: 'cors' })
+    .then(response => response.json())
+     .then(data => printOutAch(data));
+  }
+  function printOutAch(data)
+  {
+    console.log(data);
+  }
+
+  </script>
+  <style>
+    </style>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<body>
+  <button onclick="searchByID(319160)">Search</button>
+
+  <div class = "col-sm-6">
+    <input id="inputText" style="margin-top:6%;height:6%;"></input>
+    <div>
+      <select id="serverSelect" style="margin-top:11%;width:52.5%;">
+        <option value="Adamantoise">Adamantoise</option>
+        <option value="Aegis">Aegis</option>
+        <option value="Alexander">Alexander</option>
+        <option value="Anima">Anima</option>
+        <option value="Asura">Asura</option>
+        <option value="Atomos">Atomos</option>
+        <option value="Bahamut">Bahamut</option>
+        <option value="Balmung">Balmung</option>
+        <option value="Behemoth">Behemoth</option>
+        <option value="Belias">Belias</option>
+        <option value="Byrnhildr">Byrnhildr</option>
+        <option value="Cactuar">Cactuar</option>
+        <option value="Carbuncle">Carbuncle</option>
+        <option value="Cerberus">Cerberus</option>
+        <option value="Chocobo">Chocobo</option>
+        <option value="Coeurl">Coeurl</option>
+        <option value="Diabolos">Diabolos</option>
+        <option value="Durandal">Durandal</option>
+        <option value="Excalibur">Excalibur</option>
+        <option value="Exodus">Exodus</option>
+        <option value="Faerie">Faerie</option>
+        <option value="Famfrit">Famfrit</option>
+        <option value="Fenrir">Fenrir</option>
+        <option value="Garuda">Garuda</option>
+        <option value="Gilgamesh">Gilgamesh</option>
+        <option value="Goblin">Goblin</option>
+        <option value="Gungnir">Gungnir</option>
+        <option value="Hades">Hades</option>
+        <option value="Hyperion">Hyperion</option>
+        <option value="Ifrit">Ifrit</option>
+        <option value="Ixion">Ixion</option>
+        <option value="Jenova">Jenova</option>
+        <option value="Kujata">Kujata</option>
+        <option value="Lamia">Lamia</option>
+        <option value="Leviathan">Leviathan</option>
+        <option value="Lich">Lich</option>
+        <option value="Louisoix">Louisoix</option>
+        <option value="Marlboro">Marlboro</option>
+        <option value="Mandragora">Mandragora</option>
+        <option value="Masamune">Masamune</option>
+        <option value="Mateus">Mateus</option>
+        <option value="Midgardsormr">Midgardsormr</option>
+        <option value="Moogle">Moogle</option>
+        <option value="Odin">Odin</option>
+        <option value="Omega">Omega</option>
+        <option value="Pandaemonium">Pandaemonium</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Ragnarok">Ragnarok</option>
+        <option value="Ramuh">Ramuh</option>
+        <option value="Ridill">Ridill</option>
+        <option value="Sargatanas">Sargatanas</option>
+        <option value="Shinryu">Shinryu</option>
+        <option value="Shiva">Shiva</option>
+        <option value="Siren">Siren</option>
+        <option value="Tiamat">Tiamat</option>
+        <option value="Titan">Titan</option>
+        <option value="Tonberry">Tonberry</option>
+        <option value="Typhon">Typhon</option>
+        <option value="Ultima">Ultima</option>
+        <option value="Ultros">Ultros</option>
+        <option value="Unicorn">Unicorn</option>
+        <option value="Valefor">Valefor</option>
+        <option value="Yojimbo">Yojimbo</option>
+        <option value="Zalera">Zalera</option>
+        <option value="Zeromus">Zeromus</option>
+        <option value="Zodiark">Zodiark</option>
+        </select>
+
+      </div>
+    </div>
+
+  </body>

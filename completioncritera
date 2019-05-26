@@ -1,0 +1,108 @@
+Crafting Calculator
+
+https://xivapi.com/item?search=%22Allagan%22
+
+
+
+
+
+craftedItem
+{
+name;
+materials = [array of items along with the quantity needed];
+}
+searchBar to look for item
+if found, display relevant items with a quantity dropdown and an Add button.
+user selects an item and a quantity.
+check to see if any materials for the craftedItem have material components.
+Then display Those. Then keep going down the line.
+i.e.
+
+  1 A Crafted Item
+      1 Steppe Serge
+        3 Worsted Yarn
+          3 Manzasiri Hair
+          3 Halgai Mane
+
+Searching xivapi.com/item for "Iron Rings"
+{"ID":5082,"Icon":"\/i\/020000\/020910.png","Name":"Iron Rings","Url":"\/Item\/5082"},
+Searching xivapi.com/item/ID
+Returns description. Returns IconID as well. Returns recipe object, Also returns an array of values in an array named ItemIngredient1, and a value ItemResult
+209 - Item (Job Crystal??)
+194 - ItemResult (Searching for this via Recipe/194 returns value for Iron Ingot)
+ItemIngredient1 - 206, 207, 208, 223, 224, 238, 240, 1248
+
+
+https://xivapi.com/Recipe/194
+When looking at the recipe, it returns these values. Popping those in to Item returns the item. We can keep going down the line to get the subitems and such.
+
+
+"ItemIngredient0Target":"Item",
+"ItemIngredient0TargetID":5111,
+"ItemIngredient1":null,
+"ItemIngredient1Target":"Item",
+"ItemIngredient1TargetID":0,
+"ItemIngredient2":null,
+"ItemIngredient2Target":"Item",
+"ItemIngredient2TargetID":0,
+
+
+
+Completionist Percentage
+XX (2%) Minion Percentage
+XX (2%) Mount Percentage
+(1%) Sightseeing Log - ACH(647-662, 1202-1207, 1878-1882)
+(1%) Hunting Journal
+(1%) Mount Speed Attained (?)
+(2%) Gathering Tomes Unlocked (?)
+  //Geological Folklore -Gyr Abania/Othard/Coerthas/Dravania/Abalathia's Spine
+  //Botanical - Gyr Abanian/Othard/Dravania/Coerthas/Abalathia's Spine
+  //Ichthyological - Gyr Abania/Othard/Dravania/Coerthas/Abalathia's Spine
+  //Tome of Botanical Folklore -
+(2%) Master Recipe Books Unlocked (?)
+  // 6 Numbered tomes, Master Carpenter: Glamours, Master Carpenter: Demimateria. (8 Books total.)
+(1%) Palace of the Dead
+    //ach = In Too Deep VI
+(1%) Heaven on High
+    //ach = "She's so High V"
+(1%) Grand Company Ranks Maxed (Serpentbringer, Stormbringer, )
+    (.33%) Immortal Flames
+    (.33%) Limsa Lominsa
+    (.34%) Gridania
+(16%) Cleared Dungeons, Trials, Raids (https://xivapi.com/InstanceContent)
+    (4%) Dungeons
+      (There are 64 dungeons, roughly. Each dungeon is worth .03125%)
+    (4%) Trials
+    (4%) Raids
+    (4%) Guildhests
+(7%) JobQuests finished.
+    - One for every job (28 of them). Each is worth roughly .25%
+(5%) Subquest storylines
+    //Doman Enclave - Bio-Doma V
+(X?) Custom Deliveries maxed
+    //Naago's Partner
+    //Kurenai's Partner
+    //
+(11%) Beast Tribe factions (11%)
+(2%) Relic and Anima Weapons
+    (1%) Full set of ARR Relics
+    (1%) Full set of HW Relics
+(3%) Eureka cleared.
+    (1%) Anemos
+    (1%) Pagos
+    (1%) Pyros
+XX - (16%) Jobs maxed out. (Max total should be 1870)
+(1%) BLU skills completed.
+(5%) MSQ finished
+(5%) Titles acquired (421 of them)
+(2%) Emotes
+(1%) Orchestrion Rolls (?)
+(2%) Seasonal Events Done (Bonus)
+--80%--
+
+Array achID []
+//My achievement IDs that I'm looking for
+Array achPoints[]
+//Array of percentile points that correspond to the ids.
+Run thru array of all achievement items on character, in a for loop.
+If ID is obtained, add that percentile to a total value.

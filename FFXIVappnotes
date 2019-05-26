@@ -1,0 +1,60 @@
+LAYER 1 ON TOP:
+<div style="position:relative; font-size:50px; z-index:2;">LAYER 1</div>
+<div style="position:relative; top:-50; left:5; color:red; font-size:80px; z-index:1">LAYER 2</div>
+
+LAYER 2 ON TOP:
+<div style="position:relative; font-size:50px; z-index:3;">LAYER 1</div>
+<div style="position:relative; top:-50; left:5; color:red; font-size:80px; z-index:4">LAYER 2</div>
+
+FFXIV Character Card Generator
+
+Input field that lets you search for your character name/input lodestone URL
+Record JSON from the site?
+Pull values from JSON into the card.
+https://stackoverflow.com/questions/10721884/render-html-to-an-image
+Render values into an image.
+
+
+FFXIV Progress Generator!
+First Time Setup,
+Enter level fields for all jobs [alt. pull from lodestone.]
+Optional entering fields for iLVL for jobs.
+Enter field for currency. [Can we retrieve the *total* amount of gil a player has ever accrued?]
+
+[Button - Save to File] [Button - Load from File]
+
+Save to file pushes a new value to an array called progressLog[i]
+  If the user tries to push a new progressLog value to a log that already has 11 values, it will let them know that it will overwrite the most recent log. Instead of pushing, it will save the values to progressLog[10]
+
+var jobArray["DRG", "RED", "BLM", ...];
+var levelArray[61, 70, 12];
+var iLvlArray[];
+string charName
+val dateStamp;
+//date stamp in format of 12-31-XXXX
+
+Display works as an underlying bar of the most recent progressLog value. It then stacks up on itself until (i=0) is reached. To the right of the bar is a numerical value.
+for (var i = progressLog.length; i >= 0; i--)
+{
+    There should be a defined bar color for each class. I.e. Red for Red Mage.
+    The most recent bar should be the most vibrant/saturated. It should decrease in hue as i decreases.
+    colorHue = 0. + "i";
+    //this formula will only work well if the maximum length of timestamps is 9;
+    if (i = 10)
+    {
+    colorHue = 1;
+    }
+    if (i = 0)
+    {
+    colorHue = 0.05;
+    }
+
+    rgba(255, 0, 0, colorHue);
+    //where hue is most vibrant at 1, least at 0.
+
+
+    create bar[DRG];
+    create bar[RDM];
+    create bar[MNK];
+
+}
