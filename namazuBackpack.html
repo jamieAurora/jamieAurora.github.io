@@ -50,6 +50,7 @@ HEWWO?!!
     objName.classList.add('buttonFont');
     var nameText = document.createTextNode(name);
     objName.innerHTML = (name);
+    //console.log(itemData);
     document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=itemButton("+itemData+");>" + "</button>";
     var x = document.createElement('IMG');
     x.classList.add('img');
@@ -160,10 +161,17 @@ HEWWO?!!
     var deleteButton = document.createElement('button');
     amount.classList.add('itemAmt');
     name.classList.add('itemName');
-    deleteButton.innerHTML = '<img src="xivImages/icons/status.png"/>';
+    //deleteButton.innerHTML = '<img src="xivImages/icons/status.png"/>';
     deleteButton.classList.add('deleteBtn');
-    deleteButton.addEventListener('click', () => { deleteItem(ID); })
+    deleteButton.addEventListener('click', () => { deleteItem(ID); });
 
+    var addButton = document.createElement('button');
+    addButton.classList.add('addBtn');
+    addButton.addEventListener('click', () => {addItem(ID); });
+
+    var subButton = document.createElement('button');
+    subButton.classList.add('subBtn');
+    subButton.addEventListener('click', () => {subtractItem(ID); });
 
 
     name.appendChild(nameText);
@@ -171,6 +179,8 @@ HEWWO?!!
     container.appendChild(x);
     container.appendChild(name);
     container.appendChild(deleteButton);
+    container.appendChild(subButton);
+    container.appendChild(addButton);
     container.appendChild(amount);
     container.id = itemArray[i].name;
     container.classList.add('itemContainer');
@@ -193,6 +203,32 @@ HEWWO?!!
       itemArray.splice(searchNum,1);
       document.getElementById(id).remove();
     }
+  }
+  //Adds another of the clicked item to the list.
+  function addItem(id)
+  {
+    var searchNum = null;
+    searchNum = itemArray.findIndex(i => i.name === id);
+    //SearchNum is the item object in the array.
+    itemArray[searchNum].amount += 1;
+    incrementItems(searchNum);
+  }
+  //Removes an item from the array.
+  function subtractItem(id)
+  {
+    var searchNum = null;
+    searchNum = itemArray.findIndex(i => i.name === id);
+    //SearchNum is the item object in the array.
+    if (itemArray[searchNum].amount === 1)
+    {
+      deleteItem(id);
+    }
+    else
+    {
+      itemArray[searchNum].amount += -1;
+      incrementItems(searchNum);
+    }
+
   }
   function deleteCItem(id)
   {
@@ -225,19 +261,51 @@ HEWWO?!!
     x.src = "https://xivapi.com" + i.Icon;
     var nameText = document.createTextNode(i.Name);
     var deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<img src="xivImages/icons/status.png"/>';
+    //deleteButton.innerHTML = '<img src="xivImages/icons/status.png"/>';
     deleteButton.classList.add('cDeleteBtn');
     deleteButton.addEventListener('click', () => { deleteCItem(i.Name); })
     var amountNum = document.createTextNode(1);
+
+    var addButton = document.createElement('button');
+    addButton.classList.add('CaddBtn');
+    addButton.addEventListener('click', () => {itemButton(i.ID); });
+
+    var subButton = document.createElement('button');
+    subButton.classList.add('CsubBtn');
+    subButton.addEventListener('click', () => {subtractCItem(i); });
+
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
     container.appendChild(name);
     container.appendChild(deleteButton);
+    container.appendChild(subButton);
+    container.appendChild(addButton);
     container.appendChild(amount);
     container.id = i.Name;
     container.classList.add('cItemContainer');
     document.getElementById("displayIconList").appendChild(container);
+  }
+  function subtractCItem(data)
+  {
+    var searchNum = null;
+    searchNum = craftedItemArray.findIndex(i => i.name === data.Name);
+    console.log(craftedItemArray);
+    console.log(searchNum);
+    //SearchNum is the item object in the array.
+    if (craftedItemArray[searchNum].amount === 1)
+    {
+        craftedItemArray.splice(searchNum,1);
+        document.getElementById(data.Name).remove();
+      }
+    else
+    {
+      craftedItemArray[searchNum].amount += -1;
+      var itemName = craftedItemArray[searchNum].name;
+      var x = document.getElementById('amount' + craftedItemArray[searchNum].name);
+      x.innerHTML = craftedItemArray[searchNum].amount;
+    }
+
   }
 
   </script>
