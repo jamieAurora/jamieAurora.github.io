@@ -253,7 +253,21 @@ HEWWO?!!
     name.id = 'name';
     var amount = document.createElement('h1');
     amount.classList.add('cItemAmt');
-    name.classList.add('cItemName');
+
+    if (i.Name.length > 22)
+    {
+      name.classList.add('cItemName');
+      console.log("more than 22");
+      name.setAttribute("style","font-size:12px;");
+    }
+    else
+    {
+      name.classList.add('cItemName');
+
+    }
+
+
+
     amount.id = 'amount' + i.Name;
     var x = document.createElement('IMG');
     x.classList.add('img');
@@ -273,6 +287,12 @@ HEWWO?!!
     var subButton = document.createElement('button');
     subButton.classList.add('CsubBtn');
     subButton.addEventListener('click', () => {subtractCItem(i); });
+    console.log("test");
+
+    console.log(i.Name);
+    console.log(i.Name.length);
+    //22 should be the limit
+
 
     name.appendChild(nameText);
     amount.appendChild(amountNum);
