@@ -26,48 +26,39 @@ HEWWO?!!
   var x = "https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item&columns=ID,Name,Icon,GameContentLinks";
   fetch(x, { mode: 'cors' })
   	.then(response => response.json())
-    .then(data => displayItems(data.Results));
+    .then(data => retrieveItems(data.Results));
   }
   var idArray = [];
-  function displayItems(id)
+  function retrieveItems(data)
   {
     var badName = ["Lominsan"," Aetherial Iron Lance","Dated"];
-    id = id.filter(id => !!id.GameContentLinks);
-    id = id.filter(id => !badID.includes(id.ID));
-    id = id.filter(id => !!id.GameContentLinks.Recipe);
-    id = id.filter(id => !!id.GameContentLinks.Recipe.ItemResult);
+    data = data.filter(data => !!data.GameContentLinks);
+    data = data.filter(data => !badID.includes(data.ID));
+    data = data.filter(data => !!data.GameContentLinks.Recipe);
+    data = data.filter(data => !!data.GameContentLinks.Recipe.ItemResult);
     var y = document.getElementById("amtSelect").value;
     for (var i = 0; i < y;i++)
     {
-      console.log(id[i]);
-      writeItems(id[i].GameContentLinks.Recipe.ItemResult, i, id[i].Name,id[i].Icon);
+      createButtons(data[i].GameContentLinks.Recipe.ItemResult, i, data[i].Name,data[i].Icon);
     }
   }
 
-  function writeItems(itemData, i, name, icon)
+  function createButtons(itemData, i, name, icon)
   {
-    console.log(i);
-    console.log(name);
-    console.log(itemData);
-    console.log(icon);
     var iconPath = "https://xivapi.com" + icon;
     var objName = document.createElement('h1');
-    objName.style="color: black;font-family: 'PT Sans', sans-serif;word-wrap:break-word;";
-    //container.appendChild(name);
+    objName.classList.add('buttonFont');
     var nameText = document.createTextNode(name);
     objName.innerHTML = (name);
-    //name.appendChild(nameText);
-
-    document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=displayItemButton("+itemData+");>" + "</button>";
+    document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=itemButton("+itemData+");>" + "</button>";
     var x = document.createElement('IMG');
     x.classList.add('img');
     x.style="float:left;margin-top:0px;";
     x.src = "https://xivapi.com" + icon;
     document.getElementById(itemData).appendChild(x);
     document.getElementById(itemData).appendChild(objName);
-
   }
-  function displayItemButton(id)
+  function itemButton(id)
   {
     var x = "https://xivapi.com/recipe/" + id;
     fetch(x, { mode: 'cors' })
@@ -161,33 +152,31 @@ HEWWO?!!
     amount.id = 'amount' + itemArray[i].name;
     var x = document.createElement('IMG');
     x.classList.add('img');
-    x.style="float:left;width:20px;padding-top:3px;";
+    x.classList.add('itemImg');
     x.src = "https://xivapi.com" + itemArray[i].iconID;
     var nameText = document.createTextNode(itemArray[i].name);
     var amountNum = document.createTextNode(itemArray[i].amount);
 
     var deleteButton = document.createElement('button');
-    amount.style = "font-size: 15px;float:right;padding-right:15px;padding-top:8px;margin-top:0px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
-    name.style="font-size: 13px;float:left;padding-left:10px;margin-top:8px;color: #EF948D;font-family: 'PT Sans', sans-serif;";
-    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;"/>';
-
-    //eleteButton.style="width:20px;height:20px;float:right;padding:0px;margin-top:4px;display:inline-block;border-radius:15px;padding-left:14px;";
-    deleteButton.style="width:20px;height:20px;padding-left:20px;float:right;padding:0px;margin-top:5px;border-radius:15px;";
-
-
-
-
+    amount.classList.add('itemAmt');
+    name.classList.add('itemName');
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png"/>';
+    deleteButton.classList.add('deleteBtn');
     deleteButton.addEventListener('click', () => { deleteItem(ID); })
+
+
+
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
     container.appendChild(name);
     container.appendChild(deleteButton);
     container.appendChild(amount);
-
     container.id = itemArray[i].name;
-    container.style = "padding-top:2px;font-size:12px;background-color:#cc5d49;margin-top:5px;margin-bottom:5px;height:30px;padding:0px;padding-left:10px;";
-   document.getElementById("displayIconList").appendChild(container);
+    container.classList.add('itemContainer');
+    document.getElementById("displayIconList").appendChild(container);
+
+
   }
   function deleteItem(id)
   {
@@ -227,38 +216,29 @@ HEWWO?!!
     var name = document.createElement('h1');
     name.id = 'name';
     var amount = document.createElement('h1');
-
-    amount.style = "font-size: 18px;float:right;margin-top:20x;color:#F29D2C;font-family: 'PT Sans', sans-serif;padding-right:13px;";
-    name.style="font-size: 18px;float:left;padding-left:10px;margin-top:20px;color:#F29D2C;font-family: 'PT Sans', sans-serif;";
-
+    amount.classList.add('cItemAmt');
+    name.classList.add('cItemName');
     amount.id = 'amount' + i.Name;
     var x = document.createElement('IMG');
     x.classList.add('img');
-    x.style="float:left;margin-top:10px;margin-left: 10px;";
+    x.classList.add('cItemImg');
     x.src = "https://xivapi.com" + i.Icon;
     var nameText = document.createTextNode(i.Name);
-
     var deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<img src="xivImages/icons/status.png" style="width:15px;position-right:20px;"/>';
-
-    deleteButton.style="margin-left:0px;width:20px;height:20px;float:right;padding:0px;margin-top:20px;display:inline-block;border-radius:15px;";
+    deleteButton.innerHTML = '<img src="xivImages/icons/status.png"/>';
+    deleteButton.classList.add('cDeleteBtn');
     deleteButton.addEventListener('click', () => { deleteCItem(i.Name); })
     var amountNum = document.createTextNode(1);
-
-
     name.appendChild(nameText);
     amount.appendChild(amountNum);
     container.appendChild(x);
     container.appendChild(name);
-
     container.appendChild(deleteButton);
     container.appendChild(amount);
-
     container.id = i.Name;
-    container.style = "margin-top:0%;font-size: 12px;margin-bottom:10px;padding:0px;";
+    container.classList.add('cItemContainer');
     document.getElementById("displayIconList").appendChild(container);
   }
-  document.getElementById("displayList").style = "width= " + screen.width;
 
   </script>
 
@@ -281,7 +261,7 @@ HEWWO?!!
     </head>
 <body style="background-color: #88241C;">
   <div class="container-fluid" style="padding:0px;margin:0px;">
-    <div class = "row" style="background-color: #661010;" id="headerContainer">
+    <div class = "row" id="headerContainer">
       <h2 id = "titleHeader">Namazu Backpack</h2>
       </div>
     <div class ="row" id="searchHeader">

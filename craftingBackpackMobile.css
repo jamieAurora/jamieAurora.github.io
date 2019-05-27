@@ -27,7 +27,7 @@
   }
   #displayList
   {
-    padding-left: 15px;
+    padding-left: 22px;
   }
   #displayList button
   {
@@ -42,14 +42,13 @@
   }
   #searchHeader
   {
-    padding-left:10px;
+    padding-left:20px;
   }
   #inputText
   {
     border-radius: 10px;
     height: 30px;
     width: 255px;
-
   }
   #amtSelect
   {
@@ -65,12 +64,12 @@
   {
     width: 40px;
     padding:5px;
-    padding-left:10px;
+    padding-left:15px;
   }
   #searchDiv
   {
     padding:5px;
-    padding-left:10px;
+    padding-left:15px;
   }
   #searchBtn
   {
@@ -80,11 +79,10 @@
     border-radius:5px;
     height: 30px;
     font-family: 'PT Sans', sans-serif;
-
   }
   #displayIconList
   {
-    background-color: #AA4A39;
+    background-color: #801515;
   }
   .removeButton
   {
@@ -97,9 +95,7 @@
   #footer
   {
     padding-top: 315px;
-
   }
-
   #speechIcon
   {
     width: 180px;
@@ -132,9 +128,64 @@
     font-size:42px;
     font-family: 'Unica One', cursive;
     padding-left: 40px;
-
   }
   #headerBG
   {
     background-color: #801515;
+  }
+  #headerContainer
+  {
+    background-color: #661010;
+  }
+  .deleteBtn
+  {
+    width:20px;height:20px;padding-left:0px;float:right;margin-top:5px;border-radius:15px;margin-right: 10px;
+  }
+  .cDeleteBtn
+  {
+    width:20px;height:20px;padding-left:0px;float:right;margin-top:20px;border-radius:15px;margin-right: 10px;
+  }
+  .deleteBtn img
+  {
+    width:15px;position-right:20px;
+  }
+  .cDeleteBtn img
+  {
+    width:15px;position-right:20px;
+  }
+  .itemName
+  {
+font-size: 13px;float:left;padding-left:10px;margin-top:8px;color: white;font-family: 'PT Sans', sans-serif;
+  }
+  .cItemName
+  {
+    font-size: 18px;float:left;padding-left:10px;margin-top:20px;color:gold;font-family: 'PT Sans', sans-serif;
+  }
+  .itemAmt
+  {
+font-size: 15px;float:right;padding-right:15px;padding-top:8px;margin-top:0px;color: white;font-family: 'PT Sans', sans-serif;
+  }
+  .cItemAmt
+  {
+    font-size: 18px;float:right;margin-top:20x;color:gold;font-family: 'PT Sans', sans-serif;padding-right:13px;
+  }
+  .itemContainer
+  {
+    padding-top:2px;font-size:12px;background-color:#aa4a39;margin-top:5px;margin-bottom:5px;height:30px;padding:0px;padding-left:25px;
+  }
+  .cItemContainer
+  {
+margin-top:0%;font-size: 12px;margin-bottom:0px;padding:0px;padding-left:15px;height:10%;background-color:#661010;
+  }
+  .itemImg
+  {
+    float:left;width:20px;padding-top:3px;
+  }
+  .cItemImg
+  {
+    float:left;margin-top:10px;margin-left: 10px;
+  }
+  .buttonFont
+  {
+    margin-top:0px;color: black;font-family: 'PT Sans', sans-serif;word-wrap:break-word;font-size:16px;
   }
