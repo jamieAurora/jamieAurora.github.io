@@ -48,7 +48,7 @@
   {
     border-radius: 10px;
     height: 30px;
-    width: 255px;
+    width: 250px;
   }
   #amtSelect
   {
@@ -105,9 +105,9 @@
   {
     color: black;
     font-family: 'PT Sans', sans-serif;
-    font-size: 12px;
-    margin-left:30px;
-    padding-top:5px;
+    font-size: 16px;
+    margin-left:45px;
+    padding-top:10px;
     position:absolute;
     top:10px;
     left:0;
@@ -187,7 +187,13 @@ font-size: 15px;float:right;padding-right:15px;padding-top:8px;margin-top:0px;co
   }
   .itemContainer
   {
-    padding-top:2px;font-size:12px;background-color:#aa4a39;margin-top:5px;margin-bottom:5px;height:30px;padding:0px;padding-left:25px;
+    padding-top:2px;font-size:12px;
+    background-color:#aa4a39;
+    margin-top:5px;
+    margin-bottom:5px;
+    height:30px;
+    padding:0px;
+    padding-left:25px;
   }
   .cItemContainer
   {
@@ -257,3 +263,27 @@ margin-top:0%;font-size: 12px;margin-bottom:0px;padding:0px;padding-left:15px;he
     background-image: url("xivImages/icons/066316.png");
     background-size: cover;
   }
+  .darkMode .itemContainer {background-color: rgb(66,66,66); }
+  .darkMode .cItemContainer {background-color: rgb(44,44,44); }
+  .darkMode button {background-color: rgb(44,44,44); border-color: rgb(55,55,55); }
+  .darkMode h1 {color: white; }
+  .darkMode #searchBtn {color: white; }
+  .darkMode #headerContainer {background-color: rgb(33,33,33);}
+  .darkMode #displayIconList {background-color: rgb(133,133,133);}
+
+  .lightMode .itemContainer {background-color: #aa4a39; }
+  .lightMode .cItemContainer {background-color: #661010); }
+  .lightMode button {background-color: rgb(116,26,18); border-color: rgb(116,26,28); }
+  .lightMode h1 {color: white; }
+
+  .lightMode .container h1 {color: white; }
+  .lightMode #searchBtn {color: white; }
+  .lightMode #headerContainer {background-color: #661010;}
+  .lightMode #displayIconList {background-color: #801515;}
+
+
+<!--
+66,66,66
+130,130,130
+233,233,233
+-->

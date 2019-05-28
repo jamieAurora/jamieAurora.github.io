@@ -263,10 +263,7 @@ HEWWO?!!
     else
     {
       name.classList.add('cItemName');
-
     }
-
-
 
     amount.id = 'amount' + i.Name;
     var x = document.createElement('IMG');
@@ -327,6 +324,56 @@ HEWWO?!!
     }
 
   }
+  var toggleBool = 0;
+  function displayToggle()
+  {
+    if (toggleBool === 1)
+    {
+      toggleBool = 0;
+      $("#appContainer").removeClass('darkMode').addClass('lightMode');
+      document.body.style.backgroundColor = "rgb(136,36,28)";
+
+
+    }
+    else if (toggleBool === 0)
+    {
+      toggleBool = 1;
+      $("#appContainer").removeClass('lightMode').addClass('darkMode');
+      document.body.style.backgroundColor = "rgb(88,88,88)";
+
+    }
+    console.log("Yes,yes!");
+    /*
+    elements = document.getElementsByClassName('itemContainer');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.backgroundColor="rgb(66,66,66)";
+    }
+    elements2 = document.getElementsByClassName('cItemContainer');
+    for (var i = 0; i < elements2.length; i++) {
+        elements2[i].style.backgroundColor="rgb(44,44,44)";
+    }
+    elements3 = document.getElementsByTagName('button');
+    for (var i = 0; i < elements3.length; i++) {
+        elements3[i].style.backgroundColor="rgb(44,44,44)";
+        elements3[i].style.borderColor="rgb(55,55,55)";
+    }
+    elements4 = document.getElementsByTagName('h1');
+    for (var i = 0; i < elements4.length; i++) {
+        elements4[i].style.color="white";
+    }
+    elements5 = document.getElementById('searchBtn');
+    elements5.style.color = 'white';
+
+    elements6 = document.getElementById('headerContainer');
+    elements6.style.backgroundColor = "rgb(33,33,33)";
+
+    elements7 = document.getElementById('displayIconList');
+    elements7.style.backgroundColor="rgb(133,133,133)";
+
+    document.body.style.backgroundColor = "rgb(88,88,88)";
+*/
+
+  }
 
   </script>
 
@@ -340,14 +387,20 @@ HEWWO?!!
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="craftingBackpackMobile.css">
+
+      <!--
       <link rel="stylesheet" media="screen and (max-width: 1000px)" href="craftingBackpackMobile.css">
       <link rel="stylesheet" media="screen and (min-width: 1000px)" href="craftingBackpackDesktop.css">
-
+      -->
+      <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+      <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
 
     </head>
 <body style="background-color: #88241C;">
+  <div id = "appContainer" class="lightMode">
   <div class="container-fluid" style="padding:0px;margin:0px;">
     <div class = "row" id="headerContainer">
       <h2 id = "titleHeader">Namazu Backpack</h2>
@@ -382,13 +435,16 @@ HEWWO?!!
         <div class = "col-xs-5">
           <div class = "image" style="">
               <img src ="xivImages/icons/speech.png" id = "speechIcon">
-              <h2 style="" id="speechText"><span>Still a work in progress, yes yes!</span></h2>
+              <h2 style="" id="speechText"><span>Click me, yes yes!</span></h2>
+              <!--
               <h2 id="footerText"><span>If an item appears as undefined, please message Jamie#6288 on Discord!</span></h2>
               <h2 id="footerText"><span>Like the app? Please tell me at @anzusariya on Twitter!</span></h2>
+              -->
           </div>
           </div>
           <div class = "col-xs-7">
-            <img src ="xivImages/icons/namazu-stroke.png" id="fishieboye"/>
+            <input type="image" onclick = "displayToggle()" src ="xivImages/icons/namazu-stroke.png" id="fishieboye" />
             </div>
+          </div>
           </div>
     </body>
