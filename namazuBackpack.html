@@ -325,15 +325,18 @@ HEWWO?!!
 
   }
   var toggleBool = 0;
+  function play(){
+       var audio = document.getElementById("audio");
+       audio.play();
+                 }
   function displayToggle()
   {
+play();
     if (toggleBool === 1)
     {
       toggleBool = 0;
       $("#appContainer").removeClass('darkMode').addClass('lightMode');
       document.body.style.backgroundColor = "rgb(136,36,28)";
-
-
     }
     else if (toggleBool === 0)
     {
@@ -343,36 +346,6 @@ HEWWO?!!
 
     }
     console.log("Yes,yes!");
-    /*
-    elements = document.getElementsByClassName('itemContainer');
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].style.backgroundColor="rgb(66,66,66)";
-    }
-    elements2 = document.getElementsByClassName('cItemContainer');
-    for (var i = 0; i < elements2.length; i++) {
-        elements2[i].style.backgroundColor="rgb(44,44,44)";
-    }
-    elements3 = document.getElementsByTagName('button');
-    for (var i = 0; i < elements3.length; i++) {
-        elements3[i].style.backgroundColor="rgb(44,44,44)";
-        elements3[i].style.borderColor="rgb(55,55,55)";
-    }
-    elements4 = document.getElementsByTagName('h1');
-    for (var i = 0; i < elements4.length; i++) {
-        elements4[i].style.color="white";
-    }
-    elements5 = document.getElementById('searchBtn');
-    elements5.style.color = 'white';
-
-    elements6 = document.getElementById('headerContainer');
-    elements6.style.backgroundColor = "rgb(33,33,33)";
-
-    elements7 = document.getElementById('displayIconList');
-    elements7.style.backgroundColor="rgb(133,133,133)";
-
-    document.body.style.backgroundColor = "rgb(88,88,88)";
-*/
-
   }
 
   </script>
@@ -444,6 +417,7 @@ HEWWO?!!
           </div>
           <div class = "col-xs-7">
             <input type="image" onclick = "displayToggle()" src ="xivImages/icons/namazu-stroke.png" id="fishieboye" />
+            <audio id="audio" src="xivImages/namazu3.mp3" />
             </div>
           </div>
           </div>
