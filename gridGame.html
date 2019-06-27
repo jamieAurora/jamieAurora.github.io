@@ -1,3 +1,5 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
 <script>
   /*So, let's say we have a room.
 []
@@ -52,7 +54,7 @@ for every value in the map array, print out [, value, ]. Then, newline.
 */
 //var testMapData = "----O-,OOOOOO,--O-O-,OOOO--";
 var testMapData = "--------,-----O--,-OOOOOO-,---O-O--,-OOOO---,--------";
-
+var currMapNum = 0;
 var currMapArray = [];
 function Tile(x,y,value)
 {
@@ -68,8 +70,19 @@ function Player(x,y)
 var thePlayer = new Player(3,3);
 var direction = "forward";
 var dirDegree = 0;
+function gameStart(mapData)
+{
+  document.getElementsByTagName('h1')[0].style.visibility = 'hidden';
+  document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+  document.getElementById("textBox").style.visibility = 'hidden';
+
+  readGrid(mapData);
+  displayGrid(mapData);
+}
+
 function readGrid(mapData)
 {
+  console.log("Read Grid Called");
   var columnCount = 0;
   var rowCount = 0;
   for (var i = 0; i < mapData.length;i++)
@@ -82,7 +95,6 @@ function readGrid(mapData)
     }
     else
     {
-      console.log("pushing");
       currMapArray.push(new Tile(rowCount,columnCount,mapData.charAt(i)));
       rowCount++;
     }
@@ -153,8 +165,6 @@ function displayGrid(mapData)
           thisDiv.appendChild(x);
         }
         spacingRow+= 25;
-        //console.log("pushing");
-        //currMapArray.push(new Tile(rowCount,columnCount,mapData.charAt(i)));
         rowCount++;
       }
     }
@@ -163,6 +173,7 @@ var tempX = 0;
 var tempY = 0;
 function rotatePlayer(input)
 {
+  document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
 
   //dirDegree is 0. 0 is forward. 90 is right. 180 is back. 270 is left.
   switch (input)
@@ -183,9 +194,6 @@ function rotatePlayer(input)
   {
     case 0:
     direction = "forward";
-
-    //transform: rotate(180deg);
-
     break;
     case 90:
     direction = "right";
@@ -246,6 +254,7 @@ for (var i = 0; i <currMapArray.length;i++)
     //console.log("The player has moved.");
     //console.log("Player is now at " + thePlayer.x + "," + thePlayer.y);
     updatePlayer();
+    checkForEvent(i);
 
     break;
   }
@@ -263,17 +272,6 @@ function drawCamera()
   var x = thePlayer.x;
   var y = thePlayer.y;
   console.log(thePlayer);
-  /*For now, tiles go...
-  0 1 2 3 4 5
-  6 7 8 9 10 11
-  12 13 14 15 16 17
-  18 19 20 21 22 23
-  i-6 = North one.
-  i-1 = West one.
-  i+1 = East one.
-  i+6 = South one.
-
-  */
   var playerTile;
   for (var i = 0; i <currMapArray.length;i++)
   {
@@ -283,9 +281,6 @@ function drawCamera()
       playerTile = i;
     }
   }
-
-  //Let's start off by assuming that the player is facing forward (in our case UP).
-
   var aVal;
   var bVal;
   var cVal;
@@ -319,37 +314,6 @@ function drawCamera()
     break;
   }
 
-
-
-    /*For now, tiles go...
-    0  1  2  3  4  5  6  7
-    8  9  10 11 12 h 14 15
-    16 17 18 19 20 21 22 23
-    24 25 26 27 28 29 30 31
-    facing left
-    +6 (-2) -10
-    +7 (-1) -9
-    (+8) H (-8)
-
-
-
-    i-8 = North one.
-    i-1 = West one.
-    i+1 = East one.
-    i+8 = South one.
-
-    Character can see on a grid like so.
-    A B C
-    D E F
-    G H I
-
-    H will always be the player.
-    We can also think of this like...
-    (h-17) (h-16) (h-15)
-    (h-9) (h-8) (h-7)
-    (h-1)   H   (h+1)
-    Assuming of course that our grid width is 6.
-    */
     var aFree;
     var bFree;
     var cFree;
@@ -359,41 +323,6 @@ function drawCamera()
     var gFree;
     var iFree;
     var zFree;
-
-    //Maybe we can have switches for the values.
-
-
-    /*
-    0  1  2  3  4  5
-    6  7  8  9  10 11
-    12 13 14 i 16 17
-    18 19 20 21 22 23
-    FOR FACING LEFT
-    i-1 = North one.
-    i+6 = West one.
-    i-6 = East one.
-    i+1 = South one.
-
-    (+4) (-2) (-8)
-    (+5) (-1) (-7)
-    (+6) H    (-6)
-
-    //FOR FACING RIGHT
-    (-4) (+2) (+8)
-    (-5) (+1) (+7)
-    (-6) H    (+6)
-
-    //FOR FACING BACK
-    (h+13) (h+12) (h+11)
-    (h+7) (h+6) (h+5)
-    (h+1)   H   (h-1)
-
-
-
-    */
-
-
-
 
     if (currMapArray[playerTile+aVal])
     {
@@ -541,12 +470,6 @@ function drawCamera()
     }
 
 
-
-  //  Character can see on a grid like so.
-  //  A B C
-  //  D E F
-  //  G H I
-  console.log(aFree, bFree, cFree,dFree,eFree,fFree,gFree,iFree);
   if (!bFree && !dFree && eFree && !fFree && gFree && iFree)
   {
     document.getElementById("displayScreen").src = "gridGameImg/deadEndFork.png";
@@ -688,13 +611,178 @@ function drawCamera()
   {
     document.getElementById("displayScreen").src = "gridGameImg/null.png";
   }
-  /*
-  false false false false false false false true
-  This is what shows the img in question.
-  */
+
+}
+
+var doneVal = 0;
+var currEvent;
+function checkForEvent(tileID)
+{
+  console.log("Check for event at tile" + tileID);
+  if (currMapNum === 0)
+  {
+    document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+
+    switch (tileID)
+    {
+      case 17:
+      if (direction === 'left')
+      {
+        document.getElementById("displayScreenOverlay").src = "gridGameImg/doittoem.png";
+        document.getElementById("displayScreenOverlay").style.visibility = 'visible';
+        currEvent = 17;
+      }
+      break;
+      case 33:
+      {
+        document.getElementById("displayScreenOverlay").src = "gridGameImg/objects/radio.png";
+        document.getElementById("displayScreenOverlay").style.visibility = 'visible';
+        currEvent = 33;
+
+      }
+    }
+
+
+
+}
+}
+function loadNewMap()
+{
+  $('.gridSquare').remove();
+  testMapData = "--------,-----O--,-OOOOOO-,-OOO-O--,-OOOOOO-,-------";
+  gameStart(testMapData);
+  console.log("loaded new map");
+}
+var isEnable = true;
+function displayText(textString)
+{
+  document.getElementById("textDisplay").innerHTML = '';
+  document.getElementById("textBox").style.visibility = 'visible';
+
+  document.getElementById("textDisplay").style.visibility = 'visible';
+  //document.getElementById("buttonLeft").disabled = true;
+  //document.getElementById("buttonRight").disabled = true;
+  //document.getElementById("buttonUp").disabled = true;
+  //document.getElementById("buttonDown").disabled = true;
+  isEnable = false;
+
+
+  var i = 0;
+    var interval = setInterval(function(){
+        document.getElementById("textDisplay").innerHTML += textString.charAt(i);
+        i++;
+        console.log(i);
+        if (i > textString.length){
+            clearInterval(interval);
+        }
+    }, 50);
+
+
+
+
+
+doneVal++;
+}
+
+function changeText(thisChar)
+{
+  console.log("b");
+}
+//Called when A button is pressed. I'm going to have to implement state handlers so that this isn't being called in the middle of battle.
+function aFunc()
+{
+  console.log("A clicked");
+  switch (currEvent)
+  {
+    case 17:
+    console.log("Here1");
+    console.log(doneVal);
+    if (doneVal === 0)
+    {
+      displayText("You know I HAD to do it to em.");
+    }
+    else if (doneVal === 1)
+    {
+      console.log("here2");
+      displayText("I gotta do it to em.");
+    }
+    else if (doneVal === 2)
+    {
+      document.getElementById("textDisplay").style.visibility = 'hidden';
+      document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+      document.getElementById("textBox").style.visibility = 'hidden';
+
+      isEnable = true;
+
+      doneVal = 0;
+    }
+    break;
+    case 33:
+    if (doneVal === 0)
+    {
+      displayText("An old record player.");
+    }
+    else if (doneVal === 1)
+    {
+      console.log("here2");
+      displayText("The arm of the machine is mangled and twisted.");
+    }
+    else if (doneVal === 2)
+    {
+      document.getElementById("textDisplay").style.visibility = 'hidden';
+      document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+      document.getElementById("textBox").style.visibility = 'hidden';
+
+      isEnable = true;
+
+      doneVal = 0;
+    }
+
+  }
+}
+var currentState;
+//Changes the currentState. States are map and battle
+
+document.addEventListener('keydown', logKey);
+
+//Uses key inputs instead of buttons.
+function logKey(e) {
+  if (e.code === 'ArrowRight' && isEnable)
+  {
+    rotatePlayer('right');
+  }
+  if (e.code === 'ArrowLeft' && isEnable)
+  {
+    rotatePlayer('left');
+  }
+  if (e.code === 'ArrowUp' && isEnable)
+  {
+    moveForward();
+  }
+  if (e.code === 'ArrowDown' && isEnable)
+  {
+    rotatePlayer('back')
+  }
+  if (e.code === 'KeyZ')
+  {
+    aFunc();
+  }
+  if (e.code === 'KeyX')
+  {
+  }
+  else
+  {
+    console.log("clickie");
+  }
 }
 
 </script>
+
+
+<!--
+iPhone X proportions are 375 by 812
+Avg screen is 1024x768
+-->
 <style>
   .square
   {
@@ -766,28 +854,125 @@ width: 300px;
 	border-bottom: 15px solid red;
   z-index: 3;
 }
-
+#displayScreen
+{
+  position: fixed;
+  top: 5%;
+  left: 35%;
+  z-index: 1;
+}
+#displayScreenOverlay
+{
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  width: 20%;
+  height: 35%;
+  z-index: 2;
+}
+.button {
+  background-color: grey; /* Green */
+  border: none;
+  color: white;
+  padding-bottom: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  font-size: 30px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.buttonb2
+{
+  background-color: grey; /* Green */
+  border: none;
+  color: white;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  font-size: 30px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button3
+{
+  background-color: grey; /* Green */
+  border: none;
+  color: white;
+  padding-bottom: 7px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  font-size: 30px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.content
+{
+  max-width: 600px;
+  margin: auto;
+  height: 600px;
+  padding: 20px;
+  background-color: black;
+}
+#buttonDiv
+{
+  padding-top: 390px;
+  padding-left: 70px;
+  max-height: 150px;
+  max-width: 250px;
+}
+#textDisplay
+{
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  font-size: 22px;
+  position: fixed;
+  z-index: 99;
+  top: 53%;
+  left: 36%;
+}
+#textBox
+{
+  position: fixed;
+  z-index: 5;
+  top: 54%;
+  left: 35%;
+}
 </style>
-
-<body>
-
-  <button onclick = "readGrid(testMapData)">Read Grid </button>
-  <button onclick= "displayGrid(testMapData)"> Display Grid </button>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  </head>
+<body onload ="gameStart(testMapData)">
+<div class="content">
   <div style="padding-top:1px;">
-  <button onclick= "moveForward()">↑</button>
-  <button onclick= "rotatePlayer('back')">↓</button>
-  <button onclick= "rotatePlayer('left')">←</button>
-  <button onclick= "rotatePlayer('right')">→</button>
 
   </div>
-  <img id="displayScreen" src="gridGameImg/null.png" style="padding-top:5px;">
-    </img>
+  <h1 id="textDisplay">TestText</h1>
+  <img id="textBox" src="gridGameImg/textBox.png"></img>
+  <img id="displayScreen" src="gridGameImg/null.png"></img>
+  <img id="displayScreenOverlay" src="gridGameImg/doittoem.png"></img>
+<!--
+    <div id="buttonDiv">
+    <div>
+      <button onclick= "moveForward()" class="button"id="buttonUp">↑</button>
+      <button onclick= "rotatePlayer('back')" class="button" id="buttonDown">↓</button>
+      <button style="margin-left: 75px;" class="button3">B</button>
+      <button onclick= "rotatePlayer('left')" class="buttonb2"id="buttonLeft">←</button>
+      <button onclick= "rotatePlayer('right')" class="buttonb2"id="buttonRight">→</button>
+      <button style="margin-left:50px;"class="button3"id="aButton" onclick="aFunc()">A</button>
+      </div>
+</div>
+-->
   <div id="backgroundGrid" style="padding-top:100px;">
     <div id="playerArrow" />
-
     </div>
-  <!--
-
     </div>
-    -->
 </body>
