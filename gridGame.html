@@ -1,61 +1,32 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <script>
-  /*So, let's say we have a room.
-[]
-Each room will have four walls, a floor, and a ceiling.
-Each room will also display the rooms two rooms forward.
-So, a map may look like...
-
-   y1 y2 y3 y4 y5 y6
-x1 [0,0][1,0][2,0][3,0][4,0][5,0]
-x2 [0,1][1,1][2,1][3,1][4,1][5,1]
-x3 [X][X][X][O][O][X]
-x4 [O][O][X][O][O][X]
-
-So, this would be an array.
-
-var tile = function(x,y,val)
-{
-this.x = x;
-this.y = y;
-this.val = val;
-}
-
-so, a textfile like
-OOXOOO
-OOXXXX
-XXX00X
-00X00X
-Would be read through line by line, character by character
-var rowCount = 0;
-int i = 0;
-the character is then assigned to a tile value in an array.
-[i, rowCount, val] with val being X or O, O denoting a space the player can move in.
-when we get to a newline, i is set back to 0, and rowCount is incremented by one.
-Do this until we get to the end.
-
-The "player" is instantiated. The player has a x and y value similar to a tile object. This x and y value is given a starting position.
-We can imagine that the starting position is [1,1]
-The game waits for user input.
-Inputs UP, the game checks to see that there is a tile object at [x,y-1].
-Inputs DOWN, the game checks to see that there is a tile object at [x,y+1].
-Inputs RIGHT, the game checks to see that there is a tile object at [x+1,y].
-Inputs LEFT, the game checks to see that there is a tile object at [x-1,y].
-Assuming there IS a tile value at that value, and that tile.value = O, the player's coordinates are then updated to that position.
- --------
- -----O--
- -OOOOOO-
- ---O-O--
- -OOOO---
- --------
-The map grid should always be displayed.
-for every value in the map array, print out [, value, ]. Then, newline.
-*/
-//var testMapData = "----O-,OOOOOO,--O-O-,OOOO--";
+//1024x768
 var testMapData = "--------,-----O--,-OOOOOO-,---O-O--,-OOOO---,--------";
 var currMapNum = 0;
 var currMapArray = [];
+var currentEssences = [];
+var essenceTyping = [['null','Filth','Enochian','Damned','Violence','Instinct','Skyborne','Martyr','Deity','Soul','Damned','Ruler','Fae','Enochian','Beauty','Gaian','Martyr','Drowned'],
+['Filth','null','Theory','Skyborne','Cryptid','Goetic','Martyr','Filth','Violence','Gaian','Beauty','Fae','Deity','Cryptid','Damned','Filth','Theory','Celestial'],
+['Enochian','Theory','null','Enochian','Theory','Gaian','Violence','Gaian','Theory','Celestial','Drowned','Filth','Beauty','Enochian','Violence','Soul','Soul','Theory'],
+['Damned','Skyborne','Enochian','null','Fae','Goetic','Cryptid','Goetic','Enochian','Instinct','Beauty','Goetic','Ruler','Celestial','Skyborne','Filth','Instinct','Drowned'],
+['Violence','Cryptid','Theory','Fae','null','Drowned','Martyr','Ruler','Violence','Violence','Soul','Drowned','Drowned','Drowned','Soul','Fae','Gaian','Soul'],
+['Instinct','Goetic','Gaian','Goetic','Drowned','null','Deity','Theory','Goetic','Instinct','Instinct','Celestial','Instinct','Cryptid','Martyr','Ruler','Filth','Goetic'],
+['Skyborne','Martyr','Violence','Cryptid','Martyr','Deity','null','Goetic','Skyborne','Soul','Deity','Skyborne','Deity','Instinct','Enochian','Ruler','Instinct','Instinct'],
+['Martyr','Filth','Gaian','Goetic','Ruler','Theory','Goetic','null','Beauty','Martyr','Celestial','Theory','Skyborne','Cryptid','Violence','Ruler','Ruler','Celestial'],
+['Deity','Violence','Theory','Enochian','Violence','Goetic','Skyborne','Beauty','null','Skyborne','Violence','Deity','Goetic','Drowned','Enochian','Filth','Damned','Soul'],
+['Soul','Gaian','Celestial','Instinct','Violence','Instinct','Soul','Martyr','Skyborne','null','Beauty','Violence','Martyr','Celestial','Gaian','Damned','Beauty','Damned'],
+['Damned','Beauty','Drowned','Beauty','Soul','Instinct','Deity','Celestial','Violence','Beauty','null','Cryptid','Gaian','Violence','Martyr','Deity','Celestial','Instinct'],
+['Ruler','Fae','Filth','Goetic','Drowned','Celestial','Skyborne','Theory','Deity','Violence','Cryptid','null','Ruler','Cryptid','Deity','Instinct','Gaian','Beauty'],
+['Fae','Deity','Beauty','Ruler','Drowned','Instinct','Deity','Skyborne','Goetic','Martyr','Gaian','Ruler','null','Fae','Cryptid','Ruler','Soul','Drowned'],
+['Enochian','Cryptid','Enochian','Celestial','Drowned','Cryptid','Instinct','Cryptid','Drowned','Celestial','Violence','Cryptid','Fae','null','Drowned','Deity','Martyr','Fae'],
+['Beauty','Damned','Violence','Skyborne','Soul','Martyr','Enochian','Violence','Enochian','Gaian','Martyr','Deity','Cryptid','Drowned','null','Damned','Soul','Soul'],
+['Gaian','Filth','Soul','Filth','Fae','Ruler','Ruler','Ruler','Filth','Damned','Deity','Instinct','Ruler','Deity','Damned','null','Fae','Damned'],
+['Martyr','Theory','Soul','Instinct','Gaian','ksihin','Instinct','Ruler','Damned','Beauty','Celestial','Gaian','Soul','Martyr','Soul','Fae','null','Ruler'],
+['Drowned','Celestial','Theory','Drowned','Soul','Goetic','Instinct','Celestial','Soul','Damned','Instinct','Beauty','Drowned','Fae','Soul','Damned','Ruler','null']];
+var currentPercentage = 0;
+
+
 function Tile(x,y,value)
 {
   this.x = x,
@@ -67,15 +38,33 @@ function Player(x,y)
   this.x = x;
   this.y = y;
 }
+function Essence(name,type,level,atkBoost,defBoost)
+{
+  this.name = name;
+  this.type = type;
+  this.level = level;
+  this.atkBoost = atkBoost;
+  this.defBoost = defBoost;
+}
+function Item(name, type, potency, amount)
+{
+  this.name = name;
+  this.type = type;
+  this.potency = potency;
+  this.amount = amount;
+}
 var thePlayer = new Player(3,3);
 var direction = "forward";
 var dirDegree = 0;
+var inventory = [];
 function gameStart(mapData)
 {
+  document.getElementById('statContainer').style.visibility = 'hidden';
+
   document.getElementsByTagName('h1')[0].style.visibility = 'hidden';
   document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
   document.getElementById("textBox").style.visibility = 'hidden';
-
+  currentState = 'exploring';
   readGrid(mapData);
   displayGrid(mapData);
 }
@@ -100,6 +89,26 @@ function readGrid(mapData)
     }
   }
 }
+function hideMap()
+{
+  var thisMap = document.getElementsByClassName('gridSquare');
+  var length = thisMap.length;
+  for (var i=0; i < length;i++)
+  {
+    thisMap[i].style.visibility = 'hidden';
+  }
+  document.getElementById('playerArrow').style.visibility = 'hidden';
+}
+function showMap()
+{
+  var thisMap = document.getElementsByClassName('gridSquare');
+  var length = thisMap.length;
+  for (var i=0; i < length;i++)
+  {
+    thisMap[i].style.visibility = 'visible';
+  }
+  document.getElementById('playerArrow').style.visibility = 'visible';
+}
 function updatePlayer()
 {
   var tempX;
@@ -117,17 +126,17 @@ function updatePlayer()
     tempX = thePlayer.x * 25;
     tempY = thePlayer.y * 25;
   }
-  document.getElementById("playerArrow").style.left = tempX + 400 + "px";
-  document.getElementById("playerArrow").style.top = tempY + 400 + "px";
+  document.getElementById("playerArrow").style.left = tempX + 40 + "px";
+  document.getElementById("playerArrow").style.top = tempY + 40 + "px";
   //Going to need to do math here. X and Y will be something like, 1, 6, 2, etc. Or even 0. We need to make that in multiples of 25 or so.
 }
 function displayGrid(mapData)
 {
     var columnCount = 0;
     var rowCount = 0;
-    var spacingColumn = 400;
-    var spacingRow = 400;
-    var backgroundGrid = document.createElement("div");
+    var spacingColumn = 40;
+    var spacingRow = 40;
+    //var backgroundGrid = document.getElementById("backgroundGrid");
     //Let's put the player character on the map.
     updatePlayer();
     for (var i = 0; i < mapData.length;i++)
@@ -138,7 +147,7 @@ function displayGrid(mapData)
         rowCount = 0;
         columnCount = columnCount + 1;
         spacingColumn +=25;
-        spacingRow = 400;
+        spacingRow = 40;
       }
       else
       {
@@ -255,6 +264,7 @@ for (var i = 0; i <currMapArray.length;i++)
     //console.log("Player is now at " + thePlayer.x + "," + thePlayer.y);
     updatePlayer();
     checkForEvent(i);
+    checkForBattle();
 
     break;
   }
@@ -611,7 +621,6 @@ function drawCamera()
   {
     document.getElementById("displayScreen").src = "gridGameImg/null.png";
   }
-
 }
 
 var doneVal = 0;
@@ -622,7 +631,6 @@ function checkForEvent(tileID)
   if (currMapNum === 0)
   {
     document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
-
     switch (tileID)
     {
       case 17:
@@ -633,17 +641,41 @@ function checkForEvent(tileID)
         currEvent = 17;
       }
       break;
+      case 22:
+      if (direction === 'right')
+      {
+        document.getElementById("displayScreenOverlay").src = "gridGameImg/npc/npc1.png";
+        document.getElementById("displayScreenOverlay").style.visibility = 'visible';
+        currEvent = 22;
+
+      }
+      break;
+      case 13:
+      if (direction === 'forward')
+      {
+        document.getElementById("displayScreenOverlay").src = "gridGameImg/npc/npc2.png";
+        document.getElementById("displayScreenOverlay").style.visibility = 'visible';
+        currEvent = 13;
+
+      }
+      break;
+
       case 33:
       {
         document.getElementById("displayScreenOverlay").src = "gridGameImg/objects/radio.png";
         document.getElementById("displayScreenOverlay").style.visibility = 'visible';
         currEvent = 33;
-
       }
+      break;
+
+      case 36:
+      {
+        document.getElementById("displayScreenOverlay").src = "gridGameImg/npc/npc1.png";
+        document.getElementById("displayScreenOverlay").style.visibility = 'visible';
+        currEvent = 36;
+      }
+      break;
     }
-
-
-
 }
 }
 function loadNewMap()
@@ -658,15 +690,8 @@ function displayText(textString)
 {
   document.getElementById("textDisplay").innerHTML = '';
   document.getElementById("textBox").style.visibility = 'visible';
-
   document.getElementById("textDisplay").style.visibility = 'visible';
-  //document.getElementById("buttonLeft").disabled = true;
-  //document.getElementById("buttonRight").disabled = true;
-  //document.getElementById("buttonUp").disabled = true;
-  //document.getElementById("buttonDown").disabled = true;
   isEnable = false;
-
-
   var i = 0;
     var interval = setInterval(function(){
         document.getElementById("textDisplay").innerHTML += textString.charAt(i);
@@ -676,69 +701,154 @@ function displayText(textString)
             clearInterval(interval);
         }
     }, 50);
-
-
-
-
-
 doneVal++;
 }
-
-function changeText(thisChar)
+function checkForBattle()
 {
-  console.log("b");
+var possibility = Math.floor(Math.random() * 100) + 1;
+console.log(possibility);
+console.log(currentPercentage);
+if (possibility < currentPercentage)
+{
+  battle(0);
+}
+else
+{
+  currentPercentage = currentPercentage + 3;
+  console.log("h");
+  document.getElementById('enemyPercentage').innerHTML = currentPercentage + "%";
+}
+
 }
 //Called when A button is pressed. I'm going to have to implement state handlers so that this isn't being called in the middle of battle.
 function aFunc()
 {
-  console.log("A clicked");
-  switch (currEvent)
+  console.log(currentState);
+  if (currentState === "exploring")
   {
-    case 17:
-    console.log("Here1");
-    console.log(doneVal);
-    if (doneVal === 0)
+    console.log("A clicked");
+    switch (currEvent)
     {
-      displayText("You know I HAD to do it to em.");
-    }
-    else if (doneVal === 1)
-    {
-      console.log("here2");
-      displayText("I gotta do it to em.");
-    }
-    else if (doneVal === 2)
-    {
-      document.getElementById("textDisplay").style.visibility = 'hidden';
-      document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
-      document.getElementById("textBox").style.visibility = 'hidden';
+      case 17:
+      console.log("Here1");
+      console.log(doneVal);
+      if (doneVal === 0)
+      {
+        displayText("You know I HAD to do it to em.");
+      }
+      else if (doneVal === 1)
+      {
+        console.log("here2");
+        displayText("I gotta do it to em.");
+      }
+      else if (doneVal === 2)
+      {
+        document.getElementById("textDisplay").style.visibility = 'hidden';
+        document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+        document.getElementById("textBox").style.visibility = 'hidden';
+        isEnable = true;
+        doneVal = 0;
+      }
+      break;
+      case 33:
+      if (doneVal === 0)
+      {
+        displayText("An old record player.");
+      }
+      else if (doneVal === 1)
+      {
+        console.log("here2");
+        displayText("The arm of the machine is mangled and twisted.");
+      }
+      else if (doneVal === 2)
+      {
+        document.getElementById("textDisplay").style.visibility = 'hidden';
+        document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+        document.getElementById("textBox").style.visibility = 'hidden';
+        isEnable = true;
+        doneVal = 0;
+      }
+      break;
 
-      isEnable = true;
+      case 13:
+      if (doneVal === 0)
+      {
+        displayText("Hey! You know about Eidolon fusion, right?");
+      }
+      else if (doneVal === 1)
+      {
+        displayText("If an Eidolon winds up liking you, they'll sometimes give you their Essence.  It's the very soul of the Eidolon.");
+      }
+      else if (doneVal === 2)
+      {
+        displayText("How do you get an Eidolon to like you? Just try talking to them!");
+      }
+      else if (doneVal === 3)
+      {
+        document.getElementById("textDisplay").style.visibility = 'hidden';
+        document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+        document.getElementById("textBox").style.visibility = 'hidden';
+        isEnable = true;
+        doneVal = 0;
+      }
+      break;
 
-      doneVal = 0;
-    }
-    break;
-    case 33:
-    if (doneVal === 0)
-    {
-      displayText("An old record player.");
-    }
-    else if (doneVal === 1)
-    {
-      console.log("here2");
-      displayText("The arm of the machine is mangled and twisted.");
-    }
-    else if (doneVal === 2)
-    {
-      document.getElementById("textDisplay").style.visibility = 'hidden';
-      document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
-      document.getElementById("textBox").style.visibility = 'hidden';
+      case 22:
+      if (doneVal === 0)
+      {
+        displayText("Hm...there doesn't seem to be any way out of this room.");
+      }
+      else if (doneVal === 1)
+      {
+        displayText("It's almost like it was made just to be presented to a higher power...");
+      }
+      else if (doneVal === 2)
+      {
+        displayText("Whoa...this is feeling pretty meta.");
+      }
+      else if (doneVal === 3)
+      {
+        document.getElementById("textDisplay").style.visibility = 'hidden';
+        document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+        document.getElementById("textBox").style.visibility = 'hidden';
+        isEnable = true;
+        doneVal = 0;
+      }
+      break;
 
-      isEnable = true;
+      //36 right
+      case 36:
+      if (doneVal === 0)
+      {
+        displayText("I'm getting the feeling that an enemy Eidolon is creeping up behind me.");
+      }
+      else if (doneVal === 1)
+      {
+        displayText("It'd be really nice if I had some sort of indicator to show when an attack is nigh.");
+      }
+      else if (doneVal === 2)
+      {
+        displayText("And to have it display, say, in the top left corner...that'd be real nice.");
+      }
+      else if (doneVal === 3)
+      {
+        document.getElementById("textDisplay").style.visibility = 'hidden';
+        document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+        document.getElementById("textBox").style.visibility = 'hidden';
+        isEnable = true;
+        doneVal = 0;
+      }
+      break;
 
-      doneVal = 0;
+
+
     }
+  }
+  else if (currentState === "battle")
+  {
 
   }
+
 }
 var currentState;
 //Changes the currentState. States are map and battle
@@ -755,20 +865,71 @@ function logKey(e) {
   {
     rotatePlayer('left');
   }
+  if (e.code === 'ArrowLeft' && currentState === 'battle')
+  {
+    $("button:focus").prev().focus();
+
+  }
+  if (e.code === 'ArrowRight' && currentState === 'battle')
+  {
+    $("button:focus").next().focus();
+  }
+  if (e.code === 'ArrowLeft' && currentState === 'menu')
+  {
+    $("button:focus").prev().focus();
+
+  }
+  if (e.code === 'ArrowRight' && currentState === 'menu')
+  {
+    $("button:focus").next().focus();
+  }
+
   if (e.code === 'ArrowUp' && isEnable)
   {
     moveForward();
   }
   if (e.code === 'ArrowDown' && isEnable)
   {
-    rotatePlayer('back')
+    //rotatePlayer('back')
   }
-  if (e.code === 'KeyZ')
+  if (e.code === 'KeyZ' && currentState !== 'battle')
   {
     aFunc();
   }
+  if (e.code === 'KeyM')
+  {
+    battle(0);
+  }
+  if (e.code === 'KeyA')
+  {
+    return "A";
+  }
+  if (e.code === 'KeyS')
+  {
+    return "B";
+  }
+  if (e.code === 'KeyD')
+  {
+    return "C";
+  }
+  if (e.code === 'KeyO')
+  {
+    testWriteEssences();
+  }
+  if (e.code === 'KeyP')
+  {
+    displayEssence();
+  }
+  if (e.code === 'KeyQ' && currentState !== 'menu')
+  {
+    document.getElementById("buttonHome").setAttribute("style","top:52%");
+
+    console.log(currentState);
+    openMenu();
+  }
   if (e.code === 'KeyX')
   {
+    playerCancel();
   }
   else
   {
@@ -776,6 +937,839 @@ function logKey(e) {
   }
 }
 
+function playerCancel()
+{
+  if (currentState !== 'battle')
+  {
+    document.getElementById("buttonHome").innerHTML = '';
+  }
+}
+function displayPlayerHealth()
+{
+  var thisString = "Protag  __________ " + protag.hp + "<br>Roxy   ____________ " + roxy.hp + "<br>Lewis ___________ " + lewis.hp;
+  document.getElementById('playerHealthDisplay').innerHTML = thisString;
+  var diff1 = protag.hp / protag.maxHP;
+  var diff2 = roxy.hp / roxy.maxHP;
+  var diff3 = lewis.hp / lewis.maxHP;
+  diff1 = diff1 * 100;
+  diff2 = diff2 * 100;
+  diff3 = diff3 * 100;
+  document.getElementById('protagHPDisplay').setAttribute("style","width:"+diff1);
+  document.getElementById('roxyHPDisplay').setAttribute("style","width:"+diff2);
+  document.getElementById('lewisHPDisplay').setAttribute("style","width:"+diff3);
+}
+window.setInterval(function()
+{
+  displayPlayerHealth();
+},50);
+
+function battleActor(name,type,hp,maxHP,mp,atk,def,agl,wepEquip,armEquip,accEquip)
+{
+  this.name = name;
+  this.maxHP = maxHP;
+  this.type = type;
+  this.hp = hp;
+  this.mp = mp;
+  this.atk = atk;
+  this.def = def;
+  this.agl = agl;
+  this.wepEquip = wepEquip;
+  this.armEquip = armEquip;
+  this.accEquip = accEquip;
+}
+var eidolonCompendium = [];
+var mothman = new Essence("Mothman","Cryptid", 5,20,10);
+var astaroth = new Essence("Astaroth","Goetic", 15,5,25);
+var mastema = new Essence("Mastema","Enochian",25,5,5);
+var greygoo = new Essence("Grey Goo","Theory",99,5,5);
+var megalith = new Essence("Megalith","Theory",15,5,5);
+
+eidolonCompendium.push(mothman,astaroth,mastema,greygoo,megalith);
+
+
+var nullEssence = new Essence("","",0,0);
+var protag = new battleActor('Protag','player',100,100,75,5,5,5, mothman,mastema, nullEssence);
+var roxy = new battleActor('Roxy','player',100,100,715,5,5,6,nullEssence,nullEssence,nullEssence);
+var lewis = new battleActor('Lewis','player',100,100,75,5,5,4,nullEssence,nullEssence,nullEssence);
+var enemy1 = new battleActor('Enemy1','enemy',10,10,30,3,3,3,nullEssence,nullEssence,nullEssence);
+var pixie = new battleActor('Pixie','enemy',50,10,30,3,3,3,nullEssence,nullEssence,nullEssence);
+var goblin = new battleActor('Goblin','enemy',50,10,30,3,3,3,nullEssence,nullEssence,nullEssence);
+var harpy = new battleActor('Harpy','enemy',50,10,30,3,3,3,nullEssence,nullEssence,nullEssence);
+
+currentEssences.push(nullEssence);
+currentEssences.push(nullEssence);
+currentEssences.push(nullEssence);
+
+
+var currentActor = 0;
+
+var playerList = [protag,roxy,lewis];
+var actorList = [protag,roxy,lewis,enemy1];
+
+//Function for one round of battle.
+//Each action a character takes is a turn.
+function goToNextRound()
+{
+  battle(0);
+}
+var talkValue = 99;
+//Maybe have some sort of encounter code?
+var enemyResponses = [["Seriously? Get away from me, then!","You think you can just say that to me, you punk?!", "Damn, that's deep...<br>...really makes you think."],["Hmmph...I mean, it's not THAT great.","You don't care one way or the other, huh?<br>I hate people like you!", "Whoa, really? You must have some grudges..."],["You freak! I'll kill you!","Hmm...a boring choice, but a safe one.", "To-fu? I've never had that kind of meat before."]];
+var askForNegotiation = "Alright, you've got my attention.";
+var enemyQuestions = ["Hey, you're talking to me?!<br>You must be crazy.","So, what do you think of the world you live in?", "I'll see if you're worthy of me.<br>What's the ultimate meat?"]
+
+//This whole Eidolon conversation system is a mess! Please don't look at it!
+
+//bigger array like [[response1,response2,response3],[response1,response2,response3]] correlating to what turn we're on.
+//Max of three turns. After that, we go into negotiation.
+
+// 0 - Enemy continues talking.
+// 1 - Enemy is displeased, but continues.
+// 2 - Enemy is very displeased, attacks.
+// 3 - Enemy is very displeased, leaves.
+// 4 - Enemy is very pleased, gives money, leaves.
+// 5 - Enemy is absolutely elated, joins the player.
+
+var enemyEndresults = [[3,2,0],[0,2,0],[2,0,0]];
+var talkTurn = 0;
+var playerResponse = [["That's right. I'm crazy.","I'm not crazy. You're crazy!","What even constitutes 'crazy'?"],["It's a wonderful place.","It's okay, I guess.","I hate it."],["Chicken","Beef","Tofu"]];
+
+function battle(x)
+{
+  document.getElementById("buttonHome").setAttribute("style","top:61%");
+  document.getElementById("displayScreenOverlay").src = "gridGameImg/enemies/testEnemy.png";
+  document.getElementById("displayScreenOverlay").style.visibility = 'visible';
+  hideMap();
+  isEnable = false;
+  currentState = "battle";
+  console.log("We are beginning the round.");
+  document.getElementById("buttonHome").innerHTML = '';
+  document.getElementById("textDisplay").innerHTML = '';
+  document.getElementById("textBox").style.visibility = 'visible';
+  document.getElementById("textDisplay").style.visibility = 'visible';
+  currentActor = currentActor + x;
+  //TO-DO: The actors in actorList need to be assigned in when the battle is being prepared.
+  //Sort users by agility.
+  actorList.sort((a, b) => (a.agl < b.agl) ? 1 : -1);
+  console.log("Current actor is " + currentActor);
+  console.log(actorList);
+  //For each user in array of battle actors, execute a turn.
+  console.log(actorList);
+  if (currentActor >= actorList.length)
+  {
+    currentActor = 0;
+    console.log("Stop here.");
+    goToNextRound();
+  }
+  else
+  {
+    if (actorList[currentActor].type === "enemy")
+    {
+      console.log("Called");
+      var randomNum = determineEnemyAISelect();
+      randomNum = randomNum-1;
+      console.log(randomNum);
+      if (actorList[randomNum].hp <= 0)
+      {
+        randNum = determineEnemyAISelect();
+      }
+      else
+      {
+        executeAIBattle(actorList[currentActor], playerList[randomNum]);
+        currentActor++;
+      }
+    }
+    else
+    {
+      //It is a player turn. Activate the butons.
+      console.log();
+      //We can go ahead and make buttons.
+      //Attack, Talk, Item, Run
+      var btnAtk = document.createElement("BUTTON");
+      var btnTlk = document.createElement("button");
+      var btnItm = document.createElement("button");
+      var btnRun = document.createElement("button");
+      btnAtk.innerHTML = "ATTACK";
+      btnTlk.innerHTML = "TALK";
+      btnItm.innerHTML = "ITEM";
+      btnRun.innerHTML = "RUN";
+      btnAtk.classList.add('combatOptionButton');
+      btnTlk.classList.add('combatOptionButton');
+      btnItm.classList.add('combatOptionButton');
+      btnRun.classList.add('combatOptionButton');
+      console.log(actorList);
+      btnAtk.onclick = () => {playerAttack(actorList[currentActor],actorList)};
+      btnItm.onclick = () => {openInventory()};
+      btnRun.onclick = () => {run(actorList[currentActor])};
+      btnTlk.onclick = () => {enemyTalk(actorList[currentActor])};
+      document.getElementById("buttonHome").appendChild(btnAtk);
+      document.getElementById("buttonHome").appendChild(btnTlk);
+      document.getElementById("buttonHome").appendChild(btnItm);
+      document.getElementById("buttonHome").appendChild(btnRun);
+      document.getElementById("textDisplay").innerHTML = "What will " + actorList[currentActor].name + " do?";
+      $("button").prev().prev().prev().focus();
+    }
+  }
+}
+
+function makeTalkButton(text, value)
+{
+  var thisBtn = document.createElement("BUTTON");
+  thisBtn.innerHTML = text;
+  thisBtn.onclick = () => {(onTalkChoice(value))};
+
+  document.getElementById("buttonHome").appendChild(thisBtn);
+  $("button").prev().prev().focus();
+
+
+}
+function onTalkChoice(value)
+{
+  console.log(value);
+  console.log(enemyEndresults[value]);
+  console.log(enemyEndresults[talkTurn][value]);
+
+  document.getElementById("buttonHome").innerHTML = "";
+  setTimeout(function(){
+    document.getElementById("textDisplay").innerHTML = enemyResponses[talkTurn][value];
+      setTimeout(function()
+      {
+        switch (enemyEndresults[talkTurn][value])
+        {
+          case 0:
+          //Demon continues talking.
+          setTimeout(function()
+          {
+            enemyContinueTalk();
+          },1000);
+          break;
+          case 2:
+
+          setTimeout(function()
+          {
+            document.getElementById("textDisplay").innerHTML = "The enemy returns to battle!";
+            setTimeout(function()
+            {
+              document.getElementById("textDisplay").innerHTML = "";
+              document.getElementById("buttonHome").innerHTML = "";
+            },500);
+          },1000);
+          break;
+
+          case 3:
+          document.getElementById("textDisplay").innerHTML = "The enemy runs away!";
+          setTimeout(function()
+          {
+            postBattle();
+          },1000);
+          break;
+
+        }
+      },500);
+
+  },2000);
+}
+function enemyContinueTalk()
+{
+  talkTurn++;
+  if (talkTurn === 3)
+  {
+    setTimeout(function()
+    {
+      document.getElementById("textDisplay").innerHTML = askForNegotiation;
+    },1000);
+
+  }
+  else
+  {
+    setTimeout(function()
+    {
+      document.getElementById("textDisplay").innerHTML = enemyQuestions[talkTurn];
+      makeTalkButton(playerResponse[talkTurn][0], 0);
+      makeTalkButton(playerResponse[talkTurn][1], 1);
+      makeTalkButton(playerResponse[talkTurn][2], 2);
+    },2000);
+  }
+
+}
+function run(i)
+{
+  setTimeout(function()
+  {
+    document.getElementById("buttonHome").innerHTML = '';
+    document.getElementById("textDisplay").innerHTML = i.name +" tried to run away...";
+    var randNum = Math.floor(Math.random() * 5) + 1;
+    if (randNum === 1)
+    {
+      setTimeout(function()
+      {
+        document.getElementById("textDisplay").innerHTML = "...but there's nowhere to run!";
+        setTimeout(function()
+        {
+          battle(1);
+        },1000);
+      },1000);
+    }
+    else
+    {
+      setTimeout(function()
+      {        document.getElementById("textDisplay").innerHTML = "...you were able to escape!";
+
+        setTimeout(function()
+        {
+          document.getElementById("displayScreenOverlay").src = "";
+          document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+          document.getElementById("textBox").style.visibility = 'hidden';
+          document.getElementById("backgroundGrid").style.visibility = 'visible';
+          showMap();
+
+          document.getElementById("textDisplay").innerHTML = "";
+          document.getElementById("enemyPercentage").innerHTML = "0%";
+          currentState = "exploring";
+          currentPercentage = 0;
+          isEnable = true;
+        },1000);
+      },1000);
+    }
+  },1000);
+
+}
+function enemyTalk(i)
+{
+  document.getElementById("buttonHome").innerHTML = '';
+  setTimeout(function()
+  {
+    document.getElementById("textDisplay").innerHTML = i.name +" tried to communicate with the Eidolon.";
+    setTimeout(function()
+    {
+      document.getElementById("textDisplay").innerHTML = enemyQuestions[0];
+
+      makeTalkButton(playerResponse[0][0], 0);
+      makeTalkButton(playerResponse[0][1], 1);
+      makeTalkButton(playerResponse[0][2], 2);
+    },2000)
+  }, 2000);
+}
+function openInventory()
+{
+  document.getElementById("buttonHome").innerHTML = '';
+  document.getElementById("inventoryHome").innerHTML = '';
+
+  for (var i = 0; i < inventory.length; i++)
+  {
+    document.getElementById("inventoryHome").innerHTML += "<button id="+i+" onClick=useItem("+i+");>" + inventory[i].name + " x " + inventory[i].amount +"</button>";
+  }
+  $("button").prev().prev().focus();
+
+  if (inventory.length === 0)
+  {
+    document.getElementById("textBox").style.visibility = 'visible';
+    document.getElementById("textDisplay").style.visibility = 'visible';
+
+    document.getElementById("textDisplay").innerHTML = "You don't have any items!";
+    setTimeout(function()
+    {
+      isEnable = true;
+      document.getElementById("textDisplay").innerHTML = "";
+      document.getElementById("textBox").style.visibility = 'hidden';
+      document.getElementById("textDisplay").style.visibility = 'hidden';
+      currentState = 'h';
+    },2000);
+  }
+
+
+}
+function useItem(thisItem)
+{
+  if (currentState === 'battle')
+  {
+    if(inventory[thisItem].type !== 'healingItem')
+    {
+      document.getElementById("textDisplay").style.visibility = "visible";
+      document.getElementById("textBox").style.visibility = "visible";
+      document.getElementById("textDisplay").innerHTML = "You can't use that now!";
+      setTimeout(function(){
+        document.getElementById("textDisplay").style.visibility = "hidden";
+        document.getElementById("textBox").style.visibility = "hidden";
+        document.getElementById("textDisplay").innerHTML = "hidden";
+      },1000);
+    }
+  }
+  document.getElementById("buttonHome").innerHTML = "";
+  document.getElementById("inventoryHome").innerHTML = "";
+
+  console.log(thisItem);
+  thisItem = inventory[thisItem];
+  console.log(thisItem);
+  var charSelect = 99;
+  var btnProtag = document.createElement("button");
+  var btnRoxy = document.createElement("button");
+  var btnLewis = document.createElement("button");
+
+  btnProtag.innerHTML = "Protag";
+  btnRoxy.innerHTML = "Roxy";
+  btnLewis.innerHTML = "Lewis";
+  btnProtag.classList.add('combatOptionButton');
+  btnRoxy.classList.add('combatOptionButton');
+  btnLewis.classList.add('combatOptionButton');
+
+  btnProtag.onclick = () => {
+    actuallyUseItem(thisItem,0);
+  };
+  btnRoxy.onclick = () => {
+    actuallyUseItem(thisItem,1);
+  };
+  btnLewis.onclick = () => {
+    actuallyUseItem(thisItem,2);
+  };
+  document.getElementById("buttonHome").appendChild(btnProtag);
+  document.getElementById("buttonHome").appendChild(btnRoxy);
+  document.getElementById("buttonHome").appendChild(btnLewis);
+  $("button").prev().prev().focus();
+
+
+}
+function actuallyUseItem(thisItem,charSelect)
+{
+  document.getElementById("buttonHome").innerHTML = "";
+  if (thisItem.type = "healingItem")
+  {
+    console.log(charSelect);
+    console.log(playerList[charSelect]);
+    playerList[charSelect].hp += thisItem.potency;
+    var index = inventory.indexOf(thisItem);
+    console.log(playerList[charSelect]);
+    thisItem.amount--;
+    if (thisItem.amount <= 0)
+    {
+      inventory.splice(index,1);
+    }
+    isEnable = true;
+    document.getElementById("textDisplay").style.visibility = "visible";
+    document.getElementById("textBox").style.visibility = "visible";
+    document.getElementById("textDisplay").innerHTML = playerList[charSelect].name + " recovered " + thisItem.potency + " HP!";
+    setTimeout(function(){
+      document.getElementById("textDisplay").style.visibility = "hidden";
+      document.getElementById("textBox").style.visibility = "hidden";
+      document.getElementById("textDisplay").innerHTML = "";
+      if (currentState === 'battle')
+      {
+        battle(1);
+      }
+    },1500);
+  }
+}
+function openMenu()
+{
+  var btnItems = document.createElement("button");
+  var btnEquip = document.createElement("button");
+  var btnFusion = document.createElement("button");
+  btnItems.innerHTML = "ITEMS";
+  btnEquip.innerHTML = "EQUIP";
+  btnFusion.innerHTML = "FUSION";
+  btnItems.classList.add('combatOptionButton');
+  btnEquip.classList.add('combatOptionButton');
+  btnFusion.classList.add('combatOptionButton');
+  console.log(actorList);
+  //btnAtk.onclick = () => {playerAttack(actorList[currqentActor],actorList)};
+  btnItems.onclick = () => {(openInventory())};
+  btnEquip.onclick = () => {openEquipMenu()};
+  btnFusion.onclick = () => {displayEssence()};
+  document.getElementById("buttonHome").appendChild(btnItems);
+  document.getElementById("buttonHome").appendChild(btnEquip);
+  document.getElementById("buttonHome").appendChild(btnFusion);
+  currentState = 'menu';
+  isEnable = false;
+  //document.getElementById("textDisplay").innerHTML = "What will " + actorList[currentActor].name + " do?";
+  $("button").prev().prev().focus();
+}
+
+function playerAttack(thisActor,actorList)
+{
+  console.log("Player has chosen to attack.");
+
+  [].forEach.call(document.querySelectorAll('.combatOptionButton'),function(e){
+    e.parentNode.removeChild(e);
+  });
+  var tempVariable = 90;
+  console.log(thisActor.name);
+  if (thisActor.name == "Roxy")
+  {
+    tempVariable = 11;
+  }
+  else if (thisActor.name == "Protag")
+  {
+    tempVariable = 10;
+  }
+  else if (thisActor.name == "Lewis")
+  {
+    tempVariable = 12;
+  }
+
+
+  for (var i =0; i < actorList.length;i++)
+  {
+    document.getElementById("buttonHome").innerHTML += "<button id="+i+" onClick=executeBattle("+tempVariable+ "," +i+");>" +actorList[i].name +"</button>";
+  }
+  $("button").prev().prev().prev().focus();
+
+}
+
+function determineEnemyAISelect()
+{
+  var playerList = [protag,roxy,lewis];
+  console.log(playerList);
+  var randNum = Math.floor((Math.random() * 3) + 1);
+  console.log("Random number: " + randNum);
+  for (var i = 0; i < playerList.length+1;i++)
+  {
+    if (i === randNum)
+    {
+      console.log("Random number chosen: " + i);
+      return i;
+      break;
+    }
+  }
+}
+function executeBattle(attacker, defender)
+{
+  document.getElementById("buttonHome").innerHTML = "";
+  attacker = playerList[attacker-10];
+  defender = actorList[defender];
+  //console.log(attacker.name + " attacks!");
+  //console.log(attacker);
+  //console.log(defender);
+  //Do basic battle calculations here.
+  var damageDifference = attacker.atk;
+  defender.hp = defender.hp - damageDifference;
+  //console.log(defender.name +" has taken " + damageDifference +" points of damage!");
+
+  document.getElementById("textDisplay").innerHTML = defender.name +" has taken " + damageDifference +" points of damage!";
+  setTimeout(function(){
+    if (defender.hp <= 0)
+    {
+      document.getElementById("textDisplay").innerHTML = defender.name +" has been defeated!";
+      document.getElementById("displayScreenOverlay").src = "";
+      document.getElementById("displayScreenOverlay").style.visibility = 'hidden';
+
+      //Function to check to see if ALL enemies have been KO'd.
+      postBattle();
+    }
+    else
+    {
+      setTimeout(function()
+      {
+        battle(1);
+      },1000);
+    }
+  }, 1000);
+}
+function executeAIBattle(attacker, defender)
+{
+  var damageDifference = attacker.atk;
+  defender.hp = defender.hp - damageDifference;
+  document.getElementById("textDisplay").innerHTML = attacker.name + " attacks!";
+  setTimeout(function()
+  {
+    document.getElementById("textDisplay").innerHTML = defender.name +" has taken " + damageDifference +" points of damage!";
+  },1000);
+
+  if (defender.hp <= 0)
+  {
+    setTimeout(function()
+    {
+      document.getElementById("textDisplay").innerHTML = defender.name +" has been defeated!";
+    },1000);
+  }
+  setTimeout(function()
+  {
+    battle(1);
+  },2000);
+}
+function postBattle(defeatedName)
+{
+  setTimeout(function()
+  {
+    document.getElementById("textDisplay").innerHTML = "The party was victorious!";
+    setTimeout(function()
+    {
+      //Implement logic for applying XP, money.
+      document.getElementById("textBox").style.visibility = 'hidden';
+      showMap();
+      document.getElementById("textDisplay").innerHTML = "";
+      currentState = "exploring";
+      isEnable = true;
+    },1000);
+  },1000);
+}
+function displayEssence()
+{
+  document.getElementById('buttonHome').innerHTML = '';
+  for (var i = 0; i < currentEssences.length; i++)
+  {
+    if (currentEssences[i].name !== "")
+    {
+      document.getElementById("buttonHome").innerHTML += "<button id="+i+" onClick=showPossibleEssence("+i+");>" + currentEssences[i].name +"</button>";
+    }
+    else
+    {
+
+    }
+  }
+  $("button").prev().prev().focus();
+
+}
+function testWriteEssences()
+{
+  console.log("Test writing essences.");
+
+  currentEssences.push(mothman);
+  currentEssences.push(astaroth);
+  currentEssences.push(mastema);
+  var potion = new Item("Potion","healingItem",200,2);
+  var potion2 = new Item("Hi-Potion","healingItem",400,1);
+  var potion3 = new Item("X-Potion","healingItem",600,3);
+  inventory.push(potion,potion2,potion3);
+}
+function showPossibleEssence(ess1)
+{
+  console.log(currentEssences);
+  console.log("showPossibleEssence running...");
+  document.getElementById("buttonHome").innerHTML = '';
+  for (var i = 0; i < currentEssences.length; i++)
+  {
+    if (i === ess1)
+    {
+      //Do nothing.
+    }
+    else
+    {
+      if (currentEssences[i].name !== "")
+      {
+        document.getElementById("buttonHome").innerHTML += "<button id="+i+" onClick=showPossibleFusion("+ess1+ "," +i+");>" + currentEssences[i].name +"</button>";
+      }
+      else
+      {
+
+      }
+    }
+  }
+  $("button").prev().focus();
+
+}
+function showPossibleFusion(ess1,ess2)
+{
+  console.log(ess1,ess2);
+  console.log("showPossibleFusion running...");
+  console.log("Entities passed in...");
+  console.log(currentEssences[ess1]);
+  console.log(currentEssences[ess2]);
+  var typeToIndex = ['Goetic','Enochian','Cryptid','Deity','Celestial','Skyborne','Gaian','Drowned','Instinct','Ruler','Fae','Soul','Damned','Theory','Filth','Beauty','Violence','Martyr'];
+  var a1 = currentEssences[ess1].type;
+  var a2 = currentEssences[ess2].type;
+  //console.log(a1,a2);
+  var ind1 = typeToIndex.indexOf(a1);
+  var ind2 = typeToIndex.indexOf(a2);
+  var possibleType = essenceTyping[ind1][ind2];
+  document.getElementById("buttonHome").innerHTML = '';
+
+  console.log("Resulting Eidolon Essence will be of type " + possibleType);
+  var btnYes = document.createElement("button");
+  var btnNo = document.createElement("button");
+  btnYes.innerHTML = "YES";
+  btnNo.innerHTML = "NO";
+  var levelAvg = (currentEssences[ess1].level + currentEssences[ess2].level)/2;
+  var tempArray = [];
+  for (var i=0;i<eidolonCompendium.length;i++)
+  {
+    if (eidolonCompendium[i].type === possibleType)
+    {
+      tempArray.push(eidolonCompendium[i]);
+    }
+    else{}
+  }
+  var closestValue = Infinity;
+  var closestIndex = -1;
+
+  for (var i = 0; i < tempArray.length; ++i) {
+    var diff = Math.abs(tempArray[i].level - levelAvg);
+    if (diff < closestValue) {
+      closestValue = diff;
+      closestIndex = i;
+    }
+  }
+  console.log(closestIndex);
+  var chosenEidolon = tempArray[closestIndex];
+  console.log(tempArray);
+  document.getElementById("textBox").style.visibility = 'visible';
+  document.getElementById("textDisplay").style.visibility = 'visible';
+  document.getElementById("textDisplay").innerHTML = 'Fused demon will be<br>' + possibleType + " " + chosenEidolon.name;
+  document.getElementById("buttonHome").setAttribute("style","top:60%");
+  btnYes.onclick = () => {fuseEidolon(chosenEidolon,ess1,ess2)};
+  btnNo.onclick = () => {cancelMenu()};
+  document.getElementById("buttonHome").appendChild(btnYes);
+  document.getElementById("buttonHome").appendChild(btnNo);
+  $("button").prev().focus();
+}
+function fuseEidolon(eidolon,eid1,eid2)
+{
+  document.getElementById("buttonHome").innerHTML = "";
+  document.getElementById("textDisplay").innerHTML = "You have fused "+ eidolon.type + " " + eidolon.name;
+  document.getElementById("buttonHome").setAttribute("style","top:52%");
+  setTimeout(function(){
+    document.getElementById("textDisplay").innerHTML = "";
+    document.getElementById("textBox").style.visibility = 'hidden';
+    document.getElementById("textDisplay").style.visibility = 'hidden';
+    currentEssences[eid1] = eidolon;
+    currentEssences.splice(eid2,1);
+    currentState = 'exploring';
+    isEnable = true;
+  },2000);
+
+}
+function openEquipMenu()
+{
+  document.getElementById("buttonHome").innerHTML ='';
+  var btnProtagWep = document.createElement("button");
+  var btnProtagArm = document.createElement("button");
+  var btnProtagAcc = document.createElement("button");
+  var btnRoxyWep = document.createElement("button");
+  var btnRoxyArm = document.createElement("button");
+  var btnRoxyAcc = document.createElement("button");
+  var btnLewisWep = document.createElement("button");
+  var btnLewisArm = document.createElement("button");
+  var btnLewisAcc = document.createElement("button");
+  btnProtagWep.innerHTML = "WPN: " + protag.wepEquip.name;
+  btnProtagArm.innerHTML = "ARM: " + protag.armEquip.name;
+  btnProtagAcc.innerHTML = "ACC: " + protag.accEquip.name;
+  btnRoxyWep.innerHTML = "WPN: " + roxy.wepEquip.name;
+  btnRoxyArm.innerHTML = "ARM: " + roxy.armEquip.name;
+  btnRoxyAcc.innerHTML = "ACC: " + roxy.accEquip.name;
+  btnLewisWep.innerHTML = "WPN: " + lewis.wepEquip.name;
+  btnLewisArm.innerHTML = "ARM: " + lewis.armEquip.name;
+  btnLewisAcc.innerHTML = "ACC: " + lewis.accEquip.name;
+  btnProtagWep.onclick = () => {
+    changeEquip(00);
+  };
+  btnProtagArm.onclick = () => {
+    changeEquip(01);
+  };
+  btnProtagAcc.onclick = () => {
+    changeEquip(02);
+  };
+  btnRoxyWep.onclick = () => {
+    changeEquip(10);
+  };
+  btnRoxyArm.onclick = () => {
+    changeEquip(11);
+  };
+  btnRoxyAcc.onclick = () => {
+    changeEquip(12);
+  };
+  btnLewisWep.onclick = () => {
+    changeEquip(20);
+  };
+  btnLewisArm.onclick = () => {
+    changeEquip(21);
+  };
+  btnLewisAcc.onclick = () => {
+    changeEquip(22);
+  };
+
+  document.getElementById("equipHome").appendChild(btnProtagWep);
+  document.getElementById("equipHome").appendChild(btnProtagArm);
+  document.getElementById("equipHome").appendChild(btnProtagAcc);
+  document.getElementById("equipHome").appendChild(btnRoxyWep);
+  document.getElementById("equipHome").appendChild(btnRoxyArm);
+  document.getElementById("equipHome").appendChild(btnRoxyAcc);
+  document.getElementById("equipHome").appendChild(btnLewisWep);
+  document.getElementById("equipHome").appendChild(btnLewisArm);
+  document.getElementById("equipHome").appendChild(btnLewisAcc);
+  $("button").prev().prev().focus();
+  //document.getElementById("buttonHome").innerHTML += "<button id="+i+" onClick=changeEquip("+tempVariable+ "," +i+");>" +actorList[i].name +"</button>";
+}
+function changeEquip(playerEquipSlot)
+{
+  if (playerEquipSlot === '00' || '01' || '02')
+  {
+    document.getElementById('statContainer').style.visibility = 'visible';
+
+    console.log("it protag");
+    document.getElementById('generalStatDisplay').innerHTML ="ATK " + protag.atk + "<br>DEF " + protag.def + "<br>AGL " + protag.agl;
+  }
+  console.log(playerEquipSlot);
+  document.getElementById('equipHome').innerHTML = '';
+  for (var i = 0; i < currentEssences.length; i++)
+  {
+    document.getElementById("equipHome").innerHTML += "<button id="+i+" onClick=equipEssence("+playerEquipSlot+ "," +i+");>" + currentEssences[i].name +"</button>";
+  }
+  $("button").prev().prev().focus();
+}
+function equipEssence(playerEquipSlot,essenceIndex)
+{
+  document.getElementById('buttonHome').innerHTML = '';
+  document.getElementById('equipHome').innerHTML = '';
+  isEnable = true;
+  currentState = "h";
+  var tempEssence = protag.wepEquip;
+  console.log(currentEssences[essenceIndex]);
+  switch (playerEquipSlot)
+  {
+    case 00:
+    var tempEssence = protag.wepEquip;
+    protag.wepEquip = currentEssences[essenceIndex];
+    break;
+
+    case 01:
+    var tempEssence = protag.armEquip;
+    protag.armEquip = currentEssences[essenceIndex];
+    break;
+
+    case 02:
+    var tempEssence = protag.accEquip;
+    protag.accEquip = currentEssences[essenceIndex];
+    break;
+
+    case 10:
+    var tempEssence = roxy.wepEquip;
+    roxy.wepEquip = currentEssences[essenceIndex];
+    break;
+
+    case 11:
+    var tempEssence = roxy.armEquip;
+    roxy.armEquip = currentEssences[essenceIndex];
+    break;
+
+    case 12:
+    var tempEssence = roxy.accEquip;
+    roxy.accEquip = currentEssences[essenceIndex];
+    break;
+
+    case 20:
+    var tempEssence = lewis.wepEquip;
+    lewis.wepEquip = currentEssences[essenceIndex];
+    break;
+
+    case 21:
+    var tempEssence =   lewis.armEquip;
+    lewis.armEquip = currentEssences[essenceIndex];
+    break;
+
+    case 22:
+    var tempEssence = lewis.accEquip;
+    lewis.accEquip = currentEssences[essenceIndex];
+    break;
+  }
+  currentEssences.splice(essenceIndex,1);
+  currentEssences.push(tempEssence);
+  document.getElementById('statContainer').style.visibility = 'hidden';
+
+
+
+  //currentEssences.split()
+  //console.log(playerEquipSlot);
+  //console.log(essenceIndex);
+}
 </script>
 
 
@@ -793,51 +1787,6 @@ Avg screen is 1024x768
     top: 300px;
     right: 350px;
   }
-
-
-  .trapezoidLeft {
-	border-bottom: 100px solid #555;
-	border-left: 75px solid transparent;
-	border-right: 75px solid transparent;
-	height: 0;
-	width: 200px;
-    transform: rotate(90deg);
-    position: absolute;
-    top: 350px;
-    right: 525px;
-}
-.trapezoidRight {
-  border-bottom: 100px solid #555;
-	border-left: 75px solid transparent;
-	border-right: 75px solid transparent;
-	height: 0;
-	width: 200px;
-    transform: rotate(-90deg);
-    position: absolute;
-    top: 350px;
-    right: 125px;
-}
-.trapezoidBottom {
-border-bottom: 75px solid #4d4d4d;
-border-left: 100px solid transparent;
-border-right: 100px solid transparent;
-width: 300px;
-  position: absolute;
-  top: 500px;
-  right: 250px;
-  color: black;
-}
-.trapezoidCeiling {
-border-bottom: 75px solid #4d4d4d;
-border-left: 100px solid transparent;
-border-right: 100px solid transparent;
-width: 300px;
-  position: absolute;
-  transform: rotate(180deg);
-  top: 225px;
-  right: 250px;
-  color: black;
-}
 .gridSquare
 {
   border: 2px solid black;
@@ -858,7 +1807,7 @@ width: 300px;
 {
   position: fixed;
   top: 5%;
-  left: 35%;
+  left: 25.5%;
   z-index: 1;
 }
 #displayScreenOverlay
@@ -918,7 +1867,7 @@ width: 300px;
 {
   max-width: 600px;
   margin: auto;
-  height: 600px;
+  height: 700px;
   padding: 20px;
   background-color: black;
 }
@@ -934,17 +1883,168 @@ width: 300px;
   font-family: 'Roboto', sans-serif;
   color: white;
   font-size: 22px;
+  width: 500px;
   position: fixed;
   z-index: 99;
-  top: 53%;
-  left: 36%;
+  top: 50%;
+  left: 26.5%;
 }
 #textBox
 {
   position: fixed;
   z-index: 5;
-  top: 54%;
+  top: 50%;
+  left: 25.5%;
+}
+.combatOptionButton
+{
+}
+#buttonHome
+{
+  position: fixed;
+  width: 600px;
+  height: 100px;
+  z-index: 95;
+  top: 71%;
+  left: 28%;
+}
+#inventoryHome
+{
+  position: fixed;
+  width: 600px;
+  height: 100px;
+  z-index: 95;
+  top: 5%;
+  left: 64%;
+}
+#inventoryHome button
+{
+  display: block;
+  font-size: 16px;
+  margin: 5px;
+  width: 120px;
+  height: 30px;
+  color: white;
+  background-color: black;
+  border: solid 2px white;
+}
+#inventoryHome button:focus
+{
+  background: pink;
+}
+#buttonHome button
+{
+  font-size: 22px;
+  margin: 5px;
+  width: 100px;
+  height: 50px;
+  color: white;
+  background-color: black;
+  border: solid 2px white;
+}
+#buttonHome button:focus
+{
+  background: pink;
+}
+#backgroundGrid
+{
+  position: fixed;
+  z-index: 124;
+  top: 70%;
+}
+#equipHome
+{
+  position: fixed;
+  width: 600px;
+  height: 100px;
+  z-index: 95;
+  top: 5%;
+  left: 46%;
+}
+#equipHome button
+{
+  display: block;
+  font-size: 16px;
+  margin: 5px;
+  width: 280px;
+  height: 30px;
+  color: white;
+  background-color: black;
+  border: solid 2px white;
+}
+#equipHome button:focus
+{
+  background: pink;
+}
+#enemyPercentage
+{
+  position: fixed;
+  color: white;
+  font-size: 36px;
+  left: 27%;
+  top: 2%;
+}
+#playerHealthDisplay
+{
+  position: fixed;
+  color: white;
+  font-size: 20px;
+  left: 59%;
+  bottom: 7%;
+}
+#devNotes
+{
+  position: fixed;
+  z-index: 0;
+  color: red;
+  font-size: 12px;
+}
+#protagHPDisplay
+{
+  position: fixed;
+  height: 10px;
+  width: 100px;
+  left: 65%;
+  background-color: green;
+  z-index: 59;
+}
+#roxyHPDisplay
+{
+  position: fixed;
+  height: 10px;
+  width: 100px;
+  left: 65%;
+  top: 86%;
+  background-color: green;
+  z-index: 59;
+}
+#lewisHPDisplay
+{
+  position: fixed;
+  height: 10px;
+  width: 100px;
+  left: 65%;
+  top: 89%;
+  background-color: green;
+  z-index: 59;
+}
+.playerStatDisplay
+{
+  position: fixed;
+  height: 10px;
+  width: 100px;
   left: 35%;
+  top: 29%;
+  background-color: blue;
+  z-index: 59;
+}
+#generalStatDisplay
+{
+  position: fixed;
+  color: white;
+  font-size: 20px;
+  left: 29%;
+  bottom: 60.5%;
 }
 </style>
 <head>
@@ -953,12 +2053,13 @@ width: 300px;
 <body onload ="gameStart(testMapData)">
 <div class="content">
   <div style="padding-top:1px;">
-
   </div>
   <h1 id="textDisplay">TestText</h1>
   <img id="textBox" src="gridGameImg/textBox.png"></img>
-  <img id="displayScreen" src="gridGameImg/null.png"></img>
+  <img id="displayScreen" src="gridGameImg/forkAhead.png"></img>
   <img id="displayScreenOverlay" src="gridGameImg/doittoem.png"></img>
+  <h1 id="devNotes">DEVELOPER NOTES<br>M: initiate battle<br>O: Test write Essences/Items<br>P: runs displayEssence<br>Q: opens menu</h1>
+
 <!--
     <div id="buttonDiv">
     <div>
@@ -974,5 +2075,20 @@ width: 300px;
   <div id="backgroundGrid" style="padding-top:100px;">
     <div id="playerArrow" />
     </div>
+    <h2 id="enemyPercentage">00%</h2>
+    <h2 id="playerHealthDisplay"></h2>
+    <div id = "protagHPDisplay"></div>
+    <div id = "roxyHPDisplay"></div>
+    <div id = "lewisHPDisplay"></div>
+  <div id = "statContainer">
+    <h2 id = "generalStatDisplay"></h2>
+    <div class = "playerStatDisplay" id="atkDisplay"></div>
+    <div class = "playerStatDisplay" id="defDisplay" style="margin-top:25px;"></div>
+    <div class = "playerStatDisplay" id="aglDisplay" style="margin-top:50px;"></div>
+</div>
+
+    <div id ="inventoryHome"></div>
+    <div id ="equipHome"></div>
+    <div id="buttonHome"/>
     </div>
 </body>
