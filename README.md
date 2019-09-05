@@ -10,10 +10,17 @@ https://jamieaurora.github.io/namazuBackpack
 To use the XIV Card Generator, go to 
 https://jamieaurora.github.io/XIVcard
 
+To try out Grid Game, go to
+https://jamieaurora.github.io/gridGame
+
 # XIV Card Generator README
 
 The XIV Card Generator is a simple display of character data, given the input of your character's name, and the server they reside on.
 Improperly entered character names may not pull the proper data.
+
+# Grid Game
+
+Grid Game is an experiment of replicating a retro RPG like Shin Megami Tensei in a single html file. While I was able to replicate grid-based movement, combat, and speaking to NPCs, it eventually proved too much work for a single developer. It is unfinished, but I am proud of my work on it. Movement is with the arrow keys, and Enter to confirm.
 
 # NamazuBackpack README
 
