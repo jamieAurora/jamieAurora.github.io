@@ -1,0 +1,32 @@
+- Grid based combat.
+
+
+- Map is loaded in.
+- Player's turn.
+- Player can move cursor around the map. When cursor is over a selectable unit, the cursor will highlight.
+- Upon pressing Z, the unit is then selected. A blue movement area will appear based on where the unit is. It will be influenced by how large the map is, as well as if there is anything blocking their way.
+- The player can move the cursor anywhere that is blue.
+- If the player presses Z again, the player moves to that space. Input is ceased while the player moves, it will not be instantaneous.
+- A check will be run to see if the player is adjacent to an enemy.
+    - Yes
+    The player will be able to select a red space, which will be lit if there is an adjacent enemy.
+      If a space is selected/confirmed, battle will start.
+    - No
+- The player ends their turn, and the player is no longer selectable.
+- We loop this until all players have moved.
+
+Saber > Lancer > Archer > Saber
+
+Rider > Caster > Assassin > Rider
+
+Berserker, Shielder
+
+
+[WORKS] 8. When I first click the element with id="start_stop", the timer should begin running from the value currently displayed in id="session-length", even if the value has been incremented or decremented from the original value of 25.
+[WORKS] 9. If the timer is running, the element with the id of "time-left" should display the remaining time in mm:ss format (decrementing by a value of 1 and updating the display every 1000ms).
+[WORKS] 10. If the timer is running and I click the element with id="start_stop", the countdown should pause.
+[WORKS]. If the timer is paused and I click the element with id="start_stop", the countdown should resume running from the point at which it was paused.
+[WORKS] 12. When a session countdown reaches zero (NOTE: timer MUST reach 00:00), and a new countdown begins, the element with the id of "timer-label" should display a string indicating a break has begun.
+[WORKS] 13. When a session countdown reaches zero (NOTE: timer MUST reach 00:00), a new break countdown should begin, counting down from the value currently displayed in the id="break-length" element.
+[WORKS] 14. When a break countdown reaches zero (NOTE: timer MUST reach 00:00), and a new countdown begins, the element with the id of "timer-label" should display a string indicating a session has begun.
+[WORKS] 15. When a break countdown reaches zero (NOTE: timer MUST reach 00:00), a new session countdown should begin, counting down from the value currently displayed in the id="session-length" element.

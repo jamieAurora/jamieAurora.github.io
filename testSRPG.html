@@ -1,0 +1,837 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+var currMapNum = 0;
+var currMapArray = [];
+var playerActorArray = [];
+var enemyArray = [];
+var currentState = "SelectUnit";
+var selectedUnit = "";
+var cursorPosition = 0;
+var menuPosition = 0;
+var menuConstraint = 0;
+var currPlayerUnit = "";
+var currEnemyUnit = "";
+//Value here is 'o' or '-' to determine type of tile.
+//X and Y correspond directly to the tiles, not the actual pixel area.
+//0,0 is the first tile. The one adjacent on the right would be 1,0.
+//The one below the first tile would be (0,1)
+function Tile(x,y,value)
+  {
+    this.x = x,
+    this.y = y,
+    this.value = value
+  }
+function cursorObject(name,x,y) {
+  this.name = name,
+  this.x = x,
+  this.y = y
+}
+function actorUnit(name,x,y,range,hasMoved,imgSrc,pSrc,str,mag,skl,spd,def,res,luc,mov,hpCurrent,hpMax)
+{
+  this.name = name,
+  this.x = x,
+  this.y = y,
+  this.range = range,
+  this.hasMoved = hasMoved,
+  this.imgSrc = imgSrc,
+  this.pSrc = pSrc,
+  this.str = str,
+  this.mag = mag,
+  this.skl = skl,
+  this.spd = spd,
+  this.def = def,
+  this.res = res,
+  this.luc = luc,
+  this.mov = mov,
+  this.hpCurrent = hpCurrent,
+  this.hpMax = hpMax
+}
+let playerCursor = new cursorObject("PlayerArrow",2,2,);
+let testUnit = new actorUnit("Bunyan",4,2,2,false,"srpgImg/bunyan.png","srpgImg/bunyanPortrait.png",13,0,8,6,5,0,5,5,30,30);
+let testUnit3 = new actorUnit("Artoria",5,2,2,false,"srpgImg/artoria.png","srpgImg/bunyan.png",6,0,5,7,7,0,1,5,18,18);
+let testUnit2 = new actorUnit("Enemy1",1,1,3,false,"srpgImg/eggplant.png","srpgImg/eggplantPortrait.png",3,3,3,3,3,3,1,3,15,15);
+
+playerActorArray.push(testUnit);
+playerActorArray.push(testUnit3);
+enemyArray.push(testUnit2);
+//Starts the entire game on load.
+function startGame()
+{
+  document.getElementById("battleMenuPosition").style.visibility = "hidden";
+  document.getElementById("attackPortrait").style.visibility = "hidden";
+  document.getElementById("defensePortrait").style.visibility = "hidden";
+  document.getElementById("battleMenuUI").style.visibility = "hidden";
+
+  //Load in the map.
+  loadInMap();
+  //Should have another function to propagate the units.
+  loadUnits();
+  var bullshitVariable = 0;
+
+
+}
+//Starts a new turn.
+function startTurn()
+{
+
+}
+
+function loadUnits()
+{
+  console.log("Function loadUnits() called.");
+  for (i=0;i<playerActorArray.length;i++)
+  {
+    var playerUnit = document.getElementById(playerActorArray[i].name);
+    //playerUnit.setAttribute("id",playerActorArray[i].name);
+    playerUnit.src = playerActorArray[i].imgSrc;
+    playerUnit.style.left = 85 + (playerActorArray[i].x * 44) + "px";
+    playerUnit.style.top = 85 + (playerActorArray[i].y * 44) + "px";
+    //document.getElementById(playerActorArray[i].name).appendChild(playerUnit);
+  }
+
+  for (i=0;i<enemyArray.length;i++)
+  {
+    var enemyUnit = document.getElementById(enemyArray[i].name);
+    enemyUnit.src = enemyArray[i].imgSrc;
+    enemyUnit.style.left = 85 + (enemyArray[i].x * 44) + "px";
+    enemyUnit.style.top = 85 + (enemyArray[i].y * 44) + "px";
+  }
+}
+function loadInMap()
+{
+  var mapData = "-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------,-------------------------";
+  readGrid(mapData);
+  displayGrid(mapData);
+  //For testing purposes, we'll create a new cursorObject here.
+  //Normally, this would be created automatically during the game after certain things.
+  updateCursor();
+  toggleOpacity(0.0);
+}
+//Toggles the opacity of the map.
+function toggleOpacity(amt)
+{
+  var gridItems = document.getElementsByClassName('gridSquare');
+  for (var i = 0; i < gridItems.length;i++)
+  {
+    gridItems[i].style.opacity= amt;
+    gridItems[i].style.backgroundColor="orange";
+  }
+}
+function updateCursor()
+{
+  //For some reason the bathory div is moving WITH the player's cursor???
+  document.getElementById("marker").style.left = 100 + (playerCursor.x * 44) + "px";
+  document.getElementById("marker").style.top = 100 + (playerCursor.y * 44) + "px";
+  loadUnits();
+}
+//Reads the grid from mapData, saves it to currMapArray as an object
+function readGrid(mapData)
+{
+  console.log("Read Grid Called");
+  var columnCount = 0;
+  var rowCount = 0;
+  for (var i = 0; i < mapData.length;i++)
+  {
+    if (mapData.charAt(i) === ',')
+    {
+      rowCount = 0;
+      columnCount = columnCount + 1;
+    }
+    else
+    {
+      currMapArray.push(new Tile(rowCount,columnCount,mapData.charAt(i)));
+      rowCount++;
+    }
+  }
+}
+//Displays the grid.
+function displayGrid(mapData)
+{
+    var columnCount = 0;
+    var rowCount = 0;
+    var spacingColumn = 84;
+    var spacingRow = 84;
+    var tileIDNum = 0;
+    //var backgroundGrid = document.getElementById("backgroundGrid");
+    //Let's put the player character on the map.
+    //updatePlayer();
+    for (var i = 0; i < mapData.length;i++)
+    {
+      //mapData.charAt(i)
+      if (mapData.charAt(i) === ',')
+      {
+        rowCount = 0;
+        columnCount = columnCount + 1;
+        spacingColumn +=45;
+        spacingRow = 84;
+        if (i===0)
+        {
+          tileIDNum++;
+        }
+        else
+        {
+
+        }
+      }
+      else
+      {
+        tileIDNum++;
+        if (mapData.charAt(i) === 'O')
+        {
+          var x = document.createElement("div");
+          x.setAttribute('class','gridSquare');
+          x.setAttribute('id',tileIDNum);
+          x.style.position="absolute";
+          x.style.left=spacingRow+"px";
+          x.style.top=spacingColumn+"px";
+          x.style.backgroundColor="orange";
+          var thisDiv = document.getElementById('backgroundGrid');
+          thisDiv.appendChild(x);
+        }
+        else if (mapData.charAt(i) === '-')
+        {
+          var x = document.createElement("div");
+          x.setAttribute('class','gridSquare');
+          x.setAttribute('id',tileIDNum);
+          x.style.position="absolute";
+          x.style.left=spacingRow+"px";
+          x.style.top=spacingColumn+"px";
+          x.style.backgroundColor="blue";
+          var thisDiv = document.getElementById('backgroundGrid');
+          thisDiv.appendChild(x);
+        }
+        spacingRow+= 44;
+        rowCount++;
+      }
+    }
+}
+//Take player input.
+document.addEventListener('keydown',logKey);
+
+//Deprecated, remove.
+const keyState = {
+  up: false,
+  down: false,
+  left: false,
+  right: false,
+  z: false,
+  x: false,
+}
+
+//Logs the functions of the various keys.
+function logKey(e)
+{
+    if (currentState === "InMenu")
+    {
+      if (e.code === "ArrowUp")
+      {
+        $("button:focus").prev().focus();
+      }
+      else if (e.code === "ArrowDown")
+      {
+        $("button:focus").next().focus();
+      }
+    }
+    else if (currentState === "SelectUnit")
+    {
+      if (e.code === 'KeyZ')
+      {
+        keyState.z = true;
+        selectUnit();
+      }
+    }
+    else if (currentState === "UnitMove")
+    {
+      if (e.code === 'KeyZ')
+      {
+        dropUnit();
+        keyState.z = true;
+      }
+    }
+    else if (currentState === "ChooseAttackTarget")
+    {
+      toggleAttackTargets();
+    }
+    else if (currentState === "BattleForecast")
+    {
+      battleCalc();
+    }
+    else if (currentState === "Default")
+    {
+      console.log("Ga");
+      if (e.code === 'ArrowRight')
+      {
+        //Move player right.
+        moveObject(playerCursor,'r');
+        keyState.right = true;
+      }
+      if (e.code === 'ArrowLeft')
+      {
+        //Move player left.
+        moveObject(playerCursor,'l');
+        keyState.left = true;
+
+      }
+      if (e.code === 'ArrowUp')
+      {
+        moveObject(playerCursor,'u');
+        keyState.up = true;
+
+      }
+      if (e.code === 'ArrowDown')
+      {
+        moveObject(playerCursor,'d');
+        keyState.down = true;
+      }
+      console.log("First tier.");
+    }
+    if (e.code === 'ArrowRight')
+      {
+        //Move player right.
+        moveObject(playerCursor,'r');
+        keyState.right = true;
+      }
+      if (e.code === 'ArrowLeft')
+      {
+        //Move player left.
+        moveObject(playerCursor,'l');
+        keyState.left = true;
+
+      }
+      if (e.code === 'ArrowUp')
+      {
+        moveObject(playerCursor,'u');
+        keyState.up = true;
+
+      }
+      if (e.code === 'ArrowDown')
+      {
+        moveObject(playerCursor,'d');
+        keyState.down = true;
+      }
+
+}
+
+//This is going to check to see if our cursor is over a game unit.
+//TO-DO: Don't let the user select a unit they already moved.
+//TO-DO: Don't let the user select an enemy unit.
+function selectUnit()
+{
+  console.log("selectUnit() called.");
+  //IS BELOW COMMENT STILL TRUE?
+  //Right now this ONLY works if we're checking for TestUnit
+  //We need to grab the name of whatever unit we're selecting, and check for that.
+  //Or we could loop thru currActorArray and just grab whichever returns true...
+  for (i=0;i<playerActorArray.length;i++)
+  {
+    if (checkForTileObject(playerCursor,playerActorArray[i]))
+    {
+      if (playerActorArray[i].hasMoved === false)
+      {
+        displayRange(playerActorArray[i]);
+      }
+    }
+  }
+
+}
+function displayRange(ourObject)
+{
+  currentState = "UnitMove";
+  console.log(ourObject.x + ", "+ourObject.y);
+  console.log(ourObject.range);
+  toggleOpacity(0.5);
+  var xDistance;
+  var yDistance;
+  var tempTile;
+  document.getElementById("marker").style.backgroundColor = "white";
+  for (i=0; i<currMapArray.length;i++)
+  {
+    xDistance = Math.abs(currMapArray[i].x - (ourObject.x+1));
+    yDistance = Math.abs(currMapArray[i].y - ourObject.y);
+    //console.log("Tile " + (i+1) +"  "+ currMapArray[i].x +","+currMapArray[i].y + "Distance from Unit: " + xDistance+","+yDistance);
+    //console.log("Player range: " + ourObject.range);
+    if (xDistance <= ourObject.range && yDistance <= ourObject.range)
+    {
+      tempTile = document.getElementById(i);
+      tempTile.style.backgroundColor = 'blue';
+      //Grab the tile with id that matches i, make that shit blue.
+    }
+    //if the difference is zero, one, or two (given that we're given two as a range), it will be blue and the unit can move
+    //imagine we are on x 14, and the tile being checked is x19
+    //19-14=5 (5<2) is not true so we can't move there
+  }
+  selectedUnit = ourObject.name;
+  currentState = "UnitMove";
+}
+//This function throws errors for some reason.
+function hideRange()
+{
+  var tempTile;
+  toggleOpacity(0.5);
+  for (i=1; i<currMapArray.length;i++)
+  {
+    console.log(currMapArray[i]);
+      tempTile = document.getElementById(i);
+      tempTile.style.backgroundColor = 'orange';
+  }
+  //toggleOpacity(0.0);
+
+}
+function dropUnit()
+{
+  console.log("Function dropUnit() called.");
+  //playerActorArray[] look for selectedUnit
+  var thisTile;
+  var result = playerActorArray.filter(object =>
+  {
+    return object.name === selectedUnit
+  });
+  console.log(selectedUnit);
+  console.log(result);
+  result = result[0];
+  currPlayerUnit = result;
+  console.log(currPlayerUnit);
+
+  //THIS RIGHT HERE! Is how we can get back to the actual playeractorarray!
+  console.log(playerActorArray.indexOf(result));
+  var ourIndex = playerActorArray.indexOf(result);
+  playerActorArray[ourIndex].hasMoved = true;
+
+  for (i=0;i<currMapArray.length;i++)
+  {
+    //console.log(playerCursor.x + "," + playerCursor.y+ "  ||   "+currMapArray[i].x + "," + currMapArray[i].y);
+    if (checkForTileObject(playerCursor,currMapArray[i]))
+    {
+      //console.log("We have a match.");
+      thisTile = i-1;
+    }
+  }
+  if (document.getElementById(thisTile+2).style.backgroundColor === "blue")
+  {
+    //console.log("Move our unit!");
+    //console.log(result[0]);
+    result.x = currMapArray[thisTile].x + 1;
+    result.y = currMapArray[thisTile].y;
+    console.log("What's this?" + result);
+    //console.log(playerActorArray.findIndex(result.name));
+    updateCursor(result);
+    openPostMoveMenu();
+    //Make unit have moved.
+  }
+  else
+  {
+    console.log("Do not move our unit!");
+  }
+  //console.log("Unit is on Tile " + (thisTile+2));
+  console.log(playerCursor);
+}
+
+//Opens the menu for a unit's actions after they move.
+function openPostMoveMenu()
+{
+  console.log("Hewwo!");
+  //TO-DO:
+  //Before we create menu, we should check to see if the unit is next to an enemy.
+  //We should also check to see if there's an ability it can use.
+
+  //Making new tiles might be fucky.
+  var t1 = new Tile(currPlayerUnit.x-1,currPlayerUnit.y);
+  var t2 = new Tile(currPlayerUnit.x+1,currPlayerUnit.y);
+  var t3 = new Tile(currPlayerUnit.x,currPlayerUnit.y-1);
+  var t4 = new Tile(currPlayerUnit.x,currPlayerUnit.y+1);
+
+  var enemySpotted = false;
+
+  //Loop thru array of enemies?
+  for (i=0;i<enemyArray.length;i++)
+  {
+    if (checkForTileObject(enemyArray[i],t1))
+    {
+      enemySpotted=true;
+    }
+    if (checkForTileObject(enemyArray[i],t2))
+    {
+      enemySpotted=true;
+    }
+    if (checkForTileObject(enemyArray[i],t3))
+    {
+      enemySpotted=true;
+    }
+    if (checkForTileObject(enemyArray[i],t4))
+    {
+      enemySpotted=true;
+    }
+  }
+  if (enemySpotted===true)
+  {
+    createMenu("Attack","Wait");
+  }
+  else
+  {
+    createMenu("Wait");
+
+  }
+  console.log("Enemy spotted: " + enemySpotted);
+}
+
+//document.activeElement.click()
+//Roughly 400 tiles or so, MAX SIZE.
+//16x25
+//1098x718 pixels ROUGHLY
+//TO-DO: Make buttons selectable via arrowkeys.
+function createMenu()
+{
+  currentState = "InMenu";
+  for (i=0; i< arguments.length;i++)
+  {
+    console.log(arguments[i]);
+    var thisBtn = document.createElement('button');
+    thisBtn.setAttribute("id", "option"+i);
+    thisBtn.style.width = "80px";
+    thisBtn.style.height = "30px";
+    thisBtn.innerHTML = arguments[i];
+    //thisBtn.onclick=()=>{responseCalled(thisBtn.innerHTML)};
+    thisBtn.onclick = function ()
+    {
+      responseCalled(this.innerHTML);
+    }
+    //Get x and y, multiply by 44?
+    console.log(playerCursor.x + ": " + playerCursor.y);
+    var xPos = (playerCursor.x + 1) * 44;
+    var yPos = (playerCursor.y + 1) * 44;
+    document.getElementById("menuPosition").style.left = xPos + 222 + "px";
+    document.getElementById("menuPosition").style.top = yPos + 44 + "px";
+    document.getElementById("menuPosition").appendChild(thisBtn);
+  }
+  menuConstraint = arguments.length;
+  console.log(menuConstraint);
+  if (menuConstraint === 1)
+  {
+    $("button").focus();
+  }
+  else if (menuConstraint === 2)
+  {
+    $("button").prev().focus();
+  }
+
+}
+
+//    document.getElementById("displayList").innerHTML += "<button id="+itemData+" onClick=itemButton("+itemData+");>" + "</button>";
+
+  //document.getElementById("option"+menuPosition).style.backgroundColor="red";
+function responseCalled(num)
+{
+  hideRange();
+  //We have to delete the objects.
+  var element = document.getElementById("option0");
+  element.parentNode.removeChild(element);
+  if (menuConstraint === 2)
+  {
+    element = document.getElementById("option1");
+    element.parentNode.removeChild(element);
+  }
+  else
+  {
+
+  }
+
+  if (num === "Attack")
+  {
+    currentState = "ChooseAttackTarget";
+  }
+  else if (num === "Wait")
+  {
+    currentState = "SelectUnit";
+    console.log("Wait selected");
+    hideRange();
+    endBattle();
+  }
+  //We have the choice that the player made now.
+  //Now, do something with it...
+}
+//This is passed an object, and then the cx moves it around the map.
+function moveObject(movedObject, dir)
+{
+  //console.log("The tile array: " + currMapArray[8].x + currMapArray[8].y);
+  //console.log("The object we are moving." + movedObject.x +","+movedObject.y);
+  console.log("moveObject called.");
+  switch (dir)
+  {
+    case "r":
+    movedObject.x++;
+    break;
+    case "l":
+    movedObject.x--;
+    break;
+    case "u":
+    movedObject.y--;
+    break;
+    case "d":
+    movedObject.y++;
+    break;
+  }
+  updateCursor();
+}
+//Is passed in two objects. It checks to see if the two are on the same tile.
+function checkForTileObject(obj1, obj2)
+{
+  console.log("Function checkForTileObject() called.");
+  if (obj1.x === obj2.x && obj1.y === obj2.y)
+  {
+    console.log("Returning true.");
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+function toggleAttackTargets()
+{
+  console.log("Function toggleAttackTargets called");
+  var onEnemy = false;
+  var enemyNum = "";
+  //if (playerCursor)
+  //Check to see if we're on an enemy unit!
+  for (i=0;i<enemyArray.length;i++)
+  {
+    if (enemyArray[i].x === playerCursor.x && enemyArray[i].y === playerCursor.y)
+    {
+      console.log("We are on an enemy");
+      onEnemy = true;
+      enemyNum = i;
+    }
+  }
+
+  if (onEnemy === true)
+  //Change currentState to BattleForeast, and currEnemyUnit to the enemy selected.
+  {
+    //console.log(currPlayerUnit);
+    //console.log(playerActorArray[currPlayerUnit]);
+    document.getElementById("attackPortrait").src = currPlayerUnit.pSrc;
+    document.getElementById("defensePortrait").src = enemyArray[enemyNum].pSrc;
+    document.getElementById("battleMenuUI").style.visibility = "visible";
+    document.getElementById("battleMenuPosition").style.visibility = "visible";
+    document.getElementById("attackPortrait").style.visibility = "visible";
+    document.getElementById("defensePortrait").style.visibility = "visible";
+    document.getElementById("attackerHP").innerHTML = "HP: " + currPlayerUnit.hpCurrent;
+    document.getElementById("attackerATK").innerHTML = "ATK: " + getAtk(currPlayerUnit,enemyArray[enemyNum]);
+    document.getElementById("attackerHIT").innerHTML = "HIT: " + getHitRate(currPlayerUnit,enemyArray[enemyNum]);
+    document.getElementById("attackerCRIT").innerHTML = "CRIT: " + getCrit(currPlayerUnit,enemyArray[enemyNum]);
+    document.getElementById("defenderHP").innerHTML = "HP: " + enemyArray[enemyNum].hpCurrent;
+    document.getElementById("defenderATK").innerHTML = "ATK: " + getAtk(enemyArray[enemyNum],currPlayerUnit);
+    document.getElementById("defenderHIT").innerHTML = "HIT: " + getHitRate(enemyArray[enemyNum],currPlayerUnit);
+    document.getElementById("defenderCRIT").innerHTML = "CRIT: " + getCrit(enemyArray[enemyNum],currPlayerUnit);
+    currentState = "BattleForecast";
+    currEnemyUnit = enemyArray[enemyNum];
+  }
+  //Check to see if the enemy unit is adjacent!
+}
+function getHitRate(attacker,defender)
+{
+  console.log(defender);
+  var attackerHit = ((attacker.skl * 3) + attacker.luc)/2;
+  var defenderAvoid = ((defender.skl * 3) + defender.luc)/2;
+  console.log(attackerHit-defenderAvoid);
+  return (attackerHit-defenderAvoid);
+}
+function getAtk(attacker,defender)
+{
+  return (attacker.str - defender.str);
+}
+function getCrit(attacker,defender)
+{
+  return ((attacker.skl/2) - defender.luc);
+}
+function removeEnemy(eIndex)
+{
+  console.log("Function removeEnemy() called.");
+}
+function battleCalc()
+{
+  console.log("Function battleCalc() called.");
+  var playerIndex = playerActorArray.indexOf(currPlayerUnit);
+  var enemyIndex = enemyArray.indexOf(currEnemyUnit);
+  var randNum = Math.floor(Math.random() * 100);
+  if (randNum < getHitRate(currPlayerUnit,currEnemyUnit))
+  {
+    //We *Are* hitting the enemy.
+    //Is this going to be a critical?
+    randNum = Math.floor(Math.random() * 100);
+    if (randNum < getCrit(currPlayerUnit,currEnemyUnit))
+    {
+      //We have critted.
+      enemyArray[enemyIndex].hpCurrent = enemyArray[enemyIndex].hpCurrent - (getAtk(currPlayerUnit,currEnemyUnit) * 3);
+      if (enemyArray[enemyIndex].hpCurrent <= 0)
+      {
+        removeEnemy(enemyIndex);
+      }
+      else
+      {
+        enemyAttack();
+      }
+    }
+    else
+    {
+      enemyArray[enemyIndex].hpCurrent = enemyArray[enemyIndex].hpCurrent - (getAtk(currPlayerUnit,currEnemyUnit));
+      if (enemyArray[enemyIndex].hpCurrent <= 0)
+      {
+        removeEnemy(enemyIndex);
+      }
+      else
+      {
+        enemyAttack();
+      }
+      //We have not critted.
+    }
+  }
+  else
+  {
+    enemyAttack();
+    //We have missed the enemy!
+  }
+}
+function enemyAttack()
+{
+  console.log("Function enemyAttack() called.");
+  var playerIndex = playerActorArray.indexOf(currPlayerUnit);
+  var enemyIndex = enemyArray.indexOf(currEnemyUnit);
+  var randNum = Math.floor(Math.random() * 100);
+  if (randNum < getHitRate(currEnemyUnit,currPlayerUnit))
+  {
+    randNum = Math.floor(Math.random() * 100);
+    if (randNum < getCrit(currEnemyUnit,currPlayerUnit))
+    {
+      //We have critted.
+      playerActorArray[playerIndex].hpCurrent = playerActorArray[playerIndex].hpCurrent - (getAtk(currEnemyUnit,currPlayerUnit) * 3);
+      if (currActorArray[playerIndex].hpCurrent <= 0)
+      {
+        removePlayer(playerIndex);
+      }
+      else
+      {
+        endBattle();
+      }
+    }
+    else
+    {
+      playerActorArray[playerIndex].hpCurrent = playerActorArray[playerIndex].hpCurrent - (getAtk(currEnemyUnit,currPlayerUnit));
+      if (playerActorArray[playerIndex].hpCurrent <= 0)
+      {
+        removePlayer(playerIndex);
+      }
+      else
+      {
+        endBattle();
+      }
+      //We have not critted.
+    }
+  }
+  else
+  {
+    endBattle();
+  }
+}
+function endBattle()
+{
+  hideBattleUI();
+  console.log("Function endBattle() called.");
+  currPlayerUnit = "";
+  currEnemyUnit = "";
+  var turnIsRemaining = false;
+  for (i=0;i<playerActorArray.length;i++)
+  {
+    if (playerActorArray[i].hasMoved === false)
+    {
+      console.log(playerActorArray[i].name + " has yet to move.");
+      turnIsRemaining = true;
+    }
+  }
+  if (turnIsRemaining === true)
+  {
+    currentState = "SelectUnit";
+    console.log("Turns are remaining.");
+  }
+  else
+  {
+    //It is now the enemy's turn to move.
+    console.log("Enemy's turn");
+    currentState = "EnemyTurn";
+  }
+}
+function hideBattleUI()
+{
+  document.getElementById("battleMenuUI").style.visibility = "hidden";
+  document.getElementById("battleMenuPosition").style.visibility = "hidden";
+  document.getElementById("attackPortrait").style.visibility = "hidden";
+  document.getElementById("defensePortrait").style.visibility = "hidden";
+
+  document.getElementById("attackerHP").innerHTML = "";
+  document.getElementById("attackerATK").innerHTML = "";
+  document.getElementById("attackerHIT").innerHTML = "";
+  document.getElementById("attackerCRIT").innerHTML = "";
+
+  document.getElementById("defenderHP").innerHTML = "";
+  document.getElementById("defenderATK").innerHTML = "";
+  document.getElementById("defenderHIT").innerHTML = "";
+  document.getElementById("defenderCRIT").innerHTML = "";
+}
+//See if we will hit the enemy!
+//if randnum < ourPercentage
+
+//This will let us modify the original object.
+//console.log(playerActorArray.indexOf(result));
+//var ourIndex = playerActorArray.indexOf(result);
+
+
+
+//Derived Stats
+//Attack = Strength/Magic
+//Hit Rate = (Skill x 3) + Luck) / 2
+//Critical = Skill/2
+//Avoid (Speed x 3 + Luck) / 2
+
+//Avoid and HitRate are pretty much the same.
+//Combat Forecast
+//Attack - Enemy Def/Res
+//Hit Rate = HitRate + Bonus - (EnemyAvoid) %
+//Crit Rate = (Crit + Bonus) - EnemyLuck %
+//DESIGN NOTES
+//EVERYTHING should be in multiples of 4!
+//Tiles are 40x40
+</script>
+<style>
+
+</style>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="testSRPG.css">
+
+  </head>
+<body onload ="startGame()">
+  <div id="container">
+  <div id ="menuPosition"></div>
+  <img id ="battleMenuPosition" src="srpgImg/battleMenuBackdrop.png">
+  <img id ="attackPortrait">
+  <img id ="defensePortrait">
+  <div id ="battleMenuUI">
+  <h2 id="attackerName">Bunyan<h2>
+    <h2 id="defenderName">Eggplant<h2>
+      <h1 id="attackerHP">HP: XX</h1>
+      <h1 id="attackerATK">Atk: XX</h1>
+      <h1 id="attackerHIT">Hit: XX</h1>
+      <h1 id="attackerCRIT">Crit: XX</h1>
+      <h1 id="defenderHP">HP: XX</h1>
+      <h1 id="defenderATK">Atk: XX</h1>
+      <h1 id="defenderHIT">Hit: XX</h1>
+      <h1 id="defenderCRIT">Crit: XX</h1>
+  </div>
+  <div id="backgroundGrid" style="padding-top:100px;">
+    <img id="mapBackdrop" src="srpgImg/mapBackdrop.png"style="padding-left:80px;"/>
+
+    <div id="marker"/>
+    </div>
+    <img id="Artoria"/>
+    <img id="Bunyan"/>
+    <img id="Enemy1"/>
+    </div>

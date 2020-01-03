@@ -77,7 +77,6 @@
   .headerText
   {
     font-size: 80px;
-    margin-bottom: 5px;
   }
   .subheaderText
   {
@@ -160,7 +159,8 @@
     margin-right: 15px;
     margin-left: 15px;
   }
-
+  @media only screen and (min-width: 1000px)
+  {
     h1
     {
       font-size: 10px;
@@ -199,6 +199,7 @@
       height: 150px;
       background-color: grey;
       border-radius: 20px;
+      margin-left: 15%;
     }
     .thumbnail:hover
     {
@@ -206,13 +207,23 @@
     }
     .projectTitle
     {
+      padding-left:0px;
+      padding-top:50px;
+      margin-left:-340px;
+      float:left;
       color:white;
       font-size: 26px;
     }
     .projectDesc
     {
+      padding-left:30px;
+      padding-top:50px;
+      margin-left:20px;
+      margin-right: 30px;
+      float:left;
       color:#86C232;
       font-family: Oswald;
+
       font-size: 26px;
     }
     .welcome-section
@@ -225,51 +236,7 @@
       height: 100vh;
       padding-top: 45vh;
     }
-    .flex-container
-    {
-      display: flex;
-    }
-    .flex-container div {
-      flex: 1;
-    }
-    .flex-container h1 {
-      color:white;
-      font-size: 26px;
-    }
-
-    .flex-container h2 {
-      color:#86C232;
-      font-family: Oswald;
-      font-size: 16px;
-    }
-    .flex-container h3 {
-      color:#86C232;
-      font-family: Oswald;
-      font-size: 33px;
-      margin: 10px;
-    }
-    .flex-container img
-    {
-      width: 150px;
-      height: 150px;
-      background-color: white;
-      border-radius: 20px;
-      padding: 5px;
-      border-color: white;
-      margin: 5px;
-      margin-bottom: 15px;
-    }
-
-    .objTile
-    {
-      display: flex;
-      flex-direction: column;
-    }
-    .textTile
-    {
-
-    }
-
+  }
 
   </style>
   <script>
@@ -305,122 +272,68 @@
   </section>
   <section class ="project-section" id = "project-section">
     <h1 class="headerText" style="color:white">Project Portfolio</h1>
-    <h1 class="subheaderText" style="color:#86C232;">A collection of works pertaining both to software development and technical writing.</h1>
 <div style="padding-bottom:50px;"></div>
-    <div class="flex-container">
-
-      <div class="objTile">
-        <div class="textTile">
-          <h1>MarginEdge Mobile Application</h1>
-          <h2>A mobile application created for a venture-capital backed startup, interfacing with back-end servers.</h2>
-        </div>
-        <div>
-          <img src="demoME.png" alt="MarginEdge Mobile App" id="tileMarginEdge">
-        </div>
-      </div>
-
-      <div class="objTile">
-        <div class="textTile">
-          <h1>Namazu Backpack</h1>
-          <h2>A web app utilizing a third party API, for use in tandem with Final Fantasy XIV.</h2>
-        </div>
-        <div>
-          <img src="namazu-stroke.png" alt="NamazuBackpack" id="tileNamazu" />
-        </div>
-      </div>
-
-      <div class="objTile">
-        <div class="textTile">
-          <h1>Coding Style Guide</h1>
-          <h2>A brief sample of my technical writing abilities, outlining proper coding format.</h2>
-        </div>
-        <div>
-          <img src="demoTW.png" alt="Technical Writing Sample" id="tileTechWri" />
-        </div>
-      </div>
-
-      <div class="objTile">
-        <div class="textTile">
-          <h1>FFXIV Card Generator</h1>
-          <h2>Another web app utilizing the same API, for pulling character data.</h2>
-        </div>
-        <div>
-          <img src="071205.png" alt="XIVCard" id="tileXIVCard" />
-        </div>
-      </div>
-
-      <div class="objTile">
-        <div class="textTile">
-          <h1>Devin Townsend Discography</h1>
-          <h2>A tribute site dedicated to my favorite musician. Currently best viewed fullscreen on desktop.</h2>
-        </div>
-        <div>
-          <img src="demoDT.png" alt="Devin Townsend Fansite" id="tileDT" />
-        </div>
-      </div>
-
-      <div class="objTile">
-        <div class="textTile">
-          <h1>ROT13 Encoder</h1>
-          <h2>A simple web app, which takes regular text and encrypts it in the ROT13 format.</h2>
-        </div>
-        <div>
-          <img src="codeIcon.png" alt="ROT13 Decoder" id="tileROT13" />
-        </div>
-      </div>
-
-
-    </section>
-
-
-
-
-    <section class ="testimonial-section" id = "testimonial-section">
-      <h1 class="headerText" style="color:white">Testimonials</h1>
-
-      <h3 style="color:#86c232">"Great app...amazingly robust analytics and food ordering interface. Highly recommend... A+++"</h3>
-      <h3>&#9733;&#9733;&#9733;&#9733;&#9733;  rated app on the iOS App Store </h3>
-
-
-      </section>
-      <section class="testimonial-section" style="background-color:#2f3236;"id="education-section">
-        <h1 class="headerText" style="color:white">Education and Certification</h1>
-        <h3 style="color:#86c232">Bachelor's of Science in Technical Writing, with a minor in Computer Science</h3>
-        <h3>Certified - Responsive Web Design Certified</h3>
-        <h3 style="color:#86c232">Certified - JavaScript Algorithms and Data Structures</h3>
-      </section>
-      <section class="testimonial-section" style="background-color:#474B4F" id="education-section">
-        <h1 class="headerText" style="color:white">Skills and Languages</h1>
-        <div class="flex-container">
-          <h3>C#</h3>
-          <h3>C++</h3>
-          <h3>Java</h3>
-          <h3>JavaScript</h3>
-          <h3>AngularJS</h3>
-          <h3>React</h3>
-          <h3>Redux</h3>
-          <h3>Python</h3>
-          <h3>Unity</h3>
-          <h3>Git</h3>
-          <h3>Ruby</h3>
-          <h3>MySQL</h3>
-          <h3>HTML</h3>
-          <h3>CSS</h3>
-          <h3>O365</h3>
-          <h3>Ionic</h3>
-          <h3>Jasmine</h3>
-          <h3>Bootstrap</h3>
-          <h3>JQuery</h3>
-          <h3>Node.js</h3>
-
-
-
-
+    <div class ="row">
+        <div class = "col-sm-4">
+          <img src="namazu-stroke.png" alt="NamazuBackpack" class="thumbnail" id="tileNamazu" />
           </div>
-
-
+          <div class = "col-sm-8">
+            <h1 class = "projectTitle">Namazu Backpack</h1>
+            <h2 class = "projectDesc" >A web app utilizing a third party API, for use in tandem with Final Fantasy XIV.</h2>
+            </div>
+        </div>
+        <div class ="row">
+            <div class = "col-sm-4">
+              <img src="demoTW.png" alt="Technical Writing Sample" class="thumbnail" id="tileTechWri" />
+              </div>
+              <div class = "col-sm-8">
+                <h1 class = "projectTitle">Technical Writing Sample</h1>
+                <h2 class = "projectDesc" >A brief sample of my technical writing abilities, outlining proper coding format</h2>
+                </div>
+            </div>
+            <div class ="row">
+                <div class = "col-sm-4">
+                  <img src="071205.png" alt="XIVCard" class="thumbnail" id="tileXIVCard" />
+                  </div>
+                  <div class = "col-sm-8">
+                    <h1 class = "projectTitle">FFXIV Card Generator</h1>
+                    <h2 class = "projectDesc" >Another web app utilizing the same API, for pulling character data.</h2>
+                    </div>
+                </div>
+                <div class ="row">
+                    <div class = "col-sm-4">
+                      <img src="demoDT.png" alt="Devin Townsend Fansite" class="thumbnail" id="tileDT" />
+                      </div>
+                      <div class = "col-sm-8">
+                        <h1 class = "projectTitle">Devin Townsend Fansite</h1>
+                        <h2 class = "projectDesc" >A tribute site dedicated to my favorite musician. Currently best viewed fullscreen on desktop.</h2>
+                        </div>
+                    </div>
+                    <div class ="row">
+                        <div class = "col-sm-4">
+                          <img src="demoME.png" alt="MarginEdge Mobile App" class="thumbnail" id="tileMarginEdge" />
+                          </div>
+                          <div class = "col-sm-8">
+                            <h1 class = "projectTitle">MarginEdge Mobile App</h1>
+                            <h2 class = "projectDesc" >A web app utilizing a third party API, for use in tandem with Final Fantasy XIV.</h2>
+                            </div>
+                        </div>
+                        <div class ="row">
+                            <div class = "col-sm-4">
+                              <img src="codeIcon.png" alt="ROT13 Decoder" class="thumbnail" id="tileROT13" />
+                              </div>
+                              <div class = "col-sm-8">
+                                <h1 class = "projectTitle">ROT13 Encoder</h1>
+                                <h2 class = "projectDesc" >A simple web app, which takes regular text and encrypts it in the ROT13 format.</h2>
+                                </div>
+                            </div>
+    </section>
+    <section class ="testimonial-section" id = "testimonial-section">
+      <h3>"Great app...amazingly robust analytics and food ordering interface. Highly recommend... A+++"</h3>
+      <h3>&#9733;&#9733;&#9733;&#9733;&#9733;  rated app on the iOS App Store </h3>
+      <h3>Certified - Responsive Web Design Certified</h3>
+      <h3>Certified - JavaScript Algorithms and Data Structures</h3>
       </section>
-
       <section class="contact-section" id="contact-section">
         <a href="https://www.linkedin.com/in/jamie-clary-b92126105" target = "_blank" id ="profile-link"><i class="fab fa-linkedin fa-5x"></i>
       </a>

@@ -1,0 +1,65 @@
+<style>
+  .square
+  {
+    height: 200px;
+    width: 300px;
+    background-color: rgb(192,192,160);
+    position: absolute;
+    top: 300px;
+    right: 350px;
+  }
+
+
+  .trapezoidLeft {
+    border-bottom: 200px solid rgb(224,224,192);
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  height: 0;
+  width: 200px;
+    transform: rotate(90deg);
+    position: absolute;
+    top: 300px;
+    right: 475px;
+}
+.trapezoidRight {
+  border-bottom: 200px solid rgb(224,224,192);
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  height: 0;
+  width: 200px;
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 300px;
+    right: 175px;
+}
+.trapezoidBottom {
+border-bottom: 75px solid rgb(64,96,128);
+border-left: 100px solid transparent;
+border-right: 100px solid transparent;
+width: 300px;
+  position: absolute;
+  top: 500px;
+  right: 250px;
+  color: rgb(64,96,128);
+}
+.trapezoidCeiling {
+border-bottom: 75px solid rgb(160,160,128);
+border-left: 100px solid transparent;
+border-right: 100px solid transparent;
+width: 300px;
+  position: absolute;
+  transform: rotate(180deg);
+  top: 225px;
+  right: 250px;
+  color: black;
+}
+  </style>
+<div style="padding-top:100px;padding-left:500px;">
+
+
+  <div class="trapezoidBottom"></div>
+  <div class="trapezoidCeiling"></div>
+  <div class = "square" id = "floorX0Y0"></div>
+
+  <div class="trapezoidRight"></div>
+  <div class="trapezoidLeft "></div>

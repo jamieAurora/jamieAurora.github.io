@@ -1,0 +1,23 @@
+<script>
+var carDebt = 6724;
+var carPayment = 250;
+var engineDebt = 1900;
+var enginePayment = 300;
+var months = 0;
+var newPayment = enginePayment + carPayment;
+for (months =0; carDebt > 0;months++)
+{
+  carDebt -= carPayment;
+  engineDebt -= enginePayment;
+  console.log("Month " + months + ": $"+carDebt+" remaining on the car.");
+  if (engineDebt <= 0)
+  {
+    carPayment = newPayment;
+  }
+  else
+  {
+    console.log(": $"+engineDebt+" remaining on the engine.");
+  }
+}
+
+</script>

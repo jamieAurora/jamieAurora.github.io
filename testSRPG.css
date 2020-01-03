@@ -1,0 +1,186 @@
+.square
+{
+  height: 200px;
+  width: 300px;
+  background-color: grey;
+  position: absolute;
+  top: 300px;
+  right: 350px;
+}
+.gridSquare
+{
+border: 1px solid black;
+width: 40px;
+height: 40px;
+background-color: orange;
+z-index: 1;
+opacity: 0.5;
+}
+.button
+{
+}
+#backgroundGrid
+{
+  position: absolute;
+  z-index: 15;
+  margin: auto;
+  left: 10%;
+  top: 0%;
+}
+#marker
+{
+  color: red;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid red;
+  z-index:3;
+}
+#Artoria
+{
+  position: absolute;
+  z-index:2;
+}
+#Bunyan
+{
+  position: absolute;
+  z-index:2;
+}
+#characterSpace
+{
+  z-index:2;
+  left: 100px;
+}
+#Enemy1
+{
+  position: absolute;
+  z-index:2;
+}
+#menuPosition
+{
+  z-index: 20;
+  position: absolute;
+  max-width: 20px;
+}
+#battleMenuPosition
+{
+  z-index: 20;
+  position: absolute;
+  left: 15%;
+  top: 53%;
+}
+#menuPosition button:focus
+{
+  background: blue;
+  color: white;
+}
+#attackPortrait
+{
+  z-index: 19;
+  position: absolute;
+  width: 20%;
+  height: 60%;
+  left: 15%;
+  top: 5%;
+}
+#defensePortrait
+{
+  z-index: 19;
+  position: absolute;
+  width: 30%;
+  left: 55%;
+  height: 80%;
+  bottom: 25%;
+}
+#attackerName
+{
+  position: absolute;
+  font-size: 64px;
+  color: white;
+  left: 18%;
+  top: 48%;
+  z-index: 21;
+}
+#attackerHP
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 58%;
+  left: 18%;
+}
+#attackerATK
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 62%;
+  left: 18%;
+}
+#attackerHIT
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 66%;
+  left: 18%;
+}
+#attackerCRIT
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 70%;
+  left: 18%;
+}
+#defenderName
+{
+  position: absolute;
+  color: white;
+  font-size: 64px;
+  right: 18%;
+  top: 48%;
+  z-index: 21;
+}
+#defenderHP
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 58%;
+  right: 18%;
+}
+#defenderATK
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 62%;
+  right: 18%;
+}
+#defenderHIT
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 66%;
+  right: 18%;
+}
+#defenderCRIT
+{
+  position: absolute;
+  z-index: 21;
+  color: white;
+  top: 70%;
+  right: 18%;
+}
+#container
+{
+  margin: auto;
+}
+#button button:focus
+{
+  background: pink;
+  color: red;
+
+}

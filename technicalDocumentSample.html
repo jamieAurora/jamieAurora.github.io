@@ -1,0 +1,229 @@
+<style>
+  #navbar
+{
+  position:fixed;
+  min-width:290px;
+  top:0px;
+  left:0px;
+  width:300px;
+  border-right:solid;
+  border-color:grey;
+}
+#navbar ul{
+
+}
+#navbar li
+{
+  margin: 0;
+  padding: 0;
+  width: 280px;
+
+}
+#navbar a
+{
+  display: block;
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  list-style: none;
+  background-color: #f1f1f1;
+  z-index: 2;
+
+}
+#navbar a:hover
+{
+  background-color: #898989;
+  color: black;
+}
+main
+{
+  position: relative;
+  width: 650px;
+  left: 320px;
+  height: 900px;
+}
+header
+{
+  font-size: 32px;
+}
+.ExampleText
+{
+  font-size: 19px;
+  bottom: 10px;
+}
+code
+{
+  display: block;
+  white-space: pre;
+  word-wrap: normal;
+  margin: 10px;
+  padding: 10px;
+  word-break: normal;
+  width: 700px;
+  background-color: #f4f4f4;
+}
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+table
+{
+  font-size: 15px;
+  style: block;
+  background-color: #f4f4f4;
+  min-width: 700px;
+    margin: 10px;
+  padding: 10px;
+}
+
+  </style>
+<nav id = "navbar"><header>Good Code Style
+  </header>
+<a class="nav-link" href="#Good_code_is_readable" rel="internal"><li>Good code is readable</li></a>
+  <a class="nav-link" href="#Good_code_is_documented" rel="internal"><li>Good code is documented</li></a>
+  <a class="nav-link" href="#Good_code_is_consistent" rel="internal"><li>Good code is consistent</li></a>
+  <a class="nav-link" href="#Good_code_follows_conventions" rel="internal"><li>Good code follows conventions</li></a>
+  <a class="nav-link" href="#Good_code_is_never_done" rel="internal"><li>Good code is never done</li></a>
+
+</nav>
+
+<body>
+  <main id = "main-doc">
+    <section class="main-section" id = "Good_code_is_readable">
+      <header>Good code is readable</header>
+      <p>Just because your code is in a language you understand, doesn't necessarily mean your code is readable. Good code is easy to look at, meaning it shouldn't strain the eye. It should be intuitive to easily parse, and the person reading your code shouldn't have to spend time trying to separate words or characters.</p>
+      <ul>
+        <li>Always use spaces between variables</li>
+        <li>Make good use of indentation</li>
+        <li>Use new lines when appropriate</li>
+        <li>If using similar arrays, align them vertically</li>
+        <li>Cleanliness is key</li>
+      </ul>
+      <p class ="ExampleText">Let's take a look at an example.</p>
+      <code>function thisFunction(){
+var aVariable;
+var thisArray=[1,2,3,4];
+var anotherVariable;
+var thatArrayWithAVeryLongName=[1,2,3,4];
+for (i=0;i&lt;thisArray.length;i++){
+thisArray[i]=thatArrayWithAVeryLongName[i];}};</code>
+      <p class ="ExampleText">This code is unpleasant to look at. Let's make some changes by following the guidelines listed above.</p>
+      <code>function thisFunction() {
+
+  var aVariable;
+  var anotherVariable;
+  var thisArray =                 [1, 2, 3, 4];
+  var thatArrayWithAVeryLongName= [1, 2, 3, 4];
+
+  for (i=0; i&lt;thisArray.length; i++)
+  {
+    thisArray[i]=thatArrayWithAVeryLongName[i];}
+  }
+};</code>
+      <p class ="ExampleText">This is much better. We've aligned our arrays, added spaces between our variables, and weren't afraid to use newlines and indent our code. It's still not perfect, and that's because...</p>
+      </section>
+    <hr>
+
+
+     <section class="main-section" id = "Good_code_is_documented">
+      <header>Good code is documented</header>
+      <p>Just because you know what your code does, doesn't mean other people do. When writing code, you should have comments in your code to let other programmers understand how it works. The more complicated the code, the more useful commenting your code is!</p>
+       <p class ="ExampleText">Let's apply commenting to the above code.</p>
+       <code>//This function sets the value of thisArray equal to thatArrayWithAVeryLongName
+function thisFunction() {
+  var aVariable;
+  var anotherVariable;
+  var thisArray =                 [1, 2, 3, 4];
+  var thatArrayWithAVeryLongName= [1, 2, 3, 4];
+
+  for (i=0; i&lt;thisArray.length; i++)
+  //This for loop iterates through the length of thisArray, updating each value at a time.
+  {
+    thisArray[i]=thatArrayWithAVeryLongName[i];}
+  };
+}</code>
+       <p class = "ExampleText">This is a lot better, and a new programmer can look at your code and instantly know what it does. There's still more we can do, and that's because...</p>
+      </section>
+    <hr>
+     <section class="main-section" id = "Good_code_is_consistent">
+      <header>Good code is consistent</header>
+      <p>You may notice that some things in our above code don't always look the same. You should always strive for consistency in your code, regardless of how you decide to format it. Let's try making our above code more consistent.</p>
+       <code>//This function sets the value of thisArray equal to thatArrayWithAVeryLongName
+function thisFunction()
+{
+  var aVariable;
+  var anotherVariable;
+  var thisArray =                 [1, 2, 3, 4];
+  var thatArrayWithAVeryLongName= [1, 2, 3, 4];
+
+  //This for loop iterates through the length of thisArray, updating each value at a time.
+  for (i=0; i&lt;thisArray.length; i++)
+  {
+    thisArray[i]=thatArrayWithAVeryLongName[i];
+  }
+};
+</code>
+       <p class = "ExampleText">What did we do here? You may notice that now, brackets appear consistently throughout our code. Brackets always have their own line, and appear with the same indentation as the function or loop that spawned them. We also now have all of our commenting directly above the line it is explaining. We can make this even better, though...</p>
+      </section>
+    <hr>
+     <section class="main-section" id = "Good_code_follows_conventions">
+      <header>Good code follows conventions</header>
+      <p>There are pre-existing naming conventions for variables, and they vary for each different programming language. Given that our imaginary code is in JavaScript, we will be going over the standard naming conventions for JavaScript variables.</p>
+       <table style = "width:100%">
+         <tr>
+<th> Classes </th>
+<th>Nouns in UpperCamelCase, with the first letter of every word being capitalized.</th>
+</tr>
+<tr>
+<th>Methods</th>
+<th>Verbs in lowerCamelCase, with the first letter of the verb being lowercase.</th>
+</tr>
+<tr>
+<th>Variables</th>
+<th>Written in lowerCamelCase. They should be short and relevant.</th>
+</tr>
+<tr>
+<th>Constants</th>
+<th>Constants are written in uppercase, separated by underscores.</th>
+</tr>
+       </table>
+
+       <p class="ExampleText">Let's apply these standards to our code.</p>
+       <code>//This function sets the value of firstArray equal to secondArray
+function arrayIterator()
+{
+  var firstVariable;
+  var secondVariable;
+  var firstArray =  [1, 2, 3, 4];
+  var secondArray = [1, 2, 3, 4];
+
+  //This for loop iterates through the length of firstArray, updating each value at a time.
+  for (i=0; i &lt; firstArray.length; i++)
+  {
+    firstArray[i] = secondArray[i];
+  }
+};</code>
+       <p class="ExampleText">This code makes more sense. We renamed our variables, which allows for our arrays to line up better. We also remembered to update our commenting to reflect the new names of the variables. But we're still not done, because...</p>
+
+      </section>
+    <hr>
+     <section class="main-section" id = "Good_code_is_never_done">
+      <header>Good code is never done</header>
+      <p>Good code is simply never done. When your code works, that is the beginning, not the end of the improvement process. You should always strive to improve on your work, refactoring it to work as efficiently as possible. Let's take a look at one example.</p>
+       <code>//This function sets the value of firstArray equal to secondArray
+function arrayIterator(firstArray, secondArray)
+{
+  //This for loop iterates through the length of firstArray, updating each value at a time.
+  for (i=0; i &lt; firstArray.length; i++)
+  {
+    firstArray[i] = secondArray[i];
+  }
+};</code>
+       <p class = "ExampleText">Here, we removed firstVariable and secondVariable, as they added nothing to the code. Secondly, we changed the code so that arrayIterator accepts two arrays as arguments, rather than having our arrays hardcoded into the function, allowing us for greater flexibility of use.</p>
+       <p></p>
+      </section>
+  </main>
+</body>
+<footer>
+</footer>

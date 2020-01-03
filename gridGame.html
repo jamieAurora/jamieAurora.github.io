@@ -1611,22 +1611,7 @@ function showPossibleFusion(ess1,ess2)
   document.getElementById("buttonHome").appendChild(btnNo);
   $("button").prev().focus();
 }
-function fuseEidolon(eidolon,eid1,eid2)
-{
-  document.getElementById("buttonHome").innerHTML = "";
-  document.getElementById("textDisplay").innerHTML = "You have fused "+ eidolon.type + " " + eidolon.name;
-  document.getElementById("buttonHome").setAttribute("style","top:52%");
-  setTimeout(function(){
-    document.getElementById("textDisplay").innerHTML = "";
-    document.getElementById("textBox").style.visibility = 'hidden';
-    document.getElementById("textDisplay").style.visibility = 'hidden';
-    currentEssences[eid1] = eidolon;
-    currentEssences.splice(eid2,1);
-    currentState = 'exploring';
-    isEnable = true;
-  },2000);
 
-}
 function openEquipMenu()
 {
   document.getElementById("buttonHome").innerHTML ='';
