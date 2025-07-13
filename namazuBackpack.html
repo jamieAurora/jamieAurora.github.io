@@ -2,6 +2,7 @@
 HEWWO?!!
 -->
 <script>
+  console.log("Script is ran");
   var itemArray = [];
   var craftedItemArray = [];
   var badID = [17731,24998,17733,7158,17735,17737,17739,7033,1828,161,6122,157,1828,1856,1860,1888,164,4459,6036,5565,20658,20887,20888,20889,20891, 20891,20892,18270,11155,11162,11169,11176,11183,11190,22960,24058];
@@ -21,6 +22,7 @@ HEWWO?!!
   }
   function makeCalls()
   {
+    console.log("In function makeCalls");
   document.getElementById("displayList").innerHTML = "";
   //The result that comes back now has .GameContentLinks.Recipe.ItemResult[]
   var x = "https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item&columns=ID,Name,Icon,GameContentLinks";
