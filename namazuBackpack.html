@@ -32,6 +32,9 @@ HEWWO?!!
   function retrieveItems(data)
   {
     var badName = ["Lominsan"," Aetherial Iron Lance","Dated"];
+    console.log("In function retrieveItems");
+    console.log(data);
+    console.log("Finished trying to call data");
     data = data.filter(data => !!data.GameContentLinks);
     data = data.filter(data => !badID.includes(data.ID));
     data = data.filter(data => !!data.GameContentLinks.Recipe);
