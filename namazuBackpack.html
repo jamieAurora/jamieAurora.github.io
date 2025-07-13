@@ -25,7 +25,8 @@ HEWWO?!!
     console.log("In function makeCalls");
   document.getElementById("displayList").innerHTML = "";
   //The result that comes back now has .GameContentLinks.Recipe.ItemResult[]
-  var x = "v2.https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item&columns=ID,Name,Icon,GameContentLinks";
+  //var x = "v2.https://xivapi.com/search?string=" + document.getElementById("inputText").value + "&indexes=item&columns=ID,Name,Icon,GameContentLinks";
+  var x = "v2.https://xivapi.com/api/search?sheets=Recipe&query=%2BItemResult%3D%22" + document.getElementById("inputText").value + "&indexes=item&columns=ID,Name,Icon";
   fetch(x, { mode: 'cors' })
   	.then(response => response.json())
     .then(data => retrieveItems(data.Results));
